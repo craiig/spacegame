@@ -1,0 +1,21 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost');
+  socket.on('objectlist', function(data){
+    console.log("object list:");
+    console.log(data);
+  });
+
+  socket.on('objectupdate', function(data){
+    console.log("object update:");
+    console.log(data);
+
+    d = new Date();
+    socket.emit('lastclientupdate', { time: d.getTime() });
+  });
+
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script> 
