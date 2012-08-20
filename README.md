@@ -7,6 +7,7 @@ Go to the directory, then type:
 node basicserver.js
 
 then visit in your browser: http://localhost:59473/
+(59473 kind of spells space, right?)
 
 Notes:
 
