@@ -7,6 +7,7 @@ Go to the directory, then type:
 node basicserver.js
 
 then visit in your browser: http://localhost:59473/
+
 (59473 kind of spells space, right?)
 
 Notes:
@@ -17,8 +18,12 @@ Notes:
 
  - World step is currently at 1 second, mainly for testing at a human readable rate.
 
+Dependencies:
 
- Todo:
+  - Socket.io
+
+
+Todo:
 
   - Implement a transparent-as possible client->server RPC. Without client->server RPC, we can't really perform actions on the server. Without a simple enough RPC method with minimum of copy and paste code, development will suck.
 
