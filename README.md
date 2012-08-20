@@ -2,6 +2,12 @@ Beginnings of space game framework
 
 Working node.js game server with basic world step and transparent state sync using delta compression.
 
+Go to the directory, then type:
+
+node basicserver.js
+
+then visit in your browser: http://localhost:59473/
+
 Notes:
 
  - No HTML interface at all yet. All output is done through the consoles on the server & client. Open Chrome Developer Tools and go to console to see output.
