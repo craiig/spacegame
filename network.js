@@ -33,7 +33,7 @@ Network.prototype.onNewPlayer = function(player){ //event registered with socket
 	var that = this;
 
 	//setup an event dispatch so we can directly fire events on specific object instances
-	player.on("network_objevent", function(player, data){
+	player.on("network_objrpc", function(player, data){
 										var objid = data.objid;
 
 										if( objid >= that.objectList.length ){
@@ -125,7 +125,7 @@ Network.prototype.generateNetworkValue = function(val){
 	if( val !== null && typeof(val) == "object"){
 		
 		if(typeof(val.netid) == "number"){
-			newval = {netid : val.netid}; //just set the netid for the object
+			newval = {_netid_ptr : val.netid}; //just set the netid for the object
 		} else if (val instanceof Array){
 			//need to something recursive here...
 			newval = new Array();
@@ -190,9 +190,10 @@ Network.prototype.calcPartialUpdate = function(){
 				//}
 			}*/
 			var val = this.generateNetworkValue(syncobj.obj[prop]);
+			var jsonval = JSON.stringify(val);
 			//if(syncobj.syncedProps[prop] === undefined || syncobj.syncedProps[prop] != val){
 				//stringify added here to be able to compare arrays
-			if(syncobj.syncedProps[prop] === undefined || syncobj.syncedProps[prop] != JSON.stringify(val)){
+			if(syncobj.syncedProps[prop] === undefined || syncobj.syncedProps[prop] != jsonval){
 				//update if we haven't seen this prop before, or if it's not what we expected
 				//var val = this.generateNetworkValue(syncobj.obj[prop]);
 
@@ -202,7 +203,7 @@ Network.prototype.calcPartialUpdate = function(){
 
 				//copy property to our synced objects
 				//todo, be pickier about the objects that we stringify
-				syncobj.syncedProps[prop] = JSON.stringify(val);
+				syncobj.syncedProps[prop] = jsonval;
 			}
 		}
 

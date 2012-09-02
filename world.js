@@ -37,11 +37,20 @@ function World(io) {
 	this.shipList = new Array();
 	this.shipList.push( new Ship(this, "SHIP KING") );
 	this.shipList.push( new Ship(this, "SPACE KING") );
+	this.primaryShip = this.shipList[0];
+
+	//add a ship after 10 seconds - mostly to test object instatiation
+	/*var that = this;
+	setTimeout(function(){
+		that.shipList.push( new Ship(that, "UNEXPECTEDS SHEEIP")) ;
+		that.primaryShip = that.shipList[2];
+		console.log("new ship added");
+	}, 10000)*/
 }
 
 
 World.prototype.getSyncProps = function(){
-	return ['worldTime', 'shipList'];
+	return ['worldTime', 'shipList', 'primaryShip'];
 }
 
 //btw this is how you do inheritance - maybe? look up node.js inheritance

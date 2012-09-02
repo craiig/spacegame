@@ -10,7 +10,7 @@ function Ship(world, name){
 	this.accel_this_frame = 0;
 	this.rot = 0; //in degrees - 0 is up
 	this.world = world;
-	this.name = name; //"SHIP KING"; //lololol
+	this.name = name;
 
 	world.netchan.registerObject(this);
 
@@ -20,7 +20,7 @@ function Ship(world, name){
 	world.on("update", function(timeSlice){ that.update(timeSlice) })
 	world.on('newplayer', function(player){that.onNewPlayer(player) })
 
-	// setup per object RPC - this way a client can send messages to a particular instantiated object
+	// setup per object RPC - this way a client can send messages to a particular instantiated object by referencing it's netid
 	this.objectRPC = new events.EventEmitter();
 	this.objectRPC.on('attach_to_ship', function(player, data){
 		//console.log("ship object rpc");
@@ -86,7 +86,7 @@ Ship.prototype.clampRot = function(){
 	//rotate rotation
 	if(this.rot < 0){
 		this.rot += 360;
-	} else if(this.rot > 360){
+	} else if(this.rot >= 360){
 		this.rot -= 360;
 	}
 }
