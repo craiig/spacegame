@@ -16,38 +16,32 @@ console.log(__dirname);
 //gets list of all active objects from the Server
 //
 
-var app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app)
-  , fs = require('fs')
+var fs = require('fs')
+  , express = require('express')
+  , app = express()
+  , http = require('http')
+  //, server = require('http').createServer(app)
+  //, io = require('socket.io').listen(server)
 
-var network = require('./network.js')
+//var network = require('./network.js')
 var world = require('./world.js')
 
-app.listen(59473);
+//setup the app & socketio in this weird way thanks to express
+var server = http.createServer(app)
+var io = require('socket.io').listen(server)
 
-function handler (req, res) {
-	filename = __dirname + '/client/index.html';
-	fs.readFile(filename,
-		function (err, data) {
-			if (err) {
-				res.writeHead(500);
-				return res.end('Error loading ' + filename);
-			}
-
-			res.writeHead(200);
-			res.end(data);
-  		});
-}
+server.listen(59473);
+app.use(express.static(__dirname + '/client/'));
 
 //instantiate the world object - which includes a network channel
-var MainWorld = world.create();
+var MainWorld = new world(io);
 
 //connect socket.io to the world
-io.sockets.on('connection', function(socket) { MainWorld.newConnection(socket); } ); //gotta do it like this to keep context properly
+//io.sockets.on('connection', function(socket) { MainWorld.newConnection(socket); } ); //gotta do it like this to keep context properly
 //io.sockets.on('connection', MainWorld.netchan.onConnection);
 
 //setInterval(MainWorld.update, 33); //33 milliseconds = 30 fps, 16 ms = 60 fps
-setInterval(function(){ MainWorld.update(); }, 10000); //33 milliseconds = 30 fps, 16 ms = 60 fps
+//setInterval(function(){ MainWorld.update(); }, 10000); //33 milliseconds = 30 fps, 16 ms = 60 fps
 
 /*io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });

@@ -5,46 +5,40 @@
 // so we need to instantiate a network object and pass it back
 
 //init
-exports.create = function(world){
+exports = module.exports = Network;
+
+function Network(world) {
 	
 	//create a network object
 	//just import some of our functions below - better IMO than having a large list of nested functions
-	var obj = {
-		objectList: new Array(),
-		socketList: new Array(),
-		nextObjectID: 0,
-		registerObject: this.registerObject,
-		update: this.update,
-		calcPartialUpdate: this.calcPartialUpdate,
-		calcFullUpdate: this.calcFullUpdate,
-		onConnection: this.onConnection,
-		world : world
-	};
+	this.objectList =  new Array(),
+	this.socketList = new Array(),
+	this.io = world.io;
 
-	return obj;
+	var that = this
+	this.io.sockets.on('connection', function(socket){ that.onConnection(socket) });
 }
 
-exports.onConnection = function(socket){ //automatically registered with socket.io
+Network.prototype.onConnection = function(socket){ //event registered with socket.io
 	//new connection!
 	//add ref to socket somewhere
-	//add 
 	//
 	this.socketList.push(socket);
 
-	socket.on("lastclientupdate", function(data){
+	/*socket.on("lastclientupdate", function(data){
 		console.log("lastclientupdate");
 		console.log(data)
-	})
+	})*/
 
 	//socket.emit("objectlist", this.objectList);
 	fullUpdate = this.calcFullUpdate();
 	socket.emit("objectlist", fullUpdate);
 }
 
-exports.test = function(){
+Network.prototype.test = function(){
 	//test of networking code:
-	netChan = this.createNetwork();
-	netChan2 = this.createNetwork();
+	netChan = Network();
+	netChan2 = Network();
 	timer  = {curtime: 0};
 	timer.getSyncProps = function(){
 		return ['curtime'];
@@ -72,7 +66,7 @@ exports.test = function(){
 }
 
 //register an object to be synchronized between client/server
-exports.registerObject = function(obj){
+Network.prototype.registerObject = function(obj){
 	//add a new sync object to the list
 	if(obj.getSyncProps !== undefined){
 		o = { obj: obj, id: this.nextObjectID++, syncedProps: {} }
@@ -85,7 +79,7 @@ exports.registerObject = function(obj){
 }
 
 //called by the world
-exports.update = function(){
+Network.prototype.update = function(){
 	messages = this.calcPartialUpdate();
 
 	//send the message down all known sockets
@@ -97,7 +91,7 @@ exports.update = function(){
 	return messages;
 }
 
-exports.calcFullUpdate = function(){
+Network.prototype.calcFullUpdate = function(){
 	//iterate over objects and their registered properties to find all properties to send to a new client
 	var updateMsgs = [];
 
@@ -124,7 +118,7 @@ exports.calcFullUpdate = function(){
 	return updateMsgs;
 }
 
-exports.calcPartialUpdate = function(){
+Network.prototype.calcPartialUpdate = function(){
 	//iterate over objects and their registered properties to find changed properties since last time
 	var updateMsgs = [];
 
