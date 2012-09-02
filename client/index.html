@@ -1,79 +1,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="/network.js"></script>
+<script src="/world.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var lastPing = 0;
 
   //var socket = io.connect('http://192.168.1.105:59473');
   var socket = io.connect(location.hostname); //better way
+  var world = new World(socket);
+  var network = new Network(world);
 
   //send a network obj
   socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
-
-  var WorldData = {}
-
-  var resolveNetIDs = function(obj){
-    //for each property of this object, check it for netid, if so, reference the net id in the world
-    //results in reference based structure
-    for(var prop in obj){
-      var pobj = obj[prop]
-      if(pobj._netid_ptr !== undefined){
-        //console.log(obj[prop])
-        obj[prop] = WorldData[pobj._netid_ptr];
-        //console.log(obj[prop])
-      } else if(typeof(pobj) == "object" && pobj !== null){
-        //console.log("rni: "+prop)
-        //console.log(pobj)
-        resolveNetIDs(pobj);
-      } 
-    }
-  }
-
-  socket.on('objectlist', function(data){ //called on the first object push
-    //console.log("object list:");
-    //console.log(data);
-    for(d in data){
-      //console.log(data[d])
-      WorldData[data[d].netid] = data[d].data
-    }
-    //console.log(WorldData)
-    //resolve any netid pointers
-    for(d in WorldData){
-      resolveNetIDs(WorldData[d])
-    }
-    //WorldData[0].primaryShip.x = 100; //tests the references
-    //console.log(WorldData)
-  });
-
-  socket.on('objectupdate', function(data){ //called on the subsequent object push
-    //console.log("object update");
-    //console.log(data);
-
-    //send ping back immediately so we can kind of measure how long this update takes
-    d = new Date();
-    lastPing = d.getTime()
-    socket.emit('ping', { time: lastPing });
-
-    //update loop
-    for(d in data){
-      //WorldData[data[d].netid] = data[d].data
-      var netid = data[d].netid
-      if(WorldData[netid] === undefined){ //new object received
-        WorldData[netid] = data[d].data;
-      } else {
-        //update to existing object
-        var obj = data[d].data;
-        for(prop in obj){
-          WorldData[netid][prop] = obj[prop];
-          console.log("updating prop: "+prop+" = "+obj[prop])
-        }
-      }
-    }
-
-    //fix up any pointers
-    for(d in WorldData){
-      resolveNetIDs(WorldData[d])
-    }
-  });
 
   $(document).ready( function(){ //fire when the document dom is ready
       socket.on('ping', function(data){
