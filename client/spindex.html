@@ -7,27 +7,26 @@
   var socket = io.connect(location.hostname); //better way
   var worldObjects = Array();
 
-console.log('hello1!');
-
   socket.on('objectlist', function(data){ //called on the first object push
     console.log("object list:");
-    console.log(data);
+    //console.log(data);
     for (x in data){
+        if (worldObjects.indexOf(x.))
         worldObjects.push(x);
     }
   });
 
-  
-
-  $(document).ready( function(){ //fire when the document dom is ready
-    socket.on('objectupdate', function(data){ //called on the subsequent object push
+  socket.on('objectupdate', function(data){ //called on the subsequent object push
       console.log("object update");
-      console.log(data);
-
+      
       for (x in data) {
+        console.log(x.name + x);
         worldObjects[worldObjects.indexOf(x)]=x;
       }
     });
+
+  $(document).ready( function(){ //fire when the document dom is ready
+    
     for (x in worldObjects){
       console.log(x);
     };
