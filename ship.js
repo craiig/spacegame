@@ -2,7 +2,7 @@ var events = require("events")
 
 exports = module.exports = Ship;
 
-function Ship(world){
+function Ship(world, name){
 	this.x = 0;
 	this.y = 0;
 	this.accel = 1;
@@ -10,7 +10,7 @@ function Ship(world){
 	this.accel_this_frame = 0;
 	this.rot = 0; //in degrees - 0 is up
 	this.world = world;
-	this.name = "SHIP KING"; //lololol
+	this.name = name; //"SHIP KING"; //lololol
 
 	world.netchan.registerObject(this);
 

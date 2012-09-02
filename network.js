@@ -35,17 +35,19 @@ Network.prototype.onNewPlayer = function(player){ //event registered with socket
 	//setup an event dispatch so we can directly fire events on specific object instances
 	player.on("network_objevent", function(player, data){
 										var objid = data.objid;
+
+										if( objid >= that.objectList.length ){
+											console.log("bad object id call, objid:"+objid);
+											return;
+										}
+
 										var object = that.objectList[objid].obj
 
-										if( objid < that.objectList.length ){
-											if(object.objectRPC instanceof events.EventEmitter){
-												object.objectRPC.emit(data.eventname, player, data.eventdata);
-												//console.log("calling objectRPC.emit: "+data.eventname+" "+)
-											} else {
-												console.log("no objectRPC on objid: "+objid)
-											}
+										if(object.objectRPC instanceof events.EventEmitter){
+											object.objectRPC.emit(data.eventname, player, data.eventdata);
+											//console.log("calling objectRPC.emit: "+data.eventname+" "+)
 										} else {
-											console.log("bad object id call, objid:"+objid);
+											console.log("no objectRPC on objid: "+objid)
 										}
 									})
 
@@ -116,6 +118,27 @@ Network.prototype.update = function(){
 	return messages;
 }
 
+//transfers a given value into one suitable to be passed across the network
+Network.prototype.generateNetworkValue = function(val){
+	var newval = val;
+
+	if( val !== null && typeof(val) == "object"){
+		
+		if(typeof(val.netid) == "number"){
+			newval = {netid : val.netid}; //just set the netid for the object
+		} else if (val instanceof Array){
+			//need to something recursive here...
+			newval = new Array();
+			for(var i=0; i<val.length; i++){
+				newval.push(this.generateNetworkValue(val[i]));
+				
+			}
+		}
+	}
+	//console.log("GNV returning: "+newval)
+	return newval;
+}
+
 Network.prototype.calcFullUpdate = function(){
 	//iterate over objects and their registered properties to find all properties to send to a new client
 	var updateMsgs = [];
@@ -131,16 +154,8 @@ Network.prototype.calcFullUpdate = function(){
 
 		for (var j = 0; j < syncprops.length; j++) {
 			var prop = syncprops[j];
-			var val = syncobj.obj[prop];
-
-			if( val !== null && typeof(val) == "object"){
-				
-				if(typeof(val.netid) == "number"){
-					val = val.netid; //just set the netid for the object
-				} else if (val instanceof Array){
-					//need to something recursive here...
-				}
-			}
+			var val = this.generateNetworkValue(syncobj.obj[prop]);
+			
 			//add property to outgoing buffer
 			msg[prop] = val;
 		}
@@ -174,17 +189,20 @@ Network.prototype.calcPartialUpdate = function(){
 					cur_propval = curpropval.network_id;
 				//}
 			}*/
-
-			if(syncobj.syncedProps[prop] === undefined || syncobj.syncedProps[prop] != syncobj.obj[prop]){
+			var val = this.generateNetworkValue(syncobj.obj[prop]);
+			//if(syncobj.syncedProps[prop] === undefined || syncobj.syncedProps[prop] != val){
+				//stringify added here to be able to compare arrays
+			if(syncobj.syncedProps[prop] === undefined || syncobj.syncedProps[prop] != JSON.stringify(val)){
 				//update if we haven't seen this prop before, or if it's not what we expected
-				var val = syncobj.obj[prop];	
+				//var val = this.generateNetworkValue(syncobj.obj[prop]);
 
 				//add property to outgoing buffer
 				msg[prop] = val;
 				msgUpdated = 1;
 
 				//copy property to our synced objects
-				syncobj.syncedProps[prop] = val;
+				//todo, be pickier about the objects that we stringify
+				syncobj.syncedProps[prop] = JSON.stringify(val);
 			}
 		}
 
