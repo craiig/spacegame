@@ -1,5 +1,6 @@
 
 //basic area model
+var network = require('./spaceMath.js')
 
 exports = module.exports = area;
 
