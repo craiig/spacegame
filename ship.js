@@ -1,3 +1,5 @@
+var events = require("events")
+
 exports = module.exports = Ship;
 
 function Ship(world){
@@ -14,9 +16,11 @@ function Ship(world){
 
 	//do stupid hack for callbacks
 	var that = this;
-	//register world update
+	//register world update and new player notification
 	world.on("update", function(timeSlice){ that.update(timeSlice) })
 	world.on('newplayer', function(player){that.onNewPlayer(player) })
+
+	this.objectRPC = new events.EventEmitter();
 
 	//register ship client messages
 	//all connections can control this ship
@@ -27,11 +31,10 @@ function Ship(world){
 //called when a new player joins a game, we register to see their messages
 Ship.prototype.onNewPlayer = function(player){
 	var that = this;
-	console.log("newplayer fired");
 
-	player.on('attach_to_ship', function(player, data){ 
+	this.objectRPC.on('attach_to_ship', function(player, data){
+		//console.log("ship object rpc");
 		//attach player
-		console.log("player attached to ship")
 		player.on('ship_accelerate_down', function(player, data){ that.accel_down(player, data) });
 		player.on('ship_accelerate_up', function(player, data){ that.accel_up(player, data) });
 		player.on('ship_accelerate_left', function(player, data){ that.accel_left(player, data) });
@@ -68,13 +71,13 @@ Ship.prototype.accel_up = function(player, data){
 }
 
 Ship.prototype.accel_left = function(player, data){
-	console.log("left")
+	//console.log("left")
 	this.rot -= 5;
 	this.clampRot();
 }
 
 Ship.prototype.accel_right = function(player, data){
-	console.log("right")
+	//console.log("right")
 	this.rot += 5;
 	this.clampRot();
 }

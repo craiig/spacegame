@@ -4,6 +4,8 @@
 // one network module per world
 // so we need to instantiate a network object and pass it back
 
+var events = require('events')
+
 //init
 exports = module.exports = Network;
 
@@ -17,14 +19,35 @@ function Network(world) {
 	this.io = world.io;
 
 	var that = this
-	this.io.sockets.on('connection', function(socket){ that.onConnection(socket) });
+	//this.io.sockets.on('connection', function(socket){ that.onConnection(socket) });
+	world.on('newplayer', function(player){that.onNewPlayer(player) })
 }
 
-Network.prototype.onConnection = function(socket){ //event registered with socket.io
+Network.prototype.onNewPlayer = function(player){ //event registered with socket.io
 	//new connection!
 	//add ref to socket somewhere
 	//
+	var socket = player.socket
 	this.socketList.push(socket);
+
+	var that = this;
+
+	//setup an event dispatch so we can directly fire events on specific object instances
+	player.on("network_objevent", function(player, data){
+										var objid = data.objid;
+										var object = that.objectList[objid].obj
+
+										if( objid < that.objectList.length ){
+											if(object.objectRPC instanceof events.EventEmitter){
+												object.objectRPC.emit(data.eventname, player, data.eventdata);
+												//console.log("calling objectRPC.emit: "+data.eventname+" "+)
+											} else {
+												console.log("no objectRPC on objid: "+objid)
+											}
+										} else {
+											console.log("bad object id call, objid:"+objid);
+										}
+									})
 
 	/*socket.on("lastclientupdate", function(data){
 		console.log("lastclientupdate");
