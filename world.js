@@ -62,9 +62,11 @@ World.prototype.update = function(){
 	var newTime = (new Date()).getTime()
 	var timeDiff = newTime - this.lastUpdate;
 	this.lastUpdate = newTime;
-	console.log("world update timeDiff: "+ timeDiff);
 
-	this.emit("update", timeDiff);
+	var sTimeDiff = timeDiff / 1000; //convert to seconds
+	console.log("world update timeDiff: "+ timeDiff + " sTimeDiff:" + timeDiff / 1000);
+
+	this.emit("update", sTimeDiff);
 
 	//update our network channel
 	this.netchan.update();

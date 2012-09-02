@@ -33,14 +33,16 @@
 $(document).bind('keydown', function(e){
   if(e.which == 38){
     //up key
-    socket.emit('ship_accelerate_down', "0")
-    console.log("down")
+    socket.emit('ship_accelerate_down');
+    //console.log("down")
   } else if(e.which == 40){
     //down key
   } else if(e.which == 37){
     //left
+    socket.emit('ship_accelerate_left');
   } else if(e.which == 39){
     //right
+    socket.emit('ship_accelerate_right');
   }
   console.log(e.which);
 })
@@ -49,7 +51,7 @@ $(document).bind('keyup', function(e){
   if(e.which == 38){
     //up key
     socket.emit('ship_accelerate_up', "0")
-    console.log("up")
+    //console.log("up")
   } else if(e.which == 40){
     //down key
   } else if(e.which == 37){
@@ -57,7 +59,7 @@ $(document).bind('keyup', function(e){
   } else if(e.which == 39){
     //right
   }
-  console.log(e.which);
+  //console.log(e.which);
 })
 
 </script> 
