@@ -37,7 +37,7 @@ area.prototype.calcGrav = function(coords) {
 	//calc the grav contributions from all the objects in the solar system
 	var vec = {0,0};
 	for (grav in this.gravitatingObjects) {
-		vec = sm.vectorAdd(vec,grav.calcGrav(coords)); // need to vector add this as it has direction and magnitude
+		vec = sm.vectorAdd(vec,allObjects[grav].calcGrav(coords)); // need to vector add this as it has direction and magnitude
 	}
 	return vec;
 }
@@ -48,7 +48,7 @@ area.prototype.calcRad = function(coords) {
 	//radiation does not have direction, only magnitude (lol)
 	var power = 0;
 	for (rad in this.radiatingObjects) {
-		power += rad.calcRad(coords);
+		power += allObjects[rad].calcRad(coords);
 	}
 	return power;
 }
