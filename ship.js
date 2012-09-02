@@ -6,7 +6,7 @@ function Ship(world){
 	this.accel = 1;
 	this.rot = 0; //in degrees - 0 is up
 	this.world = world;
-	this.name = "SHIP KING"
+	this.name = "SHIP KING"; //lololol
 
 	world.netchan.registerObject(this);
 

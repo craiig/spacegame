@@ -5,12 +5,12 @@
 
   var socket = io.connect('http://localhost');
 
-  socket.on('objectlist', function(data){
+  socket.on('objectlist', function(data){ //called on the first object push
     console.log("object list:");
     console.log(data);
   });
 
-  socket.on('objectupdate', function(data){
+  socket.on('objectupdate', function(data){ //called on the subsequent object push
     console.log("object update");
     //console.log(data);
 
@@ -19,7 +19,7 @@
     socket.emit('ping', { time: lastPing });
   });
 
-  $(document).ready( function(){
+  $(document).ready( function(){ //fire when the document dom is ready
       socket.on('ping', function(data){
         //console.log("ping response:");
         //console.log(data);
@@ -29,7 +29,12 @@
       })
   })
 
+//setup a keypress handler
+$(document).bind('keydown', function(e){
+  console.log(e.which;
+})
+
 </script> 
 
-
 Ping: <span id="ping">xx</span> ms
+
