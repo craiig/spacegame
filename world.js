@@ -54,7 +54,6 @@ World.prototype.newConnection = function(socket){
 
 	player = new Player(this, socket);
 	this.playerList.push(player);
-
 	this.emit("newplayer", player);
 
 	//setup any other notifications
