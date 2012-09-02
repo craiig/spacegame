@@ -31,7 +31,33 @@
 
 //setup a keypress handler
 $(document).bind('keydown', function(e){
-  console.log(e.which;
+  if(e.which == 38){
+    //up key
+    socket.emit('ship_accelerate_down', "0")
+    console.log("down")
+  } else if(e.which == 40){
+    //down key
+  } else if(e.which == 37){
+    //left
+  } else if(e.which == 39){
+    //right
+  }
+  console.log(e.which);
+})
+
+$(document).bind('keyup', function(e){
+  if(e.which == 38){
+    //up key
+    socket.emit('ship_accelerate_up', "0")
+    console.log("up")
+  } else if(e.which == 40){
+    //down key
+  } else if(e.which == 37){
+    //left
+  } else if(e.which == 39){
+    //right
+  }
+  console.log(e.which);
 })
 
 </script> 
