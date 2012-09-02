@@ -16,19 +16,26 @@ function Ship(world){
 	var that = this;
 	//register world update
 	world.on("update", function(timeSlice){ that.update(timeSlice) })
+	world.on('newplayer', function(player){that.onNewPlayer(player) })
 
 	//register ship client messages
 	//all connections can control this ship
-	var io = world.io;
-	io.sockets.on('connection', function(socket){ that.onConnection(socket) })
+	//var io = world.io;
+	//io.sockets.on('connection', function(socket){ that.onConnection(socket) })
 }
 
-Ship.prototype.onConnection = function(socket){
+//called when a new player joins a game, we register to see their messages
+Ship.prototype.onNewPlayer = function(player){
 	var that = this;
-	socket.on('ship_accelerate_down', function(player, data){ that.accel_down(player, data) });
-	socket.on('ship_accelerate_up', function(player, data){ that.accel_up(player, data) });
-	socket.on('ship_accelerate_left', function(player, data){ that.accel_left(player, data) });
-	socket.on('ship_accelerate_right', function(player, data){ that.accel_right(player, data) });
+	console.log("newplayer fired");
+
+	player.on('attach_to_ship', function(player, data){ 
+		//attach player to 
+		player.on('ship_accelerate_down', function(player, data){ that.accel_down(player, data) });
+		player.on('ship_accelerate_up', function(player, data){ that.accel_up(player, data) });
+		player.on('ship_accelerate_left', function(player, data){ that.accel_left(player, data) });
+		player.on('ship_accelerate_right', function(player, data){ that.accel_right(player, data) });
+	})
 }
 
 Ship.prototype.getSyncProps = function(){
@@ -50,22 +57,22 @@ Ship.prototype.update = function(timeSlice){
 	this.accel_this_frame = 0;
 }
 
-Ship.prototype.accel_down = function(data){
+Ship.prototype.accel_down = function(player, data){
 	this.accel_on = 1
 	this.accel_this_frame = 1
 }
 
-Ship.prototype.accel_up = function(data){
+Ship.prototype.accel_up = function(player, data){
 	this.accel_on = 0;
 }
 
-Ship.prototype.accel_left = function(data){
+Ship.prototype.accel_left = function(player, data){
 	console.log("left")
 	this.rot -= 5;
 	this.clampRot();
 }
 
-Ship.prototype.accel_right = function(data){
+Ship.prototype.accel_right = function(player, data){
 	console.log("right")
 	this.rot += 5;
 	this.clampRot();

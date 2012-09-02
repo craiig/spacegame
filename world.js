@@ -8,6 +8,7 @@
 
 var network = require('./network.js')
 var Ship = require('./ship.js')
+var Player = require("./player.js")
 var events = require('events')
 
 exports = module.exports = World;
@@ -17,6 +18,7 @@ function World(io) {
 	this.clients = 0;
 	this.io = io;
 	this.lastUpdate = (new Date()).getTime(); //last update time
+	this.playerList = new Array();
 
 	this.netchan = new network(this);
 	this.netchan.registerObject(this);
@@ -31,7 +33,7 @@ function World(io) {
 
 	//setup - 
 	//build a ship
-	this.shipList =  new Array();
+	this.shipList = new Array();
 	this.shipList.push( new Ship(this) );
 }
 
@@ -49,6 +51,11 @@ World.prototype.newConnection = function(socket){
 	//netchan takes care of talking to clients
 	//console.log('netchan: ' + this);
 	this.clients++;
+
+	player = new Player(this, socket);
+	this.playerList.push(player);
+
+	this.emit("newplayer", player);
 
 	//setup any other notifications
 	var that = this;
