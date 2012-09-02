@@ -21,13 +21,14 @@ function World(io) {
 	
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
-	//setInterval( function(){that.update()}, 10000); //33 milliseconds = 30 fps, 16 ms = 60 fps
-	setInterval( function(){that.update()}, 16);
+	setInterval( function(){that.update()}, 10000); //33 milliseconds = 30 fps, 16 ms = 60 fps
+	//setInterval( function(){that.update()}, 16); //60 fps
 
 	io.sockets.on('connection', function(socket){ that.newConnection(socket) });
 
 	//setup - 
-		
+	//build a ship
+	this.shipList = [];
 }
 
 //btw this is how you do inheritance - maybe? look up node.js inheritance

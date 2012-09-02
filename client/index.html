@@ -24,7 +24,7 @@
         //console.log("ping response:");
         //console.log(data);
         $("#ping").html(data.time - lastPing);
-        //console.log("lastPing: " + lastPing + "thisPing: " + data.time)
+        console.log("lastPing: " + lastPing + "thisPing: " + data.time)
         lastPing = data.time;
       })
   })
