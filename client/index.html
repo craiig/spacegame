@@ -6,6 +6,8 @@
   //var socket = io.connect('http://192.168.1.105:59473');
   var socket = io.connect(document.URL); //better way
 
+  socket.emit("attach_to_ship");
+
   socket.on('objectlist', function(data){ //called on the first object push
     console.log("object list:");
     console.log(data);

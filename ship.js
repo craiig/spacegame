@@ -30,7 +30,8 @@ Ship.prototype.onNewPlayer = function(player){
 	console.log("newplayer fired");
 
 	player.on('attach_to_ship', function(player, data){ 
-		//attach player to 
+		//attach player
+		console.log("player attached to ship")
 		player.on('ship_accelerate_down', function(player, data){ that.accel_down(player, data) });
 		player.on('ship_accelerate_up', function(player, data){ that.accel_up(player, data) });
 		player.on('ship_accelerate_left', function(player, data){ that.accel_left(player, data) });
