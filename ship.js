@@ -20,7 +20,16 @@ function Ship(world){
 	world.on("update", function(timeSlice){ that.update(timeSlice) })
 	world.on('newplayer', function(player){that.onNewPlayer(player) })
 
+	// setup per object RPC - this way a client can send messages to a particular instantiated object
 	this.objectRPC = new events.EventEmitter();
+	this.objectRPC.on('attach_to_ship', function(player, data){
+		//console.log("ship object rpc");
+		//attach player
+		player.on('ship_accelerate_down', function(player, data){ that.accel_down(player, data) });
+		player.on('ship_accelerate_up', function(player, data){ that.accel_up(player, data) });
+		player.on('ship_accelerate_left', function(player, data){ that.accel_left(player, data) });
+		player.on('ship_accelerate_right', function(player, data){ that.accel_right(player, data) });
+	})
 
 	//register ship client messages
 	//all connections can control this ship
@@ -30,16 +39,7 @@ function Ship(world){
 
 //called when a new player joins a game, we register to see their messages
 Ship.prototype.onNewPlayer = function(player){
-	var that = this;
-
-	this.objectRPC.on('attach_to_ship', function(player, data){
-		//console.log("ship object rpc");
-		//attach player
-		player.on('ship_accelerate_down', function(player, data){ that.accel_down(player, data) });
-		player.on('ship_accelerate_up', function(player, data){ that.accel_up(player, data) });
-		player.on('ship_accelerate_left', function(player, data){ that.accel_left(player, data) });
-		player.on('ship_accelerate_right', function(player, data){ that.accel_right(player, data) });
-	})
+	
 }
 
 Ship.prototype.getSyncProps = function(){

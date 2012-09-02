@@ -94,6 +94,7 @@ Network.prototype.registerObject = function(obj){
 	//add a new sync object to the list
 	if(obj.getSyncProps !== undefined){
 		o = { obj: obj, id: this.nextObjectID++, syncedProps: {} }
+		obj.netid = o.id;
 
 		this.objectList.push( o );
 	} else {
@@ -120,7 +121,7 @@ Network.prototype.calcFullUpdate = function(){
 	var updateMsgs = [];
 
 
-	for (var i = this.objectList.length - 1; i >= 0; i--) {
+	for (var i = 0; i < this.objectList.length ; i++) {
 		var syncobj = this.objectList[i];
 
 		var syncprops = syncobj.obj.getSyncProps(); //returns name of properties to sync, assured to be here by register
@@ -128,9 +129,18 @@ Network.prototype.calcFullUpdate = function(){
 		var msg = {}
 		var msgUpdated = 0;
 
-		for (var j = syncprops.length - 1; j >= 0; j--) {
+		for (var j = 0; j < syncprops.length; j++) {
 			var prop = syncprops[j];
 			var val = syncobj.obj[prop];
+
+			if( val !== null && typeof(val) == "object"){
+				
+				if(typeof(val.netid) == "number"){
+					val = val.netid; //just set the netid for the object
+				} else if (val instanceof Array){
+					//need to something recursive here...
+				}
+			}
 			//add property to outgoing buffer
 			msg[prop] = val;
 		}
@@ -155,10 +165,10 @@ Network.prototype.calcPartialUpdate = function(){
 		var msg = {}
 		var msgUpdated = 0;
 
-		for (var j = syncprops.length - 1; j >= 0; j--) {
+		for (var j = 0; j < syncprops.length; j++) {
 			var prop = syncprops[j];
 
-			/*var cur_propval = syncobj.obj[prop];
+			/*
 			if(cur_propval !== null && typeof(cur_propval) == "object"){
 				//if(cur_propval.network_id !== undefined){
 					cur_propval = curpropval.network_id;
@@ -167,8 +177,8 @@ Network.prototype.calcPartialUpdate = function(){
 
 			if(syncobj.syncedProps[prop] === undefined || syncobj.syncedProps[prop] != syncobj.obj[prop]){
 				//update if we haven't seen this prop before, or if it's not what we expected
+				var val = syncobj.obj[prop];	
 
-				var val = syncobj.obj[prop];
 				//add property to outgoing buffer
 				msg[prop] = val;
 				msgUpdated = 1;

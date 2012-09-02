@@ -33,13 +33,14 @@ function World(io) {
 
 	//setup - 
 	//build a ship
-	this.shipList = new Array();
-	this.shipList.push( new Ship(this) );
+	this.theShip = new Ship(this);
+	//this.shipList = new Array();
+	//this.shipList.push( new Ship(this) );
 }
 
 
 World.prototype.getSyncProps = function(){
-	return ['worldTime'];
+	return ['worldTime', 'theShip'];
 }
 
 //btw this is how you do inheritance - maybe? look up node.js inheritance
