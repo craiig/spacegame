@@ -35,6 +35,11 @@ function World(io) {
 	this.shipList.push( new Ship(this) );
 }
 
+
+World.prototype.getSyncProps = function(){
+	return ['worldTime'];
+}
+
 //btw this is how you do inheritance - maybe? look up node.js inheritance
 //World.prototype.__proto__ = somother prototype object, i.e.: Object.prototype
 //this lets us emit events
@@ -70,8 +75,4 @@ World.prototype.update = function(){
 
 	//update our network channel
 	this.netchan.update();
-}
-
-World.prototype.getSyncProps = function(){
-	return ['worldTime', 'lastClientTime'];
 }

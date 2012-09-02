@@ -18,16 +18,17 @@ function Ship(world){
 	world.on("update", function(timeSlice){ that.update(timeSlice) })
 
 	//register ship client messages
+	//all connections can control this ship
 	var io = world.io;
 	io.sockets.on('connection', function(socket){ that.onConnection(socket) })
 }
 
 Ship.prototype.onConnection = function(socket){
 	var that = this;
-	socket.on('ship_accelerate_down', function(data){ that.accel_down(data) });
-	socket.on('ship_accelerate_up', function(data){ that.accel_up(data) });
-	socket.on('ship_accelerate_left', function(data){ that.accel_left(data) });
-	socket.on('ship_accelerate_right', function(data){ that.accel_right(data) });
+	socket.on('ship_accelerate_down', function(player, data){ that.accel_down(player, data) });
+	socket.on('ship_accelerate_up', function(player, data){ that.accel_up(player, data) });
+	socket.on('ship_accelerate_left', function(player, data){ that.accel_left(player, data) });
+	socket.on('ship_accelerate_right', function(player, data){ that.accel_right(player, data) });
 }
 
 Ship.prototype.getSyncProps = function(){
@@ -40,7 +41,7 @@ Ship.prototype.update = function(timeSlice){
 		var deltax = Math.sin(Math.PI * this.rot / 180) * this.accel * timeSlice;
 		var deltay = Math.cos(Math.PI * this.rot / 180) * this.accel * timeSlice; //cos 0 = 1, so 0 is degree that is up
 
-		console.log("applying acceleration Math.sin(rot): " + Math.sin(this.rot) + " accel: " + this.accel + " timeSlice: " + timeSlice);
+		//console.log("applying acceleration Math.sin(rot): " + Math.sin(this.rot) + " accel: " + this.accel + " timeSlice: " + timeSlice);
 		//console.log("applying acceleration dx: " + deltax + " dy:" + deltay);
 
 		this.x += deltax;
@@ -59,11 +60,13 @@ Ship.prototype.accel_up = function(data){
 }
 
 Ship.prototype.accel_left = function(data){
+	console.log("left")
 	this.rot -= 5;
 	this.clampRot();
 }
 
 Ship.prototype.accel_right = function(data){
+	console.log("right")
 	this.rot += 5;
 	this.clampRot();
 }

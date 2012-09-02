@@ -3,7 +3,8 @@
 <script>
   var lastPing = 0;
 
-  var socket = io.connect('http://localhost');
+  //var socket = io.connect('http://192.168.1.105:59473');
+  var socket = io.connect(document.URL); //better way
 
   socket.on('objectlist', function(data){ //called on the first object push
     console.log("object list:");
@@ -12,7 +13,7 @@
 
   socket.on('objectupdate', function(data){ //called on the subsequent object push
     console.log("object update");
-    //console.log(data);
+    console.log(data);
 
     d = new Date();
     lastPing = d.getTime()
@@ -34,7 +35,7 @@ $(document).bind('keydown', function(e){
   if(e.which == 38){
     //up key
     socket.emit('ship_accelerate_down');
-    console.log("down")
+    //console.log("down")
   } else if(e.which == 40){
     //down key
   } else if(e.which == 37){
@@ -44,14 +45,14 @@ $(document).bind('keydown', function(e){
     //right
     socket.emit('ship_accelerate_right');
   }
-  console.log(e.which);
+  //console.log(e.which);
 })
 
 $(document).bind('keyup', function(e){
   if(e.which == 38){
     //up key
     socket.emit('ship_accelerate_up', "0")
-    console.log("up")
+    //console.log("up")
   } else if(e.which == 40){
     //down key
   } else if(e.which == 37){
