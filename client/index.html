@@ -8,7 +8,6 @@
   //var socket = io.connect('http://192.168.1.105:59473');
   var socket = io.connect(location.hostname); //better way
   var world = new World(socket);
-  var network = new Network(world);
 
   //send a network obj
   socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
