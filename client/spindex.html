@@ -10,9 +10,19 @@
   socket.on('objectlist', function(data){ //called on the first object push
     console.log("object list:");
     //console.log(data);
+
+    //loop through all the messages in this update
     for (x in data){
-        if (worldObjects.indexOf(x.))
-        worldObjects.push(x);
+        //check to see if this object has been added to world objects yet
+        if (worldObjects.indexOf(x.netid)==-1) {
+          worldObjects.push(x.netid);
+        }
+        //loop through all of the updated properties and assign to worldObject
+        for (prop in x.data) {
+          x=worldObjects[worldObjects.indexOf(x.netid)]
+          x[prop[0]]=prop[1];
+          worldObjects[worldObjects.indexOf(x.netid)]=x;
+        }
     }
   });
 
