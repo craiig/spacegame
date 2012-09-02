@@ -4,7 +4,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var lastPing = 0;
-  var socket = io.connect(document.URL); //better way
+  var socket = io.connect(location.hostname); //better way
   var worldObjects = Array();
 
 console.log('hello1!');

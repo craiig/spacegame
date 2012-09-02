@@ -4,7 +4,7 @@
   var lastPing = 0;
 
   //var socket = io.connect('http://192.168.1.105:59473');
-  var socket = io.connect(document.URL); //better way
+  var socket = io.connect(location.hostname); //better way
 
   //socket.emit("attach_to_ship");
   socket.emit("network_objevent", {objid:1,eventname:'attach_to_ship'});
