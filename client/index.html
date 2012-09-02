@@ -34,7 +34,7 @@ $(document).bind('keydown', function(e){
   if(e.which == 38){
     //up key
     socket.emit('ship_accelerate_down');
-    //console.log("down")
+    console.log("down")
   } else if(e.which == 40){
     //down key
   } else if(e.which == 37){
@@ -51,7 +51,7 @@ $(document).bind('keyup', function(e){
   if(e.which == 38){
     //up key
     socket.emit('ship_accelerate_up', "0")
-    //console.log("up")
+    console.log("up")
   } else if(e.which == 40){
     //down key
   } else if(e.which == 37){

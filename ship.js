@@ -4,6 +4,7 @@ function Ship(world){
 	this.x = 0;
 	this.y = 0;
 	this.accel = 1;
+	this.accel_on = 0;
 	this.accel_this_frame = 0;
 	this.rot = 0; //in degrees - 0 is up
 	this.world = world;
@@ -35,7 +36,7 @@ Ship.prototype.getSyncProps = function(){
 
 Ship.prototype.update = function(timeSlice){
 	//apply acceleration
-	if(this.accel_this_frame){
+	if(this.accel_this_frame || this.accel_on){
 		var deltax = Math.sin(Math.PI * this.rot / 180) * this.accel * timeSlice;
 		var deltay = Math.cos(Math.PI * this.rot / 180) * this.accel * timeSlice; //cos 0 = 1, so 0 is degree that is up
 
@@ -49,11 +50,12 @@ Ship.prototype.update = function(timeSlice){
 }
 
 Ship.prototype.accel_down = function(data){
+	this.accel_on = 1
 	this.accel_this_frame = 1
 }
 
 Ship.prototype.accel_up = function(data){
-	//this.accel_on = 0;
+	this.accel_on = 0;
 }
 
 Ship.prototype.accel_left = function(data){
