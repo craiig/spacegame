@@ -13,10 +13,10 @@
   //example: send a network obj rpc for testing
   world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
 
-//send ping back immediately since we'll block processing and we can use it to measure how long this takes
+  //send ping back immediately since we'll block processing and we can use it to measure how long this takes
   this.world.socket.emit('ping', { time: (new Date()).getTime() });
 
-//setup simple ping function
+  //setup simple ping function
   $(document).ready( function(){ //fire when the document dom is ready
       socket.on('ping', function(data){
         //console.log("ping response:");
@@ -65,5 +65,9 @@ $(document).bind('keyup', function(e){
 </script> 
 
 Ping: <span id="ping">xx</span> ms
-
+<br/>
+<br/>
 Ships: <ul id="shiplist"></ul>
+<br/>
+<br/>
+Players: <ul id="playerlist"></ul>
