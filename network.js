@@ -13,7 +13,7 @@ function Network(world) {
 	
 	//create a network object
 	//just import some of our functions below - better IMO than having a large list of nested functions
-	this.objectList =  new Array(),
+	this.objectList = new Array(),
 	this.socketList = new Array(),
 	this.nextObjectID = 0;
 	this.io = world.io;

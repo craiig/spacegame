@@ -73,7 +73,11 @@ World.prototype.newConnection = function(socket){
 		socket.emit("ping", data);
 	})
 
-	socket.on('disconnect', function(socket){ that.clients--; })
+	socket.on('disconnect', function(socket){ that.onDisconnect(socket) })
+}
+
+World.prototype.onDisconnect = function(socket) {
+	this.clients--;
 }
 
 World.prototype.update = function(){

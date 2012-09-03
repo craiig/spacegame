@@ -16,12 +16,13 @@ function Ship(world, name){
 
 	//do stupid hack for callbacks
 	var that = this;
+
 	//register world update and new player notification
 	world.on("update", function(timeSlice){ that.update(timeSlice) })
-	world.on('newplayer', function(player){that.onNewPlayer(player) })
+	world.on('newplayer', function(player){ that.onNewPlayer(player) })
 
 	// setup per object RPC - this way a client can send messages to a particular instantiated object by referencing it's netid
-	this.objectRPC = new events.EventEmitter();
+	this.objectRPC = new events.EventEmitter();	
 	this.objectRPC.on('attach_to_ship', function(player, data){
 		//console.log("ship object rpc");
 		//attach player
@@ -55,7 +56,7 @@ Ship.prototype.update = function(timeSlice){
 		//console.log("applying acceleration Math.sin(rot): " + Math.sin(this.rot) + " accel: " + this.accel + " timeSlice: " + timeSlice);
 		//console.log("applying acceleration dx: " + deltax + " dy:" + deltay);
 
-		this.x += deltax;
+		this.x = this.x + deltax;
 		this.y += deltay;
 	}
 	this.accel_this_frame = 0;

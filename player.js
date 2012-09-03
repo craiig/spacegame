@@ -6,11 +6,11 @@ var events = require("events")
 
 exports = module.exports = Player;
 
-var playerCount;
+var playerCount = 0;
 
 function Player(world, socket){
 	this.socket = socket;
-	this.name = "space derp "+playerCount;
+	this.name = "space derp "+playerCount++;
 
 	world.netchan.registerObject(this);
 
