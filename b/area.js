@@ -1,28 +1,29 @@
 
-//basic area model
+//basic physicalArea model
 var SpaceMath = require('./spaceMath.js');
-var GameObject = require('./gameObject.js');
+var physicalObject = require('./physicalObject.js');
 var PlayerShip = require('./playerShip.js');
 
-exports = module.exports = area;
+exports = module.exports = physicalArea;
 
-function area() {
-    this.allObjects = new Array(); //all objects in a level / area
+function physicalArea() {
+    this.allObjects = new Array(); //all objects in a level / physicalArea
 	this.gravitatingObjects =  new Array(); //just index into allObjects
 	this.radiatingObjects = new Array(); //just index into allObjects
     this.bounds = new Array(); // top left to bottom righ
     this.playerShips = new Array();
 }
 
-//add gameObject to current area
-area.prototype.addObject = function(obj){
+//add gameObject to current physicalArea
+physicalArea.prototype.addObject = function(obj){
     x = this.allObjects.push(obj); //add object to all object list
     if (obj.isGrav == true) this.gravitatingObjects.push(x); //add reference to object
 	if (obj.isRad == true) this.radiatingObjects.push(x); //add reference to object
+	if (obj.isPlayerShip == true) this.playerShips.push(x); //add reference to object
 }
 
-//remove gameObject from current area
-area.prototype.removeObject = function(obj){
+//remove gameObject from current physicalArea
+physicalArea.prototype.removeObject = function(obj){
 	x = this.allObjects.indexOf(obj); //get index of object to remove
 	if (obj.isGrav == true){
 		y = this.gravitatingObjects.indexOf(x); //find the reference in the grav array
@@ -36,7 +37,7 @@ area.prototype.removeObject = function(obj){
 }
 
 //calc sum of all gravities at a point
-area.prototype.calcGrav = function(coords) {
+physicalArea.prototype.calcGrav = function(coords) {
 	//calc the grav contributions from all the objects in the solar system
 	var vec = [0,0];
 	for (grav in this.gravitatingObjects) {
@@ -46,7 +47,7 @@ area.prototype.calcGrav = function(coords) {
 }
 
 //calc sum of all radiation at a point
-area.prototype.calcRad = function(coords) {
+physicalArea.prototype.calcRad = function(coords) {
 	//this does not take into account occlusion so we should fix it eventually
 	//radiation does not have direction, only magnitude (lol)
 	var power = 0;
@@ -57,12 +58,17 @@ area.prototype.calcRad = function(coords) {
 }
 
 //update the slow-changing properties of a scene like the effect of gravity from other planets etc
-area.prototype.updateSlow = function(amountOfTime) {
+physicalArea.prototype.updateSlow = function(amountOfTime) {
 	//update all the slow things
 	//ie calc grav updates to all objects in system
-	for (o in this.allObjects) {
+	console.log('allo:'+this.allObjects.length);
+	for (i=0;i<this.allObjects.length;i++) {
+		o=this.allObjects[i];
+		console.log('a' + 	o);
+		o.prototype = physicalObject.prototype;
+		console.log('b' + o);
 		o.applyImpulse(this.calcGrav(o.coords));
-		o.updateRad(this.calcRad(coords));
+		o.updateRad(this.calcRad(o.coords));
 	}
 }
 

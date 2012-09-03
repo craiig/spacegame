@@ -1,6 +1,6 @@
 //object expressing basic physical physicalObject functions as will be called from area.js
 
-var sm = require('./spaceMath.js');
+var spaceMath = require('./spaceMath.js');
 
 exports = module.exports = physicalObject;
 
@@ -33,11 +33,15 @@ function physicalObject() {
 physicalObject.prototype.applyImpulse = function(vecImpulse){
 	//assumed that forces are expressed in Newtons
 	q = [this.heading[0] * this.mass, this.heading[1]];
-	q = sm.vectorAdd(q,vecImpulse);
-	q[0] = q[0] / mass;
+	rr = new spaceMath();
+	q = rr.vectorAdd(q,vecImpulse);
+	q[0] = q[0] / this.mass;
 	this.heading = q;
 };
 
+physicalObject.prototype.updateRad = function(inPower){
+	this.power = inPower;
+};
 
 physicalObject.prototype.getSyncProps = function(){
 	return ['coords', 'heading','mass','model','state'];

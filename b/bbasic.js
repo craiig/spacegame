@@ -16,6 +16,6 @@ app.use(express.static(__dirname + '/client/'));
 //instantiate the world object - which includes a network channel
 var MainWorld = new world(io);
 //Load The Test Area
-MainWorld.loadArea('./b/TestArea1');
+MainWorld.loadArea('TestArea1');
 console.log('done loading');
 

@@ -7,7 +7,7 @@
 // if GameServer model was made to be an event emitter, game objects could attach actions to the GameServer update event easily
 
 var network = require('./snetwork.js');
-var go = require('./gameObject.js');
+var physicalObject = require('./physicalObject.js');
 var area = require('./area.js');
 var Player = require('./player.js');
 var PlayerShip = require('./PlayerShip.js');
@@ -30,7 +30,7 @@ function GameServer(io) {
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
 	setInterval( function(){that.update()}, 1000); //1 fps
-	setInterval( function(){that.slowUpdate()}, 30000); //1 fps
+	setInterval( function(){that.slowUpdate()}, 2000); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
 };
@@ -64,7 +64,7 @@ GameServer.prototype.update = function(){
 	this.emit("update", sTimeDiff);
 	//this.saveArea('./TestArea1',this.areaList[0]);
 
-	if ((this.myFlag==false) && (this.fileLoaded==true)){
+	/* if ((this.myFlag==false) && (this.fileLoaded==true)){
 		console.log('gogogog');
 		a = new go();
 		a.name = 'TestObject1';
@@ -77,21 +77,28 @@ GameServer.prototype.update = function(){
 		a.name = 'TestPlayerShip';
 		this.areaList[0].playerShips.push(a);
 		//this.saveArea('./b/TestArea1',this.areaList[0]);		
-		
-
-
-
-
-
+	
 	}
-
+*/
 	//update our network channel
 	this.netchan.update();
 };
 
-GameServer.prototype.slowUpdate = function(){
-	for ( area in this.areaList) {
-		area.slowUpdate();
+GameServer.prototype.slowUpdate = function(that){
+	console.log(this.areaList);
+	console.log(this.areaList.length);
+	for (i=0; i< this.areaList.length; i++) {
+		a = this.areaList[i];
+		console.log('\n\n\n\n\n area1:' + a);
+		a.prototype = area.prototype;
+		console.log('\n\n\n\n\n area2:' + a);
+		//try {
+			a.updateSlow(1);
+			console.log('updateSlow success');
+		//} catch (err){
+		//	console.log('error in updateSlow');
+		//}
+		
 	}
 	this.emit("slowUpdate", this.GameServerTime);
 	this.netchan.update();
@@ -103,10 +110,19 @@ GameServer.prototype.loadArea = function(filename){
 	console.log('file:' + x);
 	newArea = new area();
 	areaProps = JSON.parse(x);
-	for(p in areaProps){ 
-		newArea[p] = areaProps[p];
+
+
+	for(p in areaProps['allObjects']){
+		var g = new physicalObject();
+		for (q in p) {
+			g[q] = p[q];
+		}
+		newArea.addObject(g);
+		//console.log(p);
 	}
-	//newArea.prototype = area.prototype;
+	newArea.prototype = area.prototype;
+	//console.log(newArea);
+	
 	this.areaList.push(newArea);
 	this.fileLoaded = true;
 };

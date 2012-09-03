@@ -1,14 +1,15 @@
 //player.js
 //fires events based on the player
 //relatively lame object that other modules can attach properties to
-var GameObject  =require('./gameObject.js');
+var physicalObject  =require('./physicalObject.js');
 var events = require("events")
 
 exports = module.exports = PlayerShip;
 
-PlayerShip.prototype.__proto__ = GameObject.prototype;
+PlayerShip.prototype.__proto__ = physicalObject.prototype;
 
 function PlayerShip(world, socket){
+	this.isPlayerShip = true;
 }
 
 PlayerShip.prototype.getSyncProps = function(){
