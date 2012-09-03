@@ -10,7 +10,7 @@ function area() {
     this.allObjects = new Array(); //all objects in a level / area
 	this.gravitatingObjects =  new Array(); //just index into allObjects
 	this.radiatingObjects = new Array(); //just index into allObjects
-    this.bounds = [[-1,1],[1,-1]]; // top left to bottom righ
+    this.bounds = new Array(); // top left to bottom righ
     this.playerShips = new Array();
 }
 
