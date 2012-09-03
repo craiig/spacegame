@@ -102,8 +102,11 @@ GameServer.prototype.loadArea = function(filename){
 	x=fs.readFileSync(filename);
 	console.log('file:' + x);
 	newArea = new area();
-	newArea = JSON.parse(x);
-	newArea.prototype = area.prototype;
+	areaProps = JSON.parse(x);
+	for(p in areaProps){ 
+		newArea[p] = areaProps[p];
+	}
+	//newArea.prototype = area.prototype;
 	this.areaList.push(newArea);
 	this.fileLoaded = true;
 };
