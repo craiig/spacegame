@@ -21,11 +21,11 @@ function gameObject() {
 	this.isGrav = false;
 
 	//some sort of model attachment for the clients & renderer
-	this.model = Array();
+	//this.model = Array();
 
 	//special handling for special states
 	//ie. on fire
-	this.state = '';
+	//this.state = '';
 }
 
 
@@ -48,11 +48,14 @@ gameObject.prototype.calcGrav = function(coords){
 	//find diff in positions
 	xDiff = this.coords.x - coords.x;
 	yDiff = this.coords.y - coords.y;
+	
 	//find radius of vector of difference
 	r = Math.sqrt(Math.pow(xDiff,2) + Math.pow(xdiff,2));
+	
 	//calc linear degrading gravity based on r
 	//in 'Newtons'
 	g = sm.grav * this.mass / r;
+	
 	//calc vector direction
 	th = atan2(yDiff,xDiff);
 	return {g,th};
@@ -63,6 +66,7 @@ gameObject.prototype.calcRad = function(coords){
 	//find diff in positions
 	xDiff = this.coords.x - coords.x;
 	yDiff = this.coords.y - coords.y;
+	
 	//find radius of vector of difference
 	r = Math.sqrt(Math.pow(xDiff,2) + Math.pow(xdiff,2));
 	p = this.power / r;

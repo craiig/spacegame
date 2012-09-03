@@ -79,12 +79,15 @@ GameServer.prototype.loadArea = function(filename){
 	this.areaList.push(newArea);
 };
 
-GameServer.prototype.saveArea = function(filename){
-
+GameServer.prototype.saveArea = function(filename,area){
+	fs.truncate(filename);
+	for (x in area.allObjects) {
+		fs.appendFileSync(filename,x,encoding='utf8');
+	};
 };
 
 GameServer.prototype.destroyArea = function(areaToDestroy){
-
+//can we literally just set the object in areaList to nothing??
 };
 
 
