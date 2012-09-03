@@ -6,9 +6,7 @@
 //http://nodejs.org/api/events.html#events_class_events_eventemitter
 // if world model was made to be an event emitter, game objects could attach actions to the world update event easily
 
-var network = require('./network.js')
-var Ship = require('./ship.js')
-var Player = require("./player.js")
+var network = require('./snetwork.js')
 var events = require('events')
 
 exports = module.exports = World;
@@ -25,16 +23,9 @@ function World(io) {
 	
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
-	//setInterval( function(){that.update()}, 10000); //33 milliseconds = 30 fps, 16 ms = 60 fps
-	//setInterval( function(){that.update()}, 16); //60 fps
 	setInterval( function(){that.update()}, 1000); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
-
-	//setup - 
-	//build a ship
-	this.shipList = new Array();
-	this.shipList.push( new Ship(this) );
 }
 
 
