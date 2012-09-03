@@ -76,7 +76,7 @@ GameServer.prototype.update = function(){
 		a = new PlayerShip();
 		a.name = 'TestPlayerShip';
 		this.areaList[0].playerShips.push(a);
-		this.saveArea('TestArea1',this.areaList[0]);		
+		//this.saveArea('./b/TestArea1',this.areaList[0]);		
 		
 
 
