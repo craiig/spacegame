@@ -1,10 +1,10 @@
-//object expressing basic physical gameobject functions as will be called from area.js
+//object expressing basic physical physicalObject functions as will be called from area.js
 
 var sm = require('./spaceMath.js');
 
-exports = module.exports = gameObject;
+exports = module.exports = physicalObject;
 
-function gameObject() {
+function physicalObject() {
 	this.name = '';
 
 	//in 2d bounds of area
@@ -30,7 +30,7 @@ function gameObject() {
 
 
 //apply specific impulse to object
-gameObject.prototype.applyImpulse = function(vecImpulse){
+physicalObject.prototype.applyImpulse = function(vecImpulse){
 	//assumed that forces are expressed in Newtons
 	q = [this.heading[0] * this.mass, this.heading[1]];
 	q = sm.vectorAdd(q,vecImpulse);
@@ -39,12 +39,12 @@ gameObject.prototype.applyImpulse = function(vecImpulse){
 };
 
 
-gameObject.prototype.getSyncProps = function(){
+physicalObject.prototype.getSyncProps = function(){
 	return ['coords', 'heading','mass','model','state'];
 };
 
 //calculate this objects 'Gravitational' input from a point in space
-gameObject.prototype.calcGrav = function(coords){
+physicalObject.prototype.calcGrav = function(coords){
 	//find diff in positions
 	xDiff = this.coords.x - coords.x;
 	yDiff = this.coords.y - coords.y;
@@ -62,7 +62,7 @@ gameObject.prototype.calcGrav = function(coords){
 }
 
 //calculate this objects 'Radiation' input to a point in space
-gameObject.prototype.calcRad = function(coords){
+physicalObject.prototype.calcRad = function(coords){
 	//find diff in positions
 	xDiff = this.coords.x - coords.x;
 	yDiff = this.coords.y - coords.y;
