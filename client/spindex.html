@@ -29,10 +29,23 @@
   socket.on('objectupdate', function(data){ //called on the subsequent object push
       console.log("object update");
       
-      for (x in data) {
-        console.log(x.name + x);
-        worldObjects[worldObjects.indexOf(x)]=x;
-      }
+      console.log(data[0].data);
+    //loop through all the messages in this update
+    for (x in data){
+      //console.log(data);
+        //check to see if this object has been added to world objects yet
+        if (worldObjects.indexOf(x.netid)==-1) {
+          worldObjects.push(x.netid);
+        }
+        //loop through all of the updated properties and assign to worldObject
+        for (prop in x.data) {
+          console.log(prop[0] + ' :  ' + prop[1]);
+          x=worldObjects[worldObjects.indexOf(x.netid)]
+          x[prop[0]]=prop[1];
+          worldObjects[worldObjects.indexOf(x.netid)]=x;
+
+        }
+    }
     });
 
   $(document).ready( function(){ //fire when the document dom is ready
