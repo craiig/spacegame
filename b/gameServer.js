@@ -111,15 +111,36 @@ GameServer.prototype.loadArea = function(filename){
 	newArea = new area();
 	areaProps = JSON.parse(x);
 
-
-	for(p in areaProps['allObjects']){
+	console.log('areaprops' + areaProps);
+	//p = new physicalObject();
+	var po =areaProps['allObjects'];
+	for(var p in po){
 		var g = new physicalObject();
+		console.log('props:' + p);
+		for (q in p) {
+			console.log ('prop['+ q + '] val[' + p[q]);
+			g[q] = p[q];
+		}
+		console.log('added object:' + g);
+		newArea.addObject(g);
+		//console.log(p);
+	}
+	newArea['gravitatingObjects'] = areaProps['gravitatingObjects'];
+	newArea['radiatingObjects'] = areaProps['radiatingObjects'];
+	newArea['bounds'] = areaProps['bounds'];
+	newArea['playerShips'] = areaProps['playerShips'];
+
+/*
+	for(p in areaProps['playerShips']){
+		var g = new PlayerShip();
 		for (q in p) {
 			g[q] = p[q];
 		}
 		newArea.addObject(g);
 		//console.log(p);
 	}
+*/
+
 	newArea.prototype = area.prototype;
 	//console.log(newArea);
 	

@@ -32,6 +32,7 @@ function physicalObject() {
 //apply specific impulse to object
 physicalObject.prototype.applyImpulse = function(vecImpulse){
 	//assumed that forces are expressed in Newtons
+	console.log('heading:' + this.heading);
 	q = [this.heading[0] * this.mass, this.heading[1]];
 	rr = new spaceMath();
 	q = rr.vectorAdd(q,vecImpulse);
