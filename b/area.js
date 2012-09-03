@@ -1,6 +1,7 @@
 
 //basic area model
-var sm = require('./spaceMath.js')
+var SpaceMath = require('./spaceMath.js');
+var GameObject = require('./gameObject.js')
 
 exports = module.exports = area;
 

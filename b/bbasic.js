@@ -4,7 +4,7 @@ var fs = require('fs')
   , app = express()
   , http = require('http')
 
-var world = require('./sworld.js')
+var world = require('./gameServer.js')
 
 //setup the app & socketio in this weird way thanks to express
 var server = http.createServer(app)
