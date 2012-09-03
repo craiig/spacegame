@@ -44,8 +44,9 @@ Network.prototype.onNewPlayer = function(player){ //event registered with socket
 										var object = that.objectList[objid].obj
 
 										if(object.objectRPC instanceof events.EventEmitter){
+											//console.log("calling objectRPC.emit: "+data.eventname)
 											object.objectRPC.emit(data.eventname, player, data.eventdata);
-											//console.log("calling objectRPC.emit: "+data.eventname+" "+)
+											
 										} else {
 											console.log("no objectRPC on objid: "+objid)
 										}
@@ -58,6 +59,7 @@ Network.prototype.onNewPlayer = function(player){ //event registered with socket
 
 	//socket.emit("objectlist", this.objectList);
 	fullUpdate = this.calcFullUpdate();
+	//console.log(fullUpdate[0].data.playerList);
 	socket.emit("objectlist", fullUpdate);
 }
 
@@ -133,6 +135,9 @@ Network.prototype.generateNetworkValue = function(val){
 				newval.push(this.generateNetworkValue(val[i]));
 				
 			}
+		} else {
+			console.log('warning: serializing an object with no netid - did you register it? probably gonna crash now');
+			console.log(val);
 		}
 	}
 	//console.log("GNV returning: "+newval)

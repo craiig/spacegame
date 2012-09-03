@@ -26,8 +26,8 @@ function World(io) {
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
 	//setInterval( function(){that.update()}, 10000); //33 milliseconds = 30 fps, 16 ms = 60 fps
-	//setInterval( function(){that.update()}, 16); //60 fps
-	setInterval( function(){that.update()}, 1000); //1 fps
+	setInterval( function(){that.update()}, 16); //60 fps
+	//setInterval( function(){that.update()}, 1000); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
 
@@ -50,7 +50,7 @@ function World(io) {
 
 
 World.prototype.getSyncProps = function(){
-	return ['worldTime', 'shipList', 'primaryShip'];
+	return ['worldTime', 'shipList', 'primaryShip', 'playerList'];
 }
 
 //btw this is how you do inheritance - maybe? look up node.js inheritance
