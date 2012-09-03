@@ -6,9 +6,9 @@ var events = require("events")
 
 exports = module.exports = PlayerShip;
 
+PlayerShip.prototype.__proto__ = GameObject.prototype;
+
 function PlayerShip(world, socket){
-	var gameObject = new GameObject();
-	return gameObject;
 }
 
 PlayerShip.prototype.getSyncProps = function(){

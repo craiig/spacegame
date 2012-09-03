@@ -1,7 +1,8 @@
 
 //basic area model
 var SpaceMath = require('./spaceMath.js');
-var GameObject = require('./gameObject.js')
+var GameObject = require('./gameObject.js');
+var PlayerShip = require('./playerShip.js');
 
 exports = module.exports = area;
 
@@ -9,7 +10,8 @@ function area() {
     this.allObjects = new Array(); //all objects in a level / area
 	this.gravitatingObjects =  new Array(); //just index into allObjects
 	this.radiatingObjects = new Array(); //just index into allObjects
-    this.bounds = {{-1,1},{1,-1}}; // top left to bottom righ
+    this.bounds = [[-1,1],[1,-1]]; // top left to bottom righ
+    this.playerShips = new Array();
 }
 
 //add gameObject to current area
@@ -36,7 +38,7 @@ area.prototype.removeObject = function(obj){
 //calc sum of all gravities at a point
 area.prototype.calcGrav = function(coords) {
 	//calc the grav contributions from all the objects in the solar system
-	var vec = {0,0};
+	var vec = [0,0];
 	for (grav in this.gravitatingObjects) {
 		vec = sm.vectorAdd(vec,allObjects[grav].calcGrav(coords)); // need to vector add this as it has direction and magnitude
 	}

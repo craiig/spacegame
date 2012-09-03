@@ -8,10 +8,10 @@ function gameObject() {
 	this.name = '';
 
 	//in 2d bounds of area
-    this.coords = {0,0}; //x,y coords
+    this.coords = [0,0]; //x,y coords
 
     //considered to be in m/s and radians 
-	this.heading = {0,0}; //r,theta - contains direction and velocity
+	this.heading = [0,0]; //r,theta - contains direction and velocity
 	this.mass = 0; //mass for calculating momentum in kg
 	
 	this.power = 0; //power of radiation in Watts
@@ -26,22 +26,22 @@ function gameObject() {
 	//special handling for special states
 	//ie. on fire
 	//this.state = '';
-}
+};
 
 
 //apply specific impulse to object
 gameObject.prototype.applyImpulse = function(vecImpulse){
 	//assumed that forces are expressed in Newtons
-	q = {this.heading[0] * this.mass, this.heading[1]};
+	q = [this.heading[0] * this.mass, this.heading[1]];
 	q = sm.vectorAdd(q,vecImpulse);
 	q[0] = q[0] / mass;
 	this.heading = q;
-}
+};
 
 
 gameObject.prototype.getSyncProps = function(){
 	return ['coords', 'heading','mass','model','state'];
-}
+};
 
 //calculate this objects 'Gravitational' input from a point in space
 gameObject.prototype.calcGrav = function(coords){
@@ -58,7 +58,7 @@ gameObject.prototype.calcGrav = function(coords){
 	
 	//calc vector direction
 	th = atan2(yDiff,xDiff);
-	return {g,th};
+	return [g,th];
 }
 
 //calculate this objects 'Radiation' input to a point in space

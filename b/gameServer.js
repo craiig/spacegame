@@ -7,8 +7,10 @@
 // if GameServer model was made to be an event emitter, game objects could attach actions to the GameServer update event easily
 
 var network = require('./snetwork.js');
-var GameObject = require('./gameObject.js');
-var Area = rquire('./area.js');
+var go = require('./gameObject.js');
+var area = require('./area.js');
+var Player = require('./player.js');
+var PlayerShip = require('./PlayerShip.js');
 var fs = require('fs');
 var events = require('events');
 
@@ -23,7 +25,8 @@ function GameServer(io) {
 	this.areaList = new Array();	
 	this.netchan = new network(this);
 	this.netchan.registerObject(this);
-	
+	this.myFlag = false;
+	this.fileLoaded = false;
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
 	setInterval( function(){that.update()}, 1000); //1 fps
@@ -59,13 +62,35 @@ GameServer.prototype.update = function(){
 
 	var sTimeDiff = timeDiff / 1000; //convert to seconds
 	this.emit("update", sTimeDiff);
+	//this.saveArea('./TestArea1',this.areaList[0]);
+
+	if ((this.myFlag==false) && (this.fileLoaded==true)){
+		console.log('gogogog');
+		a = new go();
+		a.name = 'TestObject1';
+		console.log(this.areaList[0]);
+
+		q=this.areaList[0];
+		q.prototype = area.prototype;
+		q.addObject(a);
+		a = new PlayerShip();
+		a.name = 'TestPlayerShip';
+		this.areaList[0].playerShips.push(a);
+		this.saveArea('TestArea1',this.areaList[0]);		
+		
+
+
+
+
+
+	}
 
 	//update our network channel
 	this.netchan.update();
 };
 
 GameServer.prototype.slowUpdate = function(){
-	for ( area in areaList) {
+	for ( area in this.areaList) {
 		area.slowUpdate();
 	}
 	this.emit("slowUpdate", this.GameServerTime);
@@ -73,15 +98,18 @@ GameServer.prototype.slowUpdate = function(){
 };
 
 
-
-
 GameServer.prototype.loadArea = function(filename){
 	x=fs.readFileSync(filename);
+	console.log('file:' + x);
+	newArea = new area();
 	newArea = JSON.parse(x);
+	newArea.prototype = area.prototype;
+	this.areaList.push(newArea);
+	this.fileLoaded = true;
 };
 
 GameServer.prototype.saveArea = function(filename,area){
-	fs.truncate(filename);
+	//fs.truncate(filename);
 	fs.appendFileSync(filename,JSON.stringify(area),encoding='utf8');
 };
 

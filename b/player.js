@@ -11,7 +11,7 @@ var playerCount;
 function Player(world, socket){
 	this.socket = socket;
 	this.name = "space derp "+playerCount;
-	var this.area;
+	this.area=undefined;
 	world.netchan.registerObject(this);
 
 	this.on("player_name_set", function(player, data){ 
