@@ -114,13 +114,33 @@ GameServer.prototype.loadArea = function(filename){
 	console.log('areaprops' + areaProps);
 	//p = new physicalObject();
 	var po =areaProps['allObjects'];
-	for(var p in po){
+	console.log('allObjects' + po);
+	
+	wwwww = JSON.stringify(po);
+	console.log('ww' + wwwww);
+
+	for(p in po){
+		console.log('record:' + p);
+		wwwww = JSON.stringify(p);
+		console.log('record' + wwwww);
+		var pp = JSON.parse(p);
+		console.log(pp);	
 		var g = new physicalObject();
-		console.log('props:' + p);
-		for (q in p) {
-			console.log ('prop['+ q + '] val[' + p[q]);
-			g[q] = p[q];
-		}
+		g.name = p['name'];
+		g.coords = p['coords'];
+		console.log('heading:' + p['heading']);
+		g.heading = p['heading'];
+		g.mass = p['mass'];
+		g.power = p['power'];
+		g.isRad	 = p['isRad'];
+		g.isGrav = p['isGrav'];
+	
+
+		// console.log('props:' + p);
+		// for (q in p) {
+		// 	console.log ('prop['+ q + '] val[' + p[q]);
+		// 	g[q] = p[q];
+		// }
 		console.log('added object:' + g);
 		newArea.addObject(g);
 		//console.log(p);
