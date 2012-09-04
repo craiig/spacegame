@@ -118,9 +118,10 @@ GameServer.prototype.loadArea = function(filename){
 	
 	wwwww = JSON.stringify(po);
 	console.log('ww' + wwwww);
-
+	console.log(po.length);
 	for(p in po){
-		console.log('record:' + p);
+		console.log('record:')
+		console.log (p);
 		wwwww = JSON.stringify(p);
 		console.log('record' + wwwww);
 		var pp = JSON.parse(p);

@@ -73,7 +73,7 @@ physicalObject.prototype.calcRad = function(coords){
 	yDiff = this.coords.y - coords.y;
 	
 	//find radius of vector of difference
-	r = Math.sqrt(Math.pow(xDiff,2) + Math.pow(xdiff,2));
+	r = Math.sqrt(Math.pow(Math.abs(xDiff),2) + Math.pow(Math.abs(yDiff),2));
 	p = this.power / r;
 	
 	return p;
