@@ -11,7 +11,6 @@ PlayerShip.prototype.__proto__ = physicalObject.prototype;
 function PlayerShip(world, socket){
 	this.isPlayerShip = true;
 
-
 	world.netchan.registerObject(this);
 
 	//do stupid hack for callbacks

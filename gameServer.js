@@ -6,9 +6,9 @@
 //http://nodejs.org/api/events.html#events_class_events_eventemitter
 // if GameServer model was made to be an event emitter, game objects could attach actions to the GameServer update event easily
 
-var network = require('./snetwork.js');
+var network = require('./network.js');
 var physicalObject = require('./physicalObject.js');
-var area = require('./area.js');
+var area = require('./physicalArea.js');
 var Player = require('./player.js');
 var PlayerShip = require('./PlayerShip.js');
 var fs = require('fs');
@@ -64,31 +64,14 @@ GameServer.prototype.update = function(){
 
 	var sTimeDiff = timeDiff / 1000; //convert to seconds
 
-
+	//do fast item update like position due to heading
 	for (i=0; i< this.areaList.length; i++) {
 		a = this.areaList[i];
 		a.update(sTimeDiff);
 	}
 
 	this.emit("update", sTimeDiff);
-	//this.saveArea('./TestArea1',this.areaList[0]);
-
-	/* if ((this.myFlag==false) && (this.fileLoaded==true)){
-		console.log('gogogog');
-		a = new go();
-		a.name = 'TestObject1';
-		console.log(this.areaList[0]);
-
-		q=this.areaList[0];
-		q.prototype = area.prototype;
-		q.addObject(a);
-		a = new PlayerShip();
-		a.name = 'TestPlayerShip';
-		this.areaList[0].playerShips.push(a);
-		//this.saveArea('./b/TestArea1',this.areaList[0]);		
 	
-	}
-*/
 	//update our network channel
 	this.netchan.update();
 };
@@ -116,7 +99,7 @@ GameServer.prototype.loadArea = function(filename){
 	//iterate over each physical object and instantiate new class
 	for(objindex in newArea.allObjects){
 		var obj = (newArea.allObjects[objindex]);
-		var newObj = new physicalObject();
+		var newObj = new physicalObject(this);
 		for(p in obj){
 			newObj[p] = obj[p];
 		}

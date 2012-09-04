@@ -1,10 +1,11 @@
 //object expressing basic physical physicalObject functions as will be called from area.js
 
 var spaceMath = require('./spaceMath.js');
+//var world = require('./gameServer.js');	
 
 exports = module.exports = physicalObject;
 
-function physicalObject() {
+function physicalObject(world) {
 	this.name = '';
 
 	//in 2d bounds of area
@@ -19,6 +20,9 @@ function physicalObject() {
 	//flags for special scene handling
 	this.isRad = false;
 	this.isGrav = false;
+
+
+	world.netchan.registerObject(this);
 
 	//some sort of model attachment for the clients & renderer
 	//this.model = Array();

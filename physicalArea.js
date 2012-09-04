@@ -6,12 +6,13 @@ var PlayerShip = require('./playerShip.js');
 
 exports = module.exports = physicalArea;
 
-function physicalArea() {
+function physicalArea(world) {
     this.allObjects = new Array(); //all objects in a level / physicalArea
 	this.gravitatingObjects =  new Array(); //just index into allObjects
 	this.radiatingObjects = new Array(); //just index into allObjects
     this.bounds = new Array(); // top left to bottom righ
     this.playerShips = new Array();
+    this.world = world;
 }
 
 physicalArea.prototype.getSyncProps = function(obj){
