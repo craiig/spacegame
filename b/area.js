@@ -14,6 +14,10 @@ function physicalArea() {
     this.playerShips = new Array();
 }
 
+physicalArea.prototype.getSyncProps = function(obj){
+	return ['bounds'];
+}
+
 //add gameObject to current physicalArea
 physicalArea.prototype.addObject = function(obj){
     x = this.allObjects.push(obj); //add object to all object list

@@ -107,24 +107,52 @@ GameServer.prototype.slowUpdate = function(that){
 
 GameServer.prototype.loadArea = function(filename){
 	x=fs.readFileSync(filename);
-	console.log('file:' + x);
+	//console.log('file:' + x);
 	newArea = new area();
 	areaProps = JSON.parse(x);
 
-	console.log('areaprops' + areaProps);
-	//p = new physicalObject();
-	var po =areaProps['allObjects'];
-	console.log('allObjects' + po);
-	
-	wwwww = JSON.stringify(po);
-	console.log('ww' + wwwww);
+	//console.log('areaprops' + areaProps);
+	console.log('newArea:')
+	console.log(newArea)
+	console.log("proof, calling newArea.getSyncProps")
+	console.log(newArea.getSyncProps());
 
-	for(p in po){
-		console.log('record:' + p);
+	//console.log('areaprops:')
+	console.log(areaProps)
+	//p = new physicalObject();
+	//var allObjects = areaProps['allObjects'];
+	//console.log('allObjects' + po);
+
+	for(p in areaProps){
+		newArea[p] = areaProps[p];
+	}
+	console.log("finished loading properties...")
+	console.log("proof, calling newArea.getSyncProps")
+	console.log(newArea.getSyncProps());
+
+	//iterate over each physical object and instantiate new class
+	for(objindex in newArea.allObjects){
+		var obj = (newArea.allObjects[objindex]);
+		var newObj = new physicalObject();
+		for(p in obj){
+			newObj[p] = obj[p];
+		}
+		newArea.allObjects[objindex] = newObj
+	}
+
+	console.log("finished loading prototypes for allObjects")
+	console.log("proof, calling getSyncProps on allObjects[0]")
+	console.log(newArea.allObjects[0].getSyncProps())
+	
+	//wwwww = JSON.stringify(po);
+	//console.log('ww' + wwwww);
+
+	//for(p in po){
+		/*console.log('record:' + p);
 		wwwww = JSON.stringify(p);
 		console.log('record' + wwwww);
 		var pp = JSON.parse(p);
-		console.log(pp);	
+		console.log(pp);
 		var g = new physicalObject();
 		g.name = p['name'];
 		g.coords = p['coords'];
@@ -143,12 +171,12 @@ GameServer.prototype.loadArea = function(filename){
 		// }
 		console.log('added object:' + g);
 		newArea.addObject(g);
-		//console.log(p);
-	}
-	newArea['gravitatingObjects'] = areaProps['gravitatingObjects'];
-	newArea['radiatingObjects'] = areaProps['radiatingObjects'];
-	newArea['bounds'] = areaProps['bounds'];
-	newArea['playerShips'] = areaProps['playerShips'];
+		//console.log(p);*/
+	//}
+	//newArea['gravitatingObjects'] = areaProps['gravitatingObjects'];
+	//newArea['radiatingObjects'] = areaProps['radiatingObjects'];
+	//newArea['bounds'] = areaProps['bounds'];
+	//newArea['playerShips'] = areaProps['playerShips'];
 
 /*
 	for(p in areaProps['playerShips']){
