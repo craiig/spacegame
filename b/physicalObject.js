@@ -32,10 +32,16 @@ function physicalObject() {
 //apply specific impulse to object
 physicalObject.prototype.applyImpulse = function(vecImpulse){
 	//assumed that forces are expressed in Newtons
-	console.log('heading:' + this.heading);
+	console.log('heading:' );
+	console.log(this.heading);
+	console.log('vecImpulse');
+	console.log(vecImpulse);
 	q = [this.heading[0] * this.mass, this.heading[1]];
-	rr = new spaceMath();
-	q = rr.vectorAdd(q,vecImpulse);
+	//rr = new spaceMath();
+	//q = rr.vectorAdd(q,vecImpulse);
+	q = spaceMath.vectorAdd(q,vecImpulse);
+	console.log('output');
+	console.log(q);
 	q[0] = q[0] / this.mass;
 	this.heading = q;
 };
@@ -50,20 +56,34 @@ physicalObject.prototype.getSyncProps = function(){
 
 //calculate this objects 'Gravitational' input from a point in space
 physicalObject.prototype.calcGrav = function(coords){
+
+	if (coords !== this.coords) {
+	console.log('GravCalc');
 	//find diff in positions
-	xDiff = this.coords.x - coords.x;
-	yDiff = this.coords.y - coords.y;
-	
+	console.log(coords);
+	console.log(this.coords);
+	xDiff = this.coords[0] - coords[0];
+	yDiff = this.coords[1] - coords[1];
+	console.log('xdiff' + xDiff);
+	console.log('yDiff'+ yDiff);
+
+
+
 	//find radius of vector of difference
-	r = Math.sqrt(Math.pow(xDiff,2) + Math.pow(xdiff,2));
+	r = Math.sqrt(Math.pow(Math.abs(xDiff),2) + Math.pow(Math.abs(yDiff),2));
 	
 	//calc linear degrading gravity based on r
 	//in 'Newtons'
-	g = sm.grav * this.mass / r;
+	g = spaceMath.grav * this.mass / r;
 	
 	//calc vector direction
-	th = atan2(yDiff,xDiff);
+	th = Math.atan2(yDiff,xDiff);
+	console.log(g,th);	
 	return [g,th];
+} else {
+	return [0,0];
+}
+
 }
 
 //calculate this objects 'Radiation' input to a point in space

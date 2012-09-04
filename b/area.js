@@ -1,6 +1,6 @@
 
 //basic physicalArea model
-var SpaceMath = require('./spaceMath.js');
+var spaceMath = require('./spaceMath.js');
 var physicalObject = require('./physicalObject.js');
 var PlayerShip = require('./playerShip.js');
 
@@ -45,7 +45,14 @@ physicalArea.prototype.calcGrav = function(coords) {
 	//calc the grav contributions from all the objects in the solar system
 	var vec = [0,0];
 	for (grav in this.gravitatingObjects) {
-		vec = sm.vectorAdd(vec,allObjects[grav].calcGrav(coords)); // need to vector add this as it has direction and magnitude
+		var q =this.allObjects[grav].calcGrav(coords);
+		console.log('obj grav add');
+		console.log(q);
+		console.log('prevec');
+		console.log(vec);
+		vec = spaceMath.vectorAdd(vec,this.allObjects[grav].calcGrav(coords)); // need to vector add this as it has direction and magnitude
+		console.log('postvec');
+		console.log(vec);
 	}
 	return vec;
 }
@@ -56,7 +63,7 @@ physicalArea.prototype.calcRad = function(coords) {
 	//radiation does not have direction, only magnitude (lol)
 	var power = 0;
 	for (rad in this.radiatingObjects) {
-		power += allObjects[rad].calcRad(coords);
+		power += this.allObjects[rad].calcRad(coords);
 	}
 	return power;
 }
@@ -68,10 +75,10 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 	console.log('allo:'+this.allObjects.length);
 	for (i=0;i<this.allObjects.length;i++) {
 		o=this.allObjects[i];
-		console.log('a' + 	o);
-		o.prototype = physicalObject.prototype;
-		console.log('b' + o);
+		//o.prototype = physicalObject.prototype;
+		console.log('Gravity');
 		o.applyImpulse(this.calcGrav(o.coords));
+		console.log('Radiation');
 		o.updateRad(this.calcRad(o.coords));
 	}
 }

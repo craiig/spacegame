@@ -85,20 +85,10 @@ GameServer.prototype.update = function(){
 };
 
 GameServer.prototype.slowUpdate = function(that){
-	console.log(this.areaList);
-	console.log(this.areaList.length);
 	for (i=0; i< this.areaList.length; i++) {
 		a = this.areaList[i];
-		console.log('\n\n\n\n\n area1:' + a);
 		a.prototype = area.prototype;
-		console.log('\n\n\n\n\n area2:' + a);
-		//try {
-			a.updateSlow(1);
-			console.log('updateSlow success');
-		//} catch (err){
-		//	console.log('error in updateSlow');
-		//}
-		
+		a.updateSlow(1);
 	}
 	this.emit("slowUpdate", this.GameServerTime);
 	this.netchan.update();
@@ -107,28 +97,12 @@ GameServer.prototype.slowUpdate = function(that){
 
 GameServer.prototype.loadArea = function(filename){
 	x=fs.readFileSync(filename);
-	//console.log('file:' + x);
 	newArea = new area();
 	areaProps = JSON.parse(x);
-
-	//console.log('areaprops' + areaProps);
-	console.log('newArea:')
-	console.log(newArea)
-	console.log("proof, calling newArea.getSyncProps")
-	console.log(newArea.getSyncProps());
-
-	//console.log('areaprops:')
-	console.log(areaProps)
-	//p = new physicalObject();
-	//var allObjects = areaProps['allObjects'];
-	//console.log('allObjects' + po);
 
 	for(p in areaProps){
 		newArea[p] = areaProps[p];
 	}
-	console.log("finished loading properties...")
-	console.log("proof, calling newArea.getSyncProps")
-	console.log(newArea.getSyncProps());
 
 	//iterate over each physical object and instantiate new class
 	for(objindex in newArea.allObjects){
@@ -140,59 +114,6 @@ GameServer.prototype.loadArea = function(filename){
 		newArea.allObjects[objindex] = newObj
 	}
 
-	console.log("finished loading prototypes for allObjects")
-	console.log("proof, calling getSyncProps on allObjects[0]")
-	console.log(newArea.allObjects[0].getSyncProps())
-	
-	/*wwwww = JSON.stringify(po);
-	console.log('ww' + wwwww);
-	console.log(po.length);
-	for(p in po){
-		console.log('record:')
-		console.log (p);
-		wwwww = JSON.stringify(p);
-		console.log('record' + wwwww);
-		var pp = JSON.parse(p);
-		console.log(pp);
-		var g = new physicalObject();
-		g.name = p['name'];
-		g.coords = p['coords'];
-		console.log('heading:' + p['heading']);
-		g.heading = p['heading'];
-		g.mass = p['mass'];
-		g.power = p['power'];
-		g.isRad	 = p['isRad'];
-		g.isGrav = p['isGrav'];
-	
-
-		// console.log('props:' + p);
-		// for (q in p) {
-		// 	console.log ('prop['+ q + '] val[' + p[q]);
-		// 	g[q] = p[q];
-		// }
-		console.log('added object:' + g);
-		newArea.addObject(g);
-		//console.log(p);*/
-	//}
-	//newArea['gravitatingObjects'] = areaProps['gravitatingObjects'];
-	//newArea['radiatingObjects'] = areaProps['radiatingObjects'];
-	//newArea['bounds'] = areaProps['bounds'];
-	//newArea['playerShips'] = areaProps['playerShips'];
-
-/*
-	for(p in areaProps['playerShips']){
-		var g = new PlayerShip();
-		for (q in p) {
-			g[q] = p[q];
-		}
-		newArea.addObject(g);
-		//console.log(p);
-	}
-*/
-
-	newArea.prototype = area.prototype;
-	//console.log(newArea);
-	
 	this.areaList.push(newArea);
 	this.fileLoaded = true;
 };
