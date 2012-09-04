@@ -9,11 +9,13 @@
 
 //gravitational constant of world
 //in our 2d world this is in units of m^2 kg^-1 s^-2
-grav = 6.67384e-11;
+//grav = 6.67384e-11;
+grav = 6.67384;
 
 function spaceMath (){
-	this.name='spaceMath';
+	//this.name='spaceMath';
 };
+
 
 function vectorAdd (vec1,vec2){
 	//convert polar vectors to rectangular form

@@ -61,6 +61,13 @@ GameServer.prototype.update = function(){
 	this.lastUpdate = newTime;
 
 	var sTimeDiff = timeDiff / 1000; //convert to seconds
+
+
+	for (i=0; i< this.areaList.length; i++) {
+		a = this.areaList[i];
+		a.update(sTimeDiff);
+	}
+
 	this.emit("update", sTimeDiff);
 	//this.saveArea('./TestArea1',this.areaList[0]);
 

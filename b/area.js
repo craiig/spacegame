@@ -45,14 +45,7 @@ physicalArea.prototype.calcGrav = function(coords) {
 	//calc the grav contributions from all the objects in the solar system
 	var vec = [0,0];
 	for (grav in this.gravitatingObjects) {
-		var q =this.allObjects[grav].calcGrav(coords);
-		console.log('obj grav add');
-		console.log(q);
-		console.log('prevec');
-		console.log(vec);
 		vec = spaceMath.vectorAdd(vec,this.allObjects[grav].calcGrav(coords)); // need to vector add this as it has direction and magnitude
-		console.log('postvec');
-		console.log(vec);
 	}
 	return vec;
 }
@@ -61,25 +54,43 @@ physicalArea.prototype.calcGrav = function(coords) {
 physicalArea.prototype.calcRad = function(coords) {
 	//this does not take into account occlusion so we should fix it eventually
 	//radiation does not have direction, only magnitude (lol)
+	//console.log('RadCalc');
+	//console.log(this.radiatingObjects);
 	var power = 0;
 	for (rad in this.radiatingObjects) {
-		power += this.allObjects[rad].calcRad(coords);
+		q = this.radiatingObjects[rad];
+		//console.log(q);
+		//console.log(this.allObjects[q])
+		power += this.allObjects[q].calcRad(coords);
 	}
 	return power;
 }
+
+//update the fast-changing properties of a scene like the movement due to heading
+physicalArea.prototype.update = function(amountOfTime) {
+	for (i=0;i<this.allObjects.length;i++) {
+		o=this.allObjects[i];
+		//console.log('Old Coords');
+		//console.log(o.coords);
+
+		
+		o.applyHeading(amountOfTime);
+		console.log('New Coords: ' + o.coords);
+		//console.log(o.coords);
+	}
+}
+
 
 //update the slow-changing properties of a scene like the effect of gravity from other planets etc
 physicalArea.prototype.updateSlow = function(amountOfTime) {
 	//update all the slow things
 	//ie calc grav updates to all objects in system
-	console.log('allo:'+this.allObjects.length);
 	for (i=0;i<this.allObjects.length;i++) {
 		o=this.allObjects[i];
-		//o.prototype = physicalObject.prototype;
-		console.log('Gravity');
-		o.applyImpulse(this.calcGrav(o.coords));
-		console.log('Radiation');
-		o.updateRad(this.calcRad(o.coords));
+		var q = this.calcGrav(o.coords);
+		o.applyImpulse(q);
+		q = this.calcRad(o.coords);
+		o.updateRad(q);
 	}
 }
 
