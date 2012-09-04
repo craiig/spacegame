@@ -144,11 +144,12 @@ GameServer.prototype.loadArea = function(filename){
 	console.log("proof, calling getSyncProps on allObjects[0]")
 	console.log(newArea.allObjects[0].getSyncProps())
 	
-	//wwwww = JSON.stringify(po);
-	//console.log('ww' + wwwww);
-
-	//for(p in po){
-		/*console.log('record:' + p);
+	/*wwwww = JSON.stringify(po);
+	console.log('ww' + wwwww);
+	console.log(po.length);
+	for(p in po){
+		console.log('record:')
+		console.log (p);
 		wwwww = JSON.stringify(p);
 		console.log('record' + wwwww);
 		var pp = JSON.parse(p);
