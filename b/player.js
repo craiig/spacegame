@@ -20,16 +20,6 @@ function Player(world, socket){
 		}
 	} );
 
-	this.on("player_list_area", function(player, data){ 
-		console.log('player_list_area');
-	} );
-	this.on("player_list_ships_in_area", function(player, data){ 
-		console.log('player_list_ships_in_area');
-	} );
-	this.on("player_join_ship", function(player, data){ 
-		console.log('player_join_ship');
-	} );
-
 }
 
 Player.prototype.getSyncProps = function(){

@@ -54,13 +54,9 @@ physicalArea.prototype.calcGrav = function(coords) {
 physicalArea.prototype.calcRad = function(coords) {
 	//this does not take into account occlusion so we should fix it eventually
 	//radiation does not have direction, only magnitude (lol)
-	//console.log('RadCalc');
-	//console.log(this.radiatingObjects);
 	var power = 0;
 	for (rad in this.radiatingObjects) {
 		q = this.radiatingObjects[rad];
-		//console.log(q);
-		//console.log(this.allObjects[q])
 		power += this.allObjects[q].calcRad(coords);
 	}
 	return power;
@@ -70,13 +66,7 @@ physicalArea.prototype.calcRad = function(coords) {
 physicalArea.prototype.update = function(amountOfTime) {
 	for (i=0;i<this.allObjects.length;i++) {
 		o=this.allObjects[i];
-		//console.log('Old Coords');
-		//console.log(o.coords);
-
-		
 		o.applyHeading(amountOfTime);
-		console.log('New Coords: ' + o.coords);
-		//console.log(o.coords);
 	}
 }
 
