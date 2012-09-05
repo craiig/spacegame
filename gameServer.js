@@ -49,6 +49,12 @@ GameServer.prototype.newConnection = function(socket){
 	this.playerList.push(player);
 	this.emit("newplayer", player);
 
+//setup any other notifications
+	var that = this;
+	socket.on("ping", function(data){
+		socket.emit("ping", data);
+	})
+
 	//setup any other notifications
 	var that = this;
 	socket.on('disconnect', function(socket){ that.clients--; });
