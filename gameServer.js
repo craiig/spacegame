@@ -89,7 +89,7 @@ GameServer.prototype.slowUpdate = function(that){
 
 GameServer.prototype.loadArea = function(filename){
 	x=fs.readFileSync(filename);
-	newArea = new area();
+	newArea = new area(this);
 	areaProps = JSON.parse(x);
 
 	for(p in areaProps){
