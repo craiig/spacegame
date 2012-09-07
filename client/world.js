@@ -2,7 +2,7 @@
 
 function World(socket){
 	this.socket = socket;
-	this.WorldData = {};
+	this.WorldData = new Array(); //{};
 	this.network = new Network(this);
 
 	this.events = new EventEmitter();
@@ -34,20 +34,30 @@ if (elem && elem.getContext) {
     // You are done! Now you can draw your first rectangle.
     // You only need to provide the (x,y) coordinates, followed by the width and 
     // height dimensions.
-   
+   console.log('len:' + that.WorldData.length);
+console.log(that.WorldData);
+var colVal = 4095;
+var colInc = Math.floor(4096 / that.WorldData.length);
 
 for (obj in that.WorldData){
 			var xobj = that.WorldData[obj];
 			console.log(obj);
 			console.log(xobj);
-			
+			console.log(colVal);
 			console.log('update1a');
 			try {
-				var cxx =  "#" + Math.floor((Math.random() *4095)).toString(16);
-				context.fillStyle   =cxx;
+				colVal -= colInc;
+				var cxx = colVal.toString(16);
+				while (cxx.length < 3){
+						cxx = "0" + cxx;
+
+				}
+				cxx =  "#"  +  colVal.toString(16);
+				console.log(cxx);
+				context.fillStyle  =cxx;
 				console.log(cxx);
 				//$("#svgelem").append('<circle id="c' + obj + '" cx="' + Math.floor(xobj.coords[0] +500) + '" cy="' + Math.floor(xobj.coords[1] + 500) + '" r="5" fill="red" />');
-				context.fillRect(xobj.coords[0] +500,  (xobj.coords[1] + 500) , 5,  5);
+				context.fillRect(xobj.coords[0] +2500,  (xobj.coords[1] + 2500) , 5,  5);
 			} catch (err){}
 			
 		}
