@@ -23,9 +23,10 @@ function World(socket){
 			var context = elem.getContext('2d');
   			if (context) {
 				var colVal = 16777215;
-				var colInc = Math.floor(16777216 / Object.keys(that.WorldData).length);
+				var colInc = Math.floor(16777215 / Object.keys(that.WorldData).length);
 
 				for (obj in that.WorldData){
+					colVal -= colInc;								
 					var xobj = that.WorldData[obj];
 					if ((that.WorldData[obj].prevCoord!==undefined)&&(that.GameServerTime==undefined)){
 						if (
@@ -45,7 +46,6 @@ function World(socket){
 							&& 
 							(xobj.coords[1]<=2500)
 							) {
-								colVal -= colInc;
 								var cxx = colVal.toString(16);
 								while (cxx.length < 6){
 										cxx = "0" + cxx;
@@ -56,10 +56,12 @@ function World(socket){
 								context.lineTo((xobj.coords[0] +2500), (xobj.coords[1] + 2500) );
 								context.lineWidth = 1;
 								context.strokeStyle =cxx;
-								context.fillStyle =cxx;
+								context.fillStyle ="#000000";
 								context.stroke();
 								context.rect((xobj.coords[0] +2500), (xobj.coords[1] + 2500),5,5);
 								context.fill();
+								//context.strokeStyle ="#000000";
+								context.stroke();
 								that.WorldData[obj].prevCoord = xobj.coords; 
 							}					
 						} else if (that.GameServerTime==undefined) {
