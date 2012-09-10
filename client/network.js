@@ -77,6 +77,7 @@ Network.prototype.receiveObjectUpdate = function(data){
 	//fix up any pointers
 	for(d in WorldData){
 		this.resolveNetIDs(WorldData[d]);
+		
 	}
 
 	world.events.emit("update");
