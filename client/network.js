@@ -72,15 +72,14 @@ Network.prototype.receiveObjectUpdate = function(data){
 			var obj = data[d].data;
 			for(prop in obj){
 				WorldData[netid][prop] = obj[prop];
-				console.log("updating prop: "+prop+" = "+obj[prop]);
+				//console.log("updating prop: "+prop+" = "+obj[prop]);
 			}
 		}
 	}
 
 	//fix up any pointers
 	for(d in WorldData){
-		this.resolveNetIDs(WorldData[d]);
-		
+		this.resolveNetIDs(WorldData[d]);	
 	}
 
 	world.events.emit("update");
