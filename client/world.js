@@ -10,7 +10,23 @@ function World(socket){
 	this.events = new EventEmitter();
 	this.events.on("init", function(){ console.log("world init"); });
 	this.events.on("update", function(){ console.log("world update"); });
+	this.isGfxInit = false;
+
 	var that = this
+	var elem1 = document.getElementById('example');
+		if (elem1 && elem1.getContext) {
+			var context1 = elem1.getContext('2d');
+  			if (context1) {
+				context1.fillStyle ="#000000";
+context.fillStyle   = '#CC5422'; // set canvas background color
+context.fillRect  (0,   0, 350, 350);  // now fill the canvas
+				context1.fillRect(0,0,elem1.width,elem1.height);
+				context1.fill();
+
+			}
+		}
+
+
 
 	this.events.on("init", function(){
 		that.world = that.WorldData[0]; //assign world for convenience
@@ -25,6 +41,12 @@ function World(socket){
 		if (elem && elem.getContext) {
 			var context = elem.getContext('2d');
   			if (context) {
+				if (that.isGfxInit==false) {
+					context.fillRect(0,0,elem.width,elem.height);
+					that.isGfxInit=true;
+				}
+
+
 				//#ffffff
 				var colVal = 16777215;
 				var colInc = Math.floor(16777215 / Object.keys(that.WorldData).length);
@@ -49,6 +71,9 @@ function World(socket){
 										cxx = "0" + cxx;
 								}
 								cxx =  "#"  +  cxx;
+								context.fillStyle =cxx;
+								context.fillRect(that.WorldData[obj].prevCoord[0]+that.half[0], that.WorldData[obj].prevCoord[1]+that.half[1],5,5);	
+
 								context.beginPath();
 								context.moveTo(that.WorldData[obj].prevCoord[0]+that.half[0], that.WorldData[obj].prevCoord[1]+that.half[1]);	
 								context.lineTo((xobj.coords[0] +that.half[0]), (xobj.coords[1] + that.half[1]) );
@@ -72,6 +97,8 @@ function World(socket){
 							that.WorldData[obj].prevCoord = xobj.coords; 	
 						} 					}
 				}
+
+				
 				console.log('b:' + tempBounds);
 				if (boundsFlag!=false) {
 					//console.log('bounds');
