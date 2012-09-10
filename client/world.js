@@ -59,26 +59,35 @@ for (obj in that.WorldData){
 				//$("#svgelem").append('<circle id="c' + obj + '" cx="' + Math.floor(xobj.coords[0] +500) + '" cy="' + Math.floor(xobj.coords[1] + 500) + '" r="5" fill="red" />');
 				//context.fillRect(xobj.coords[0] +2500,  (xobj.coords[1] + 2500) , 5,  5);
 				//context.fillStyle  ='#000';
-				if (that.WorldData[obj].prevCoord!==undefined){
+				if ((that.WorldData[obj].prevCoord!==undefined)&&(that.GameServerTime==undefined)){
 					if (
-						(that.WorldData[obj].prevCoord[0]>=0 )&& (that.WorldData[obj].prevCoord[0]<=2500)
+						(that.WorldData[obj].prevCoord[0]>=-2500 )
+						&& 
+						(that.WorldData[obj].prevCoord[0]<=2500)
 						&&
-						(that.WorldData[obj].prevCoord[1]>=0 )&& (that.WorldData[obj].prevCoord[1]<=2500)
+						(that.WorldData[obj].prevCoord[1]>=-2500 )
+						&& 
+						(that.WorldData[obj].prevCoord[1]<=2500)
 						&&
-						(xobj.coords[0]>=0 ) && (xobj.coords[0]<=2500)
+						(xobj.coords[0]>=-2500 ) 
+						&& 
+						(xobj.coords[0]<=2500)
 						&&
-						(xobj.coords[1]>=0 ) && (xobj.coords[1]<=2500)
+						(xobj.coords[1]>=-2500 ) 
+						&& 
+						(xobj.coords[1]<=2500)
 						) {
 						context.moveTo(that.WorldData[obj].prevCoord[0]+2500,that.WorldData[obj].prevCoord[1]+2500);	
 						context.lineTo(xobj.coords[0] +2500,  (xobj.coords[1] + 2500) );
 						context.stroke();
+						that.WorldData[obj].prevCoord = xobj.coords; 
 					}
 					
 				} 
 				//context.fillRect(xobj.coords[0] +2501,  (xobj.coords[1] + 2501) , 4,  4);
 				
 				
-				that.WorldData[obj].prevCoord = xobj.coords; 
+				
 			} catch (err){}
 			
 			
