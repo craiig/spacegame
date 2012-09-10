@@ -29,7 +29,7 @@ function GameServer(io) {
 	this.fileLoaded = false;
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
-	setInterval( function(){that.update()}, 20); //1 fps
+	setInterval( function(){that.update()}, 10); //1 fps
 	setInterval( function(){that.slowUpdate()}, 10); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
