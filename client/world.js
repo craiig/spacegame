@@ -56,8 +56,10 @@ function World(socket){
 								context.lineTo((xobj.coords[0] +2500), (xobj.coords[1] + 2500) );
 								context.lineWidth = 1;
 								context.strokeStyle =cxx;
-								context.rect((xobj.coords[0] +2500), (xobj.coords[1] + 2500),5,5);
+								context.fillStyle =cxx;
 								context.stroke();
+								context.rect((xobj.coords[0] +2500), (xobj.coords[1] + 2500),5,5);
+								context.fill();
 								that.WorldData[obj].prevCoord = xobj.coords; 
 							}					
 						} else if (that.GameServerTime==undefined) {
