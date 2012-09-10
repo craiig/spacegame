@@ -16,15 +16,18 @@ Network.prototype.resolveNetIDs = function(obj){
 
 	for(var prop in obj){
 		var pobj = obj[prop];
+		try {
 		if(pobj._netid_ptr !== undefined){
 			//console.log(obj[prop])
 			obj[prop] = WorldData[pobj._netid_ptr];
 			//console.log(obj[prop])
-		} else if(typeof(pobj) == "object" && pobj !== null){
-			//console.log("rni: "+prop)
-			//console.log(pobj)
-			this.resolveNetIDs(pobj);
 		} 
+	} catch (errx){}
+		// else if(typeof(pobj) == "object" && pobj !== null){
+		// 	//console.log("rni: "+prop)
+		// 	//console.log(pobj)
+		// 	this.resolveNetIDs(pobj);
+		// } 
 	}
 }
 

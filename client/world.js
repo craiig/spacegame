@@ -50,7 +50,6 @@ for (obj in that.WorldData){
 				var cxx = colVal.toString(16);
 				while (cxx.length < 3){
 						cxx = "0" + cxx;
-
 				}
 				cxx =  "#"  +  colVal.toString(16);
 				console.log(cxx);
@@ -83,7 +82,9 @@ for (obj in that.WorldData){
 						that.WorldData[obj].prevCoord = xobj.coords; 
 					}
 					
-				} 
+				} else if (that.GameServerTime==undefined) {
+					that.WorldData[obj].prevCoord = xobj.coords; 
+				}
 				//context.fillRect(xobj.coords[0] +2501,  (xobj.coords[1] + 2501) , 4,  4);
 				
 				
