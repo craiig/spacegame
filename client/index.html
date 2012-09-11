@@ -5,140 +5,127 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/three/three.min.js"></script>
 <script src="/three/Tween.js"></script>
-
+<script src="/three/Stats.js"></script>
+<html><body>
 <script>
+	var container, stats;
+	var camera, scene, renderer, particle;
+	var mouseX = 0, mouseY = 0;
 
+	var windowHalfX = window.innerWidth / 2;
+	var windowHalfY = window.innerHeight / 2;
 
+	init();
+	animate();
 
+	function initParticle( particle, delay ) {
+		var particle = this instanceof THREE.Particle ? this : particle;
+		var delay = delay !== undefined ? delay : 0;
 
+		particle.position.x = 0;
+		particle.position.y = 0;
+		particle.position.z = 0;
+		particle.scale.x = particle.scale.y = Math.random() * 3 + 1;
 
+		new TWEEN.Tween( particle )
+			.delay( delay )
+			.to( {}, 10000 )
+			.onComplete( initParticle )
+			.start();
 
-function initParticle( particle, delay ) {
+		new TWEEN.Tween( particle.position )
+			.delay( delay )
+			.to( { x: Math.random() * 4000 - 2000, y: Math.random() * 1000 - 500, z: Math.random() * 4000 - 2000 }, 10000 )
+			.start();
 
-				var particle = this instanceof THREE.Particle ? this : particle;
-				var delay = delay !== undefined ? delay : 0;
+		new TWEEN.Tween( particle.scale )
+			.delay( delay )
+			.to( { x: 0, y: 0 }, 10000 )
+			.start();
 
-				particle.position.x = 0;
-				particle.position.y = 0;
-				particle.position.z = 0;
-				particle.scale.x = particle.scale.y = Math.random() * 3 + 1;
+	}
+	function generateSprite() {
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = 16;
+		canvas.height = 16;
 
-				new TWEEN.Tween( particle )
-					.delay( delay )
-					.to( {}, 10000 )
-					.onComplete( initParticle )
-					.start();
+		var context = canvas.getContext( '2d' );
+		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
+		gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
+		gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
+		gradient.addColorStop( 0.4, 'rgba(0,0,64,1)' );
+		gradient.addColorStop( 1, 'rgba(0,0,0,1)' );
 
-				new TWEEN.Tween( particle.position )
-					.delay( delay )
-					.to( { x: Math.random() * 4000 - 2000, y: Math.random() * 1000 - 500, z: Math.random() * 4000 - 2000 }, 10000 )
-					.start();
+		context.fillStyle = gradient;
+		context.fillRect( 0, 0, canvas.width, canvas.height );
 
-				new TWEEN.Tween( particle.scale )
-					.delay( delay )
-					.to( { x: 0, y: 0 }, 10000 )
-					.start();
+		return canvas;
 
-			}
-function generateSprite() {
+	}
+	function init() {
+		container = document.createElement( 'div' );
+		document.body.appendChild( container );
 
-				var canvas = document.createElement( 'canvas' );
-				canvas.width = 16;
-				canvas.height = 16;
+		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.z = 1000;
 
-				var context = canvas.getContext( '2d' );
-				var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
-				gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
-				gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
-				gradient.addColorStop( 0.4, 'rgba(0,0,64,1)' );
-				gradient.addColorStop( 1, 'rgba(0,0,0,1)' );
+		scene = new THREE.Scene();
 
-				context.fillStyle = gradient;
-				context.fillRect( 0, 0, canvas.width, canvas.height );
+		var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
 
-				return canvas;
+		for ( var i = 0; i < 1000; i++ ) {
 
-			}
-function init() {
+			particle = new THREE.Particle( material );
 
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
+			initParticle( particle, i * 10 );
 
-				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
-				camera.position.z = 1000;
+			scene.add( particle );
+		}
 
-				scene = new THREE.Scene();
+		renderer = new THREE.CanvasRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.sortElements = false;
+		renderer.setClearColorHex( 0x0000ff, 0.25 );
+		container.appendChild( renderer.domElement );
 
-				var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
+		stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '0px';
+		container.appendChild( stats.domElement );
 
-				for ( var i = 0; i < 1000; i++ ) {
+		//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		//document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+		//document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
-					particle = new THREE.Particle( material );
+		//
 
-					initParticle( particle, i * 10 );
+		//window.addEventListener( 'resize', onWindowResize, false );
 
-					scene.add( particle );
-				}
+	}
 
-				renderer = new THREE.CanvasRenderer();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.sortElements = false;
-				renderer.setClearColorHex( 0x0000ff, 0.25 );
-				container.appendChild( renderer.domElement );
+	function animate() {
+		requestAnimationFrame( animate );
+		render();
+		stats.update();
+	}
 
-				stats = new Stats();
-				stats.domElement.style.position = 'absolute';
-				stats.domElement.style.top = '0px';
-				container.appendChild( stats.domElement );
+	function render() {
 
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+		TWEEN.update();
 
-				//
+		camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+		camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+		camera.lookAt( scene.position );
 
-				window.addEventListener( 'resize', onWindowResize, false );
+		renderer.render( scene, camera );
 
-			}
+	}
 
-function animate() {
+	var lastPing = 0;
 
-				requestAnimationFrame( animate );
-
-				render();
-				stats.update();
-
-			}
-
-			function render() {
-
-				TWEEN.update();
-
-				camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-				camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
-				camera.lookAt( scene.position );
-
-				renderer.render( scene, camera );
-
-			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-  var lastPing = 0;
-
-  //var socket = io.connect('http://192.168.1.105:59473');
-  var socket = io.connect(location.hostname); //better way
-  var world = new World(socket);
+	//var socket = io.connect('http://192.168.1.105:59473');
+	var socket = io.connect(location.hostname); //better way
+	var world = new World(socket);
 
   //example: send a network obj rpc for testing
   world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
@@ -202,8 +189,8 @@ Ships: <ul id="shiplist"></ul>
 <br/>
 Name: <input type="text" /> <br />
 Players: <ul id="playerlist"></ul>
-
-<svg id="svgelem" width="10cm" height="10cm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5000 5000"></svg>
 <canvas id="example" width="5000" height="5000" >
 This text is displayed if your browser does not support HTML5 Canvas.
 </canvas>
+</body>
+</html>
