@@ -1,4 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="/jquery/jquery.min.js"></script>
 <script src="/events.js"></script>
 <script src="/network.js"></script>
 <script src="/world.js"></script>
@@ -9,14 +9,25 @@
 <html><body>
 <script>
 	var container, stats;
-	var camera, scene, renderer, particle;
+	var camera, renderer, particle;
 	var mouseX = 0, mouseY = 0;
 
 	var windowHalfX = window.innerWidth / 2;
 	var windowHalfY = window.innerHeight / 2;
+	var scene = new THREE.Scene();
+
 
 	init();
 	animate();
+
+	var lastPing = 0;
+
+	//var socket = io.connect('http://192.168.1.105:59473');
+	var socket = io.connect(location.hostname); //better way
+	var world = new World(socket);
+
+
+
 
 	function initParticle( particle, delay ) {
 		var particle = this instanceof THREE.Particle ? this : particle;
@@ -44,6 +55,7 @@
 			.start();
 
 	}
+
 	function generateSprite() {
 		var canvas = document.createElement( 'canvas' );
 		canvas.width = 16;
@@ -69,7 +81,7 @@
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
 		camera.position.z = 1000;
 
-		scene = new THREE.Scene();
+		
 
 		var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
 
@@ -113,19 +125,18 @@
 
 		TWEEN.update();
 
-		camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-		camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+		//camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+		//camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
 		camera.lookAt( scene.position );
 
 		renderer.render( scene, camera );
 
 	}
 
-	var lastPing = 0;
 
-	//var socket = io.connect('http://192.168.1.105:59473');
-	var socket = io.connect(location.hostname); //better way
-	var world = new World(socket);
+
+
+
 
   //example: send a network obj rpc for testing
   world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
