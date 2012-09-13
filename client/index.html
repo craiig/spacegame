@@ -26,32 +26,37 @@
 	var socket = io.connect(location.hostname); //better way
 	var world = new World(socket);
 
+	world.events.on("update", function(){ 
+		var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
 
+		for (obj in world.WorldData){
+			//colVal -= colInc;								
+			var xobj = world.WorldData[obj];
 
+			//probably a better way to identify object types than this
+			if ((xobj.prevCoord!=undefined)&&(xobj.GameServerTime==undefined)){
+				particle = new THREE.Particle( material );
+				initParticle( particle, lastPing, xobj.coords, xobj.prevCoord );
+				scene.add( particle );
+			} else if ((xobj.GameServerTime==undefined)&&(xobj.prevCoord==undefined)) {
+				world.WorldData[obj].prevCoord = xobj.coords; 	
+			} 					
+		}
+	});
 
-	function initParticle( particle, delay ) {
+	function initParticle( particle, time, coordsFrom, coordsTo ) {
 		var particle = this instanceof THREE.Particle ? this : particle;
 		var delay = delay !== undefined ? delay : 0;
 
-		particle.position.x = 0;
-		particle.position.y = 0;
-		particle.position.z = 0;
-		particle.scale.x = particle.scale.y = Math.random() * 3 + 1;
+		particle.position.x = coordsFrom[0];
+		particle.position.y = coordsFrom[1];
 
 		new TWEEN.Tween( particle )
-			.delay( delay )
-			.to( {}, 10000 )
-			.onComplete( initParticle )
+			.to( {}, time )
 			.start();
 
 		new TWEEN.Tween( particle.position )
-			.delay( delay )
-			.to( { x: Math.random() * 4000 - 2000, y: Math.random() * 1000 - 500, z: Math.random() * 4000 - 2000 }, 10000 )
-			.start();
-
-		new TWEEN.Tween( particle.scale )
-			.delay( delay )
-			.to( { x: 0, y: 0 }, 10000 )
+			.to( { x: coordsTo[0], y: coordsTo[1] }, time )
 			.start();
 
 	}
@@ -83,16 +88,6 @@
 
 		
 
-		var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
-
-		for ( var i = 0; i < 1000; i++ ) {
-
-			particle = new THREE.Particle( material );
-
-			initParticle( particle, i * 10 );
-
-			scene.add( particle );
-		}
 
 		renderer = new THREE.CanvasRenderer();
 		renderer.setSize( window.innerWidth, window.innerHeight );
