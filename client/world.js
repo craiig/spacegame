@@ -4,28 +4,15 @@ function World(socket){
 	this.socket = socket;
 	this.WorldData = {};// new Array(); //{};
 	this.network = new Network(this);
-	this.bounds = [[-2500,2500],[-2500,2500]];
-	this.midpoint=[0,0];
-	this.half = [2500,2500];
+	//this.bounds = [[-2500,2500],[-2500,2500]];
+	//this.midpoint=[0,0];
+	//this.half = [2500,2500];
 	this.events = new EventEmitter();
 	this.events.on("init", function(){ console.log("world init"); });
 	this.events.on("update", function(){ console.log("world update"); });
 	this.isGfxInit = false;
 
 	var that = this
-	// var elem1 = document.getElementById('example');
-	// 	if (elem1 && elem1.getContext) {
-	// 		var context1 = elem1.getContext('2d');
- //  			if (context1) {
-	// 			context1.fillStyle ="#000000";
-	// 			context.fillStyle   = '#CC5422'; // set canvas background color
-	// 			context.fillRect  (0,   0, 350, 350);  // now fill the canvas
-	// 			context1.fillRect(0,0,elem1.width,elem1.height);
-	// 			context1.fill();
-
-	// 		}
-	// 	}
-
 
 
 	this.events.on("init", function(){
@@ -50,38 +37,38 @@ function World(socket){
 
 
 //#ffffff
-				var colVal = 16777215;
-				var colInc = Math.floor(16777215 / Object.keys(that.WorldData).length);
+				// var colVal = 16777215;
+				// var colInc = Math.floor(16777215 / Object.keys(that.WorldData).length);
 
-				for (obj in that.WorldData){
-					colVal -= colInc;								
-					var xobj = that.WorldData[obj];
+				// for (obj in that.WorldData){
+				// 	colVal -= colInc;								
+				// 	var xobj = that.WorldData[obj];
 
-					if (that.GameServerTime!==undefined) {
-						console.log(that.WorldData[obj]);
+				// 	if (that.GameServerTime!==undefined) {
+				// 		console.log(that.WorldData[obj]);
 
-					}
+				// 	}
 
 
-					//probably a better way to identify object types than this
-					if ((that.WorldData[obj].prevCoord!=undefined)&&(that.WorldData[obj].GameServerTime==undefined)){
-						if (
-							(xobj.coords[0]>=that.bounds[0][0] ) 
-							&& 
-							(xobj.coords[0]<=that.bounds[0][1] )
-							&&
-							(xobj.coords[1]>=that.bounds[1][0]  ) 
-							&& 
-							(xobj.coords[1]<=that.bounds[1][1])
-							) {
-								var cxx = colVal.toString(16);
-								while (cxx.length < 6){
-										cxx = "0" + cxx;
-								}
-								cxx =  "#"  +  cxx;
-								}
-							}
-						}
+				// 	//probably a better way to identify object types than this
+				// 	if ((that.WorldData[obj].prevCoord!=undefined)&&(that.WorldData[obj].GameServerTime==undefined)){
+				// 		if (
+				// 			(xobj.coords[0]>=that.bounds[0][0] ) 
+				// 			&& 
+				// 			(xobj.coords[0]<=that.bounds[0][1] )
+				// 			&&
+				// 			(xobj.coords[1]>=that.bounds[1][0]  ) 
+				// 			&& 
+				// 			(xobj.coords[1]<=that.bounds[1][1])
+				// 			) {
+				// 				var cxx = colVal.toString(16);
+				// 				while (cxx.length < 6){
+				// 						cxx = "0" + cxx;
+				// 				}
+				// 				cxx =  "#"  +  cxx;
+				// 				}
+				// 			}
+				// 		}
 
 
 

@@ -11,15 +11,14 @@
 	var container, stats;
 	var camera, renderer, particle;
 	var mouseX = 0, mouseY = 0;
-
+	var currPing=0;
 	var windowHalfX = window.innerWidth / 2;
 	var windowHalfY = window.innerHeight / 2;
 	var scene = new THREE.Scene();
-
-
+	var lastUpdate=(new Date()).getTime();
+	var updateTime=(new Date()).getTime();
 	init();
-	animate();
-
+	var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
 	var lastPing = 0;
 
 	//var socket = io.connect('http://192.168.1.105:59473');
@@ -27,7 +26,7 @@
 	var world = new World(socket);
 
 	world.events.on("update", function(){ 
-		var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
+		
 
 		for (obj in world.WorldData){
 			//colVal -= colInc;								
@@ -36,21 +35,34 @@
 			//probably a better way to identify object types than this
 			if ((xobj.prevCoord!=undefined)&&(xobj.GameServerTime==undefined)){
 				particle = new THREE.Particle( material );
-				initParticle( particle, lastPing, xobj.coords, xobj.prevCoord );
+				initParticle( particle, updateTime, xobj.prevCoord, xobj.coords );
 				scene.add( particle );
+				world.WorldData[obj].prevCoord = xobj.coords; 	
 			} else if ((xobj.GameServerTime==undefined)&&(xobj.prevCoord==undefined)) {
 				world.WorldData[obj].prevCoord = xobj.coords; 	
-			} 					
+			} if ((xobj.GameServerTime!==undefined))		{
+				//console.log(lastUpdate);
+				updateTime =  (new Date()).getTime() - lastUpdate;
+				lastUpdate = (new Date()).getTime();
+				//console.log(updateTime);
+				//console.log(lastUpdate);
+			}
+
+
+
+						
 		}
 	});
 
-	function initParticle( particle, time, coordsFrom, coordsTo ) {
+	function initParticle( particle, time, coordsFrom, coordsTo) {
 		var particle = this instanceof THREE.Particle ? this : particle;
-		var delay = delay !== undefined ? delay : 0;
+		//var delay = delay !== undefined ? delay : 0;
 
 		particle.position.x = coordsFrom[0];
 		particle.position.y = coordsFrom[1];
-
+		//particle.scale = scale;
+		//particle.scale.x = particle.scale.y = Math.random() * 3 + 1;
+		
 		new TWEEN.Tween( particle )
 			.to( {}, time )
 			.start();
@@ -58,7 +70,9 @@
 		new TWEEN.Tween( particle.position )
 			.to( { x: coordsTo[0], y: coordsTo[1] }, time )
 			.start();
-
+		// new TWEEN.Tween( particle.scale )
+		// 	.to( { x: 0, y: 0 }, time )
+		// 	.start();
 	}
 
 	function generateSprite() {
@@ -100,9 +114,9 @@
 		stats.domElement.style.top = '0px';
 		container.appendChild( stats.domElement );
 
-		//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-		//document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-		//document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+		document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+		document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
 		//
 
@@ -120,8 +134,8 @@
 
 		TWEEN.update();
 
-		//camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-		//camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+		camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+		camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
 		camera.lookAt( scene.position );
 
 		renderer.render( scene, camera );
@@ -129,7 +143,37 @@
 	}
 
 
+function onDocumentMouseMove( event ) {
 
+				mouseX = event.clientX - windowHalfX;
+				mouseY = event.clientY - windowHalfY;
+			}
+
+			function onDocumentTouchStart( event ) {
+
+				if ( event.touches.length == 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+				}
+
+			}
+
+			function onDocumentTouchMove( event ) {
+
+				if ( event.touches.length == 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+				}
+
+			}
 
 
 
@@ -147,7 +191,7 @@
         var now = (new Date()).getTime();
         $("#ping").html(now - data.time);
         //console.log("now: " + now + " received: " + data.time)
-        lastPing = now;
+        lastPing = now - data.time;
         //this.emit('ping', { time: now });
       })
   })
@@ -185,6 +229,13 @@ $(document).bind('keyup', function(e){
   //console.log(e.which);
 })
 
+
+
+
+	animate();
+
+
+
 </script> 
 
 Ping: <span id="ping">xx</span> ms
@@ -195,8 +246,6 @@ Ships: <ul id="shiplist"></ul>
 <br/>
 Name: <input type="text" /> <br />
 Players: <ul id="playerlist"></ul>
-<canvas id="example" width="5000" height="5000" >
-This text is displayed if your browser does not support HTML5 Canvas.
-</canvas>
+
 </body>
 </html>
