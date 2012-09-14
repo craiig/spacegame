@@ -6,7 +6,21 @@
 <script src="/three/three.min.js"></script>
 <script src="/three/Tween.js"></script>
 <script src="/three/Stats.js"></script>
-<html><body>
+<html>
+<head>
+		<style>
+			body {
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			a {
+				color:#0078ff;
+			}
+		</style>
+	</head>
+<body>
 <script>
 	var container, stats;
 	var camera, renderer, particle;
@@ -35,11 +49,18 @@
 			//probably a better way to identify object types than this
 			if ((xobj.prevCoord!=undefined)&&(xobj.GameServerTime==undefined)){
 				particle = new THREE.Particle( material );
-				initParticle( particle, updateTime, xobj.prevCoord, xobj.coords );
+				var currZ = Math.random() *100 - 50;
+				initParticle( particle, updateTime, xobj.prevCoord, xobj.coords,xobj.prevHeading[0]/10,xobj.heading[0]/10,xobj.prevZ,currZ );
 				scene.add( particle );
 				world.WorldData[obj].prevCoord = xobj.coords; 	
+				world.WorldData[obj].prevHeading = xobj.heading;
+				world.WorldData[obj].prevZ = currZ;
 			} else if ((xobj.GameServerTime==undefined)&&(xobj.prevCoord==undefined)) {
 				world.WorldData[obj].prevCoord = xobj.coords; 	
+				world.WorldData[obj].prevHeading = xobj.heading;
+				world.WorldData[obj].prevZ = Math.random() * 100 - 50;
+				
+				
 			} if ((xobj.GameServerTime!==undefined))		{
 				//console.log(lastUpdate);
 				updateTime =  (new Date()).getTime() - lastUpdate;
@@ -52,27 +73,32 @@
 
 						
 		}
+		//console.log(scene);
 	});
 
-	function initParticle( particle, time, coordsFrom, coordsTo) {
+	function initParticle( particle, time, coordsFrom, coordsTo, oldScale, newScale) {
 		var particle = this instanceof THREE.Particle ? this : particle;
 		//var delay = delay !== undefined ? delay : 0;
 
-		particle.position.x = coordsFrom[0];
-		particle.position.y = coordsFrom[1];
-		//particle.scale = scale;
-		//particle.scale.x = particle.scale.y = Math.random() * 3 + 1;
+		particle.position.x = new Number(coordsFrom[0]);
+		particle.position.y = new Number(coordsFrom[1]);
+		//particle.position.z = oldZ;
 		
-		new TWEEN.Tween( particle )
-			.to( {}, time )
-			.start();
+		//console.log('s' + newscale)
+		particle.scale.x = particle.scale.y = oldScale;
+		
+		// new TWEEN.Tween( particle )
+		// 	.onComplete(function(){scene.remove(particle)})
+		// 	.to( {}, time )
+		// 	.start();
 
 		new TWEEN.Tween( particle.position )
-			.to( { x: coordsTo[0], y: coordsTo[1] }, time )
+			.to( { x: new Number(coordsTo[0]), y: new Number(coordsTo[1])}, time+1 )
+			.onComplete(function(){scene.remove(particle)})
 			.start();
-		// new TWEEN.Tween( particle.scale )
-		// 	.to( { x: 0, y: 0 }, time )
-		// 	.start();
+		 new TWEEN.Tween( particle.scale )
+		 	.to( { x: newScale, y: newScale }, time )
+		 	.start();
 	}
 
 	function generateSprite() {
