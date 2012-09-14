@@ -39,66 +39,123 @@
 	var socket = io.connect(location.hostname); //better way
 	var world = new World(socket);
 
-	world.events.on("update", function(){ 
-		
-
+	world.events.on("init", function(){ 
+		console.log(world.WorldData)
 		for (obj in world.WorldData){
-			//colVal -= colInc;								
-			var xobj = world.WorldData[obj];
+			//var xobj = world.WorldData[obj];
 
 			//probably a better way to identify object types than this
-			if ((xobj.prevCoord!=undefined)&&(xobj.GameServerTime==undefined)){
-				particle = new THREE.Particle( material );
-				var currZ = Math.random() *100 - 50;
-				initParticle( particle, updateTime, xobj.prevCoord, xobj.coords,xobj.prevHeading[0]/10,xobj.heading[0]/10,xobj.prevZ,currZ );
-				scene.add( particle );
-				world.WorldData[obj].prevCoord = xobj.coords; 	
-				world.WorldData[obj].prevHeading = xobj.heading;
-				world.WorldData[obj].prevZ = currZ;
-			} else if ((xobj.GameServerTime==undefined)&&(xobj.prevCoord==undefined)) {
-				world.WorldData[obj].prevCoord = xobj.coords; 	
-				world.WorldData[obj].prevHeading = xobj.heading;
-				world.WorldData[obj].prevZ = Math.random() * 100 - 50;
+			if ((world.WorldData[obj].coords!==undefined)){
+				world.WorldData[obj].particle = new THREE.Particle( material );
+
+				initParticle(world.WorldData[obj].particle, world.WorldData[obj].coords,1);
 				
-				
-			} if ((xobj.GameServerTime!==undefined))		{
-				//console.log(lastUpdate);
+				scene.add( world.WorldData[obj].particle);
+				//console.log( world.WorldData[obj].particle.myPositionTween);
+				//console.log(particle);
+				//console.log(scene);
+				//var objIndex=scene.__objects.indexOf(particle);
+				//console.log(objIndex);
+				world.WorldData[obj].prevCoord = world.WorldData[obj].coords; 	
+				world.WorldData[obj].prevHeading = world.WorldData[obj].heading;
+				//world.WorldData[obj].prevParticle = objIndex;
+			} else if ((world.WorldData[obj].GameServerTime!==undefined)) {
 				updateTime =  (new Date()).getTime() - lastUpdate;
 				lastUpdate = (new Date()).getTime();
-				//console.log(updateTime);
-				//console.log(lastUpdate);
-			}
-
-
-
-						
+			}			
 		}
-		//console.log(scene);
 	});
 
-	function initParticle( particle, time, coordsFrom, coordsTo, oldScale, newScale) {
-		var particle = this instanceof THREE.Particle ? this : particle;
-		//var delay = delay !== undefined ? delay : 0;
+	world.events.on("update", function(){ 
+		for (obj in world.WorldData){
+			var xobj = world.WorldData[obj];
+			
+ 			if ((xobj.GameServerTime!==undefined))		{
+				updateTime =  Date.now() - lastUpdate;
+				lastUpdate = Date.now();
+			} 
+			else
+				if (xobj.coords!== undefined){
+				//particle = scene.__objects[xobj.prevParticle];
+				//console.log(updateTime);
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.heading[0]/10);
+				// console.log('Pos tween');
+				// console.log(xobj.particle.myPositionTween);
+				// console.log('Scale tween');
+				// console.log(xobj.particle.myScaleTween);
+				//xobj.particle.myPositionTween.start();
+				//xobj.particle.myScaleTween.start();
+				world.WorldData[obj].prevCoord = xobj.coords; 	
+				world.WorldData[obj].prevHeading = xobj.heading;
+			} 
+		}
+	});
 
-		particle.position.x = new Number(coordsFrom[0]);
-		particle.position.y = new Number(coordsFrom[1]);
-		//particle.position.z = oldZ;
-		
-		//console.log('s' + newscale)
-		particle.scale.x = particle.scale.y = oldScale;
-		
-		// new TWEEN.Tween( particle )
-		// 	.onComplete(function(){scene.remove(particle)})
-		// 	.to( {}, time )
-		// 	.start();
+	function initParticle( particle, coords, newScale) {
+		particle.position.x = new Number(coords[0]);
+		particle.position.y = new Number(coords[1]);
+		particle.scale.x = particle.scale.y = newScale;
+		particle.myPositionTween = new TWEEN.Tween( particle.position )
+			.to( { x: new Number(coords[0]*2), y: new Number(coords[1]*2)}, 1000 )
+			.onUpdate (function () {
+					console.log('boopp');
+					return this;
+			});	
 
-		new TWEEN.Tween( particle.position )
-			.to( { x: new Number(coordsTo[0]), y: new Number(coordsTo[1])}, time+1 )
-			.onComplete(function(){scene.remove(particle)})
-			.start();
-		 new TWEEN.Tween( particle.scale )
-		 	.to( { x: newScale, y: newScale }, time )
-		 	.start();
+		particle.myScaleTween= new TWEEN.Tween( particle.scale )
+		 	.to( { x: newScale, y: newScale }, 0 );
+		// console.log(particle.myPositionTween);	
+	}
+
+	function setParticle( particle, time, coordsFrom,coordsTo, newScale) {
+		//particle.myPositionTween.stop();
+		//particle.myScaleTween.stop();
+
+		//particle.position.x = new Number(coordsFrom[0]);
+		//particle.position.y = new Number(coordsFrom[1]);
+		// console.log(particle.myPositionTween._duration);
+		// particle.myPositionTween.to({ x: coordsTo[0], y: coordsTo[1]}, time ) ;
+		// particle.myPositionTween.start();
+		// //particle.myScaleTween.to({ x: newScale, y: newScale }, time ) ;
+		//console.log(particle.myPositionTween);	
+	
+		particle.myPositionTween =new TWEEN.Tween( particle.position)
+		//console.log(particle.myPositionTween);
+		//particle.myPositionTween.Tween(particle.position);
+
+		.to(  { x: coordsTo[0], y: coordsTo[1]}, time )
+		.start();
+		//);
+//particle.myPositionTween.start();	
+
+		//particle.myPositionTween.start();	
+		//TWEEN.add(particle.myPositionTween);
+			// .onUpdate (function () {
+			// 		console.log('beep');
+			// })
+			//.start();
+			//console.log(q);
+		 particle.myScaleTween= new TWEEN.Tween( particle.scale )
+		  	.to( { x: newScale, y: newScale }, time )
+		  	.start();
+		//  	.start();
+
+
+		// particle.myPositionTween.to = function () {
+		// 	_duration = time;
+		// 	_valuesEnd = { x: coordsTo[0], y: coordsTo[1]};
+		// 	return this;
+		// };
+		// console.log(particle.myPositionTween);
+		//  particle.myPositionTween._duration = time;
+		//  particle.myPositionTween._valuesEnd = { x: coordsTo[0], y: coordsTo[1]};
+		// //particle.myPositionTween.start();
+		 // particle.myScaleTween._duration = time;
+		 // particle.myScaleTween._valuesEnd = { x: newScale, y: newScale };
+		// particle.myPositionTween.onUpdate = function() {
+		// 	console.log(particle.position.x);
+		// }
+		
 	}
 
 	function generateSprite() {
@@ -124,11 +181,9 @@
 		document.body.appendChild( container );
 
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
-		camera.position.z = 1000;
+		camera.position.z = 100;
 
-		
-
-
+		//renderer = new THREE.WebGLRenderer();
 		renderer = new THREE.CanvasRenderer();
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.sortElements = false;
@@ -169,91 +224,80 @@
 	}
 
 
-function onDocumentMouseMove( event ) {
+	function onDocumentMouseMove( event ) {
+		mouseX = event.clientX - windowHalfX;
+		mouseY = event.clientY - windowHalfY;
+	}
 
-				mouseX = event.clientX - windowHalfX;
-				mouseY = event.clientY - windowHalfY;
-			}
+	function onDocumentTouchStart( event ) {
+		if ( event.touches.length == 1 ) {
+			event.preventDefault();
+			mouseX = event.touches[ 0 ].pageX - windowHalfX;
+			mouseY = event.touches[ 0 ].pageY - windowHalfY;
+		}
+	}
 
-			function onDocumentTouchStart( event ) {
-
-				if ( event.touches.length == 1 ) {
-
-					event.preventDefault();
-
-					mouseX = event.touches[ 0 ].pageX - windowHalfX;
-					mouseY = event.touches[ 0 ].pageY - windowHalfY;
-
-				}
-
-			}
-
-			function onDocumentTouchMove( event ) {
-
-				if ( event.touches.length == 1 ) {
-
-					event.preventDefault();
-
-					mouseX = event.touches[ 0 ].pageX - windowHalfX;
-					mouseY = event.touches[ 0 ].pageY - windowHalfY;
-
-				}
-
-			}
+	function onDocumentTouchMove( event ) {
+		if ( event.touches.length == 1 ) {
+			event.preventDefault();
+			mouseX = event.touches[ 0 ].pageX - windowHalfX;
+			mouseY = event.touches[ 0 ].pageY - windowHalfY;
+		}
+	}
 
 
 
-  //example: send a network obj rpc for testing
-  world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
+	//example: send a network obj rpc for testing
+	world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
 
-  //send ping back immediately since we'll block processing and we can use it to measure how long this takes
-  this.world.socket.emit('ping', { time: (new Date()).getTime() });
+	//send ping back immediately since we'll block processing and we can use it to measure how long this takes
+	this.world.socket.emit('ping', { time: (new Date()).getTime() });
 
-  //setup simple ping function
-  $(document).ready( function(){ //fire when the document dom is ready
-      socket.on('ping', function(data){
-        //console.log("ping response:");
-        //console.log(data);
-        var now = (new Date()).getTime();
-        $("#ping").html(now - data.time);
-        //console.log("now: " + now + " received: " + data.time)
-        lastPing = now - data.time;
-        //this.emit('ping', { time: now });
-      })
-  })
+	//setup simple ping function
+	$(document).ready( function(){ //fire when the document dom is ready
+	socket.on('ping', function(data){
+	//console.log("ping response:");
+	//console.log(data);
+	var now = (new Date()).getTime();
+	$("#ping").html(now - data.time);
+	//console.log("now: " + now + " received: " + data.time)
+	lastPing = now - data.time;
+	//this.emit('ping', { time: now });
+	})
+	})
 
-//setup a keypress handler
-$(document).bind('keydown', function(e){
-  if(e.which == 38){
-    //up key
-    socket.emit('ship_accelerate_down');
-    //console.log("down")
-  } else if(e.which == 40){
-    //down key
-  } else if(e.which == 37){
-    //left
-    socket.emit('ship_accelerate_left');
-  } else if(e.which == 39){
-    //right
-    socket.emit('ship_accelerate_right');
-  }
-  //console.log(e.which);
-})
+	//setup a keypress handler
+	$(document).bind('keydown', function(e){
+	if(e.which == 38){
+	//up key
+	socket.emit('ship_accelerate_down');
+	//console.log("down")
+	} else if(e.which == 40){
+	//down key
+	} else if(e.which == 37){
+	//left
+	socket.emit('ship_accelerate_left');
+	} else if(e.which == 39){
+	//right
+	socket.emit('ship_accelerate_right');
+	}
+	//console.log(e.which);
+	})
 
-$(document).bind('keyup', function(e){
-  if(e.which == 38){
-    //up key
-    socket.emit('ship_accelerate_up', "0")
-    //console.log("up")
-  } else if(e.which == 40){
-    //down key
-  } else if(e.which == 37){
-    //left
-  } else if(e.which == 39){
-    //right
-  }
-  //console.log(e.which);
-})
+	$(document).bind('keyup', function(e){
+	if(e.which == 38){
+	//up key
+	socket.emit('ship_accelerate_up', "0")
+	//console.log("up")
+	} else if(e.which == 40){
+	//down key
+	} else if(e.which == 37){
+	//left
+	} else if(e.which == 39){
+	//right
+	}
+	//console.log(e.which);
+	})
 
 
 

@@ -58,7 +58,7 @@ Network.prototype.receiveObjectUpdate = function(data){
 	//d = new Date();
 	//lastPing = d.getTime()
 	//this.world.socket.emit('ping', { time: lastPing });
-	this.world.socket.emit('ping', { time: (new Date()).getTime() });
+	//this.world.socket.emit('ping', { time: (new Date()).getTime() });
 
 	//update loop
 	for(d in data){
