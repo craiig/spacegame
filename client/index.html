@@ -84,7 +84,7 @@
 				if (xobj.coords!== undefined){
 				//particle = scene.__objects[xobj.prevParticle];
 				//console.log(updateTime);
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.heading[0]/10);
+				setParticle( xobj.particle, updateTime*0.9, xobj.prevCoord, xobj.coords,xobj.heading[0]/10);
 				// console.log('Pos tween');
 				// console.log(xobj.particle.myPositionTween);
 				// console.log('Scale tween');
@@ -113,53 +113,21 @@
 	}
 
 	function setParticle( particle, time, coordsFrom,coordsTo, newScale) {
-		//particle.myPositionTween.stop();
-		//particle.myScaleTween.stop();
-
-		//particle.position.x = new Number(coordsFrom[0]);
-		//particle.position.y = new Number(coordsFrom[1]);
-		// console.log(particle.myPositionTween._duration);
-		// particle.myPositionTween.to({ x: coordsTo[0], y: coordsTo[1]}, time ) ;
-		// particle.myPositionTween.start();
-		// //particle.myScaleTween.to({ x: newScale, y: newScale }, time ) ;
-		//console.log(particle.myPositionTween);	
 		
-		//TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)].to(  { x: coordsTo[0], y: coordsTo[1]}, time );
 		var xq =new TWEEN.Tween( particle.position)
 		 .to(  { x: coordsTo[0], y: coordsTo[1]}, time )
 		 .onComplete (function(){
-		 	TWEEN.stop(this);
 		 });
 		 //.start();
 		 //console.log(time);
 		 if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)] !== undefined) {
 			particle.myPositionTween.chain(xq);
+			//console.log(TWEEN.getAll().indexOf(particle.myPositionTween));
 		 } else {
+		 	//console.log(TWEEN.getAll().indexOf(particle.myPositionTween));
 		 	particle.myPositionTween = xq;
 		 	particle.myPositionTween.start();
 		 }
-		//particle.myPositionTween.to(  { x: coordsTo[0], y: coordsTo[1]}, time );
-
-		//TWEEN.add(particle.myPositionTween);
-
-		//particle.myPositionTween.start();
-
-		// particle.myPositionTween =new TWEEN.Tween( particle.position)
-		// .to(  { x: coordsTo[0], y: coordsTo[1]}, time )
-		// .start();
-
-
-
-		//);
-//particle.myPositionTween.start();	
-
-		//particle.myPositionTween.start();	
-		//TWEEN.add(particle.myPositionTween);
-			// .onUpdate (function () {
-			// 		console.log('beep');
-			// })
-			//.start();
-			//console.log(q);
 		
 
 
@@ -174,34 +142,12 @@
 
 
 		if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)] !== undefined) {
-			particle.myPositionTween.chain(xxq);
+			particle.myScaleTween.chain(xxq);
 		 } else {
-		 	particle.myPositionTween = xxq;
-		 	particle.myPositionTween.start();
+		 	particle.myScaleTween = xxq;
+		 	particle.myScaleTween.start();
 		 }		
-//console.log(TWEEN);
-//console.log(TWEEN.getAll());
 
-
-		//  	.start();
-
-
-		// particle.myPositionTween.to = function () {
-		// 	_duration = time;
-		// 	_valuesEnd = { x: coordsTo[0], y: coordsTo[1]};
-		// 	return this;
-		// };
-		// console.log(particle.myPositionTween);
-		//  particle.myPositionTween._duration = time;
-		//  particle.myPositionTween._valuesEnd = { x: coordsTo[0], y: coordsTo[1]};
-		// //particle.myPositionTween.start();
-		 // particle.myScaleTween._duration = time;
-		 // particle.myScaleTween._valuesEnd = { x: newScale, y: newScale };
-		// particle.myPositionTween.onUpdate = function() {
-		// 	console.log(particle.position.x);
-		// }
-		//console.log(TWEEN.getAll().length);
-		
 	}
 
 	function generateSprite() {
