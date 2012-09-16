@@ -67,12 +67,18 @@
 	});
 
 	world.events.on("update", function(){ 
+		//console.log(updateTime);
+		// if  (TWEEN.getAll().length !== 0) {
+		// 	TWEEN.removeAll();
+		// }
+
 		for (obj in world.WorldData){
 			var xobj = world.WorldData[obj];
 			
  			if ((xobj.GameServerTime!==undefined))		{
 				updateTime =  Date.now() - lastUpdate;
 				lastUpdate = Date.now();
+				//if (updateTime>1000) updateTime = 300;
 			} 
 			else
 				if (xobj.coords!== undefined){
@@ -89,21 +95,20 @@
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
 		}
+	
 	});
 
 	function initParticle( particle, coords, newScale) {
 		particle.position.x = new Number(coords[0]);
 		particle.position.y = new Number(coords[1]);
 		particle.scale.x = particle.scale.y = newScale;
-		particle.myPositionTween = new TWEEN.Tween( particle.position )
-			.to( { x: new Number(coords[0]*2), y: new Number(coords[1]*2)}, 1000 )
-			.onUpdate (function () {
-					console.log('boopp');
-					return this;
-			});	
+		// particle.myPositionTween = new TWEEN.Tween( particle.position )
+		// 	.to( { x: new Number(coords[0]*2), y: new Number(coords[1]*2)}, 1000 )
+		// 	.start();	
 
-		particle.myScaleTween= new TWEEN.Tween( particle.scale )
-		 	.to( { x: newScale, y: newScale }, 0 );
+
+		// particle.myScaleTween= new TWEEN.Tween( particle.scale )
+		//  	.to( { x: newScale, y: newScale }, 0 );
 		// console.log(particle.myPositionTween);	
 	}
 
@@ -118,13 +123,33 @@
 		// particle.myPositionTween.start();
 		// //particle.myScaleTween.to({ x: newScale, y: newScale }, time ) ;
 		//console.log(particle.myPositionTween);	
-	
-		particle.myPositionTween =new TWEEN.Tween( particle.position)
-		//console.log(particle.myPositionTween);
-		//particle.myPositionTween.Tween(particle.position);
+		
+		//TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)].to(  { x: coordsTo[0], y: coordsTo[1]}, time );
+		var xq =new TWEEN.Tween( particle.position)
+		 .to(  { x: coordsTo[0], y: coordsTo[1]}, time )
+		 .onComplete (function(){
+		 	TWEEN.stop(this);
+		 });
+		 //.start();
+		 //console.log(time);
+		 if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)] !== undefined) {
+			particle.myPositionTween.chain(xq);
+		 } else {
+		 	particle.myPositionTween = xq;
+		 	particle.myPositionTween.start();
+		 }
+		//particle.myPositionTween.to(  { x: coordsTo[0], y: coordsTo[1]}, time );
 
-		.to(  { x: coordsTo[0], y: coordsTo[1]}, time )
-		.start();
+		//TWEEN.add(particle.myPositionTween);
+
+		//particle.myPositionTween.start();
+
+		// particle.myPositionTween =new TWEEN.Tween( particle.position)
+		// .to(  { x: coordsTo[0], y: coordsTo[1]}, time )
+		// .start();
+
+
+
 		//);
 //particle.myPositionTween.start();	
 
@@ -135,9 +160,29 @@
 			// })
 			//.start();
 			//console.log(q);
-		 particle.myScaleTween= new TWEEN.Tween( particle.scale )
+		
+
+
+		var xxq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
-		  	.start();
+		  	.onComplete (function(){
+		 		TWEEN.stop(this);
+		 	});
+		  	//.start();
+		
+
+
+
+		if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)] !== undefined) {
+			particle.myPositionTween.chain(xxq);
+		 } else {
+		 	particle.myPositionTween = xxq;
+		 	particle.myPositionTween.start();
+		 }		
+//console.log(TWEEN);
+//console.log(TWEEN.getAll());
+
+
 		//  	.start();
 
 
@@ -155,6 +200,7 @@
 		// particle.myPositionTween.onUpdate = function() {
 		// 	console.log(particle.position.x);
 		// }
+		//console.log(TWEEN.getAll().length);
 		
 	}
 
@@ -181,7 +227,7 @@
 		document.body.appendChild( container );
 
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
-		camera.position.z = 100;
+		camera.position.z = 800;
 
 		//renderer = new THREE.WebGLRenderer();
 		renderer = new THREE.CanvasRenderer();
@@ -195,9 +241,9 @@
 		stats.domElement.style.top = '0px';
 		container.appendChild( stats.domElement );
 
-		document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-		document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-		document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+		//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		//document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+		//document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
 		//
 
