@@ -29,8 +29,8 @@ function GameServer(io) {
 	this.fileLoaded = false;
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
-	setInterval( function(){that.update()}, 500); //1 fps
-	setInterval( function(){that.slowUpdate()}, 500); //1 fps
+	setInterval( function(){that.update()}, 1500); //1 fps
+	setInterval( function(){that.slowUpdate()}, 1500); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
 };
@@ -52,7 +52,7 @@ GameServer.prototype.newConnection = function(socket){
 //setup any other notifications
 	var that = this;
 	socket.on("ping", function(data){
-		socket.emit("ping", data);
+		//socket.emit("ping", data);
 	})
 
 	//setup any other notifications
@@ -76,6 +76,11 @@ GameServer.prototype.update = function(){
 		a.update(sTimeDiff);
 	}
 
+	for (i=0; i< this.areaList.length; i++) {
+		a = this.areaList[i];
+		a.prototype = area.prototype;
+		a.updateSlow(1);
+	}
 	this.emit("update", sTimeDiff);
 	
 	//update our network channel
@@ -83,13 +88,13 @@ GameServer.prototype.update = function(){
 };
 
 GameServer.prototype.slowUpdate = function(that){
-	for (i=0; i< this.areaList.length; i++) {
-		a = this.areaList[i];
-		a.prototype = area.prototype;
-		a.updateSlow(1);
-	}
-	this.emit("slowUpdate", this.GameServerTime);
-	this.netchan.update();
+	// for (i=0; i< this.areaList.length; i++) {
+	// 	a = this.areaList[i];
+	// 	a.prototype = area.prototype;
+	// 	a.updateSlow(1);
+	// }
+	//this.emit("slowUpdate", this.GameServerTime);
+	//this.netchan.update();
 };
 
 

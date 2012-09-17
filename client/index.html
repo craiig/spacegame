@@ -53,7 +53,11 @@
 		}
 	});
 
+
 	world.events.on("update", function(){ 
+		//console.log(world.worldData);
+		//console.log(world.worldData.length);
+		if (world.worldData !== undefined) console.log(world.worldData);
 		for (obj in world.WorldData){
 			var xobj = world.WorldData[obj];
 			
@@ -63,7 +67,7 @@
 			} 
 			else
 				if (xobj.coords!== undefined){
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.heading[0]/5);
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.heading[0]/2);
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -80,17 +84,11 @@
 	function setParticle( particle, time, coordsFrom,coordsTo, newScale) {
 		
 		var xq =undefined;
-		// xq=new TWEEN.Tween( particle.position)
-		//  .to(  { x: coordsTo[0], y: coordsTo[1]}, time )
-		//  .onComplete (function(){
-		//  	TWEEN.stop(this);
-		//  });
+		var r = undefined;
+		r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)];
 
-		 var r = undefined;
-		 r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)];
-
-		 if (r !== undefined) {
-			particle.myPositionTween.chain(
+		if (r !== undefined) {
+			r.chain(
 				xq=new TWEEN.Tween( particle.position)
 		 		.to(  { x: coordsTo[0], y: coordsTo[1]}, time )
 		 		.onComplete (function(){
@@ -103,7 +101,8 @@
 		 		.to(  { x: coordsTo[0], y: coordsTo[1]}, time )
 		 		.onComplete (function(){
 		 			TWEEN.stop(this);
-		 		});
+		 		})
+		 		.delay(5);
 		 	particle.myPositionTween = xq;
 		 	particle.myPositionTween.start();
 		 }
@@ -113,31 +112,29 @@
 		 r = undefined;
 		 r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)];
 
-		var xq = new TWEEN.Tween( particle.scale )
-		  	.to( { x: newScale, y: newScale }, time )
-		  	.onComplete (function(){
-		 		TWEEN.stop(this);
-		 	});
-		  	//.start();
 		
-
-
+		 console.log(time);
 
 		if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)] !== undefined) {
-			particle.myScaleTween.chain(xq = new TWEEN.Tween( particle.scale )
+			r.chain(xq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
 		  	.onComplete (function(){
 		 		TWEEN.stop(this);
+		 		console.log('chain end');
 		 	}));
 		 	particle.myScaleTween = xq;
+		 	console.log('chain');
 		 } else {
 		 	xq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
 		  	.onComplete (function(){
 		 		TWEEN.stop(this);
-		 	});
+		 		console.log('new end');
+		 	})
+		 	.delay(5);
 		 	particle.myScaleTween = xq;
 		 	particle.myScaleTween.start();
+		 	console.log('new');
 		 }		
 
 	}
@@ -232,7 +229,7 @@
 
 
 	//example: send a network obj rpc for testing
-	world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
+	//world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
 
 	//send ping back immediately since we'll block processing and we can use it to measure how long this takes
 	//this.world.socket.emit('ping', { time: (new Date()).getTime() });
