@@ -8,8 +8,10 @@ function World(socket){
 	//this.midpoint=[0,0];
 	//this.half = [2500,2500];
 	this.events = new EventEmitter();
-	this.events.on("init", function(){ console.log("world init"); });
-	this.events.on("update", function(){ console.log("world update"); });
+	this.events.on("init", function(){ //console.log("world init"); 
+});
+	this.events.on("update", function(){ //console.log("world update"); 
+});
 	this.isGfxInit = false;
 
 	var that = this

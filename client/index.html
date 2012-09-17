@@ -34,31 +34,18 @@
 	init();
 	var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
 	var lastPing = 0;
-
-	//var socket = io.connect('http://192.168.1.105:59473');
 	var socket = io.connect(location.hostname); //better way
 	var world = new World(socket);
 
 	world.events.on("init", function(){ 
 		console.log(world.WorldData)
 		for (obj in world.WorldData){
-			//var xobj = world.WorldData[obj];
-
-			//probably a better way to identify object types than this
 			if ((world.WorldData[obj].coords!==undefined)){
 				world.WorldData[obj].particle = new THREE.Particle( material );
-
 				initParticle(world.WorldData[obj].particle, world.WorldData[obj].coords,1);
-				
 				scene.add( world.WorldData[obj].particle);
-				//console.log( world.WorldData[obj].particle.myPositionTween);
-				//console.log(particle);
-				//console.log(scene);
-				//var objIndex=scene.__objects.indexOf(particle);
-				//console.log(objIndex);
 				world.WorldData[obj].prevCoord = world.WorldData[obj].coords; 	
 				world.WorldData[obj].prevHeading = world.WorldData[obj].heading;
-				//world.WorldData[obj].prevParticle = objIndex;
 			} else if ((world.WorldData[obj].GameServerTime!==undefined)) {
 				updateTime =  (new Date()).getTime() - lastUpdate;
 				lastUpdate = (new Date()).getTime();
@@ -67,30 +54,16 @@
 	});
 
 	world.events.on("update", function(){ 
-		//console.log(updateTime);
-		// if  (TWEEN.getAll().length !== 0) {
-		// 	TWEEN.removeAll();
-		// }
-
 		for (obj in world.WorldData){
 			var xobj = world.WorldData[obj];
 			
  			if ((xobj.GameServerTime!==undefined))		{
 				updateTime =  Date.now() - lastUpdate;
 				lastUpdate = Date.now();
-				//if (updateTime>1000) updateTime = 300;
 			} 
 			else
 				if (xobj.coords!== undefined){
-				//particle = scene.__objects[xobj.prevParticle];
-				//console.log(updateTime);
-				setParticle( xobj.particle, updateTime*0.9, xobj.prevCoord, xobj.coords,xobj.heading[0]/5);
-				// console.log('Pos tween');
-				// console.log(xobj.particle.myPositionTween);
-				// console.log('Scale tween');
-				// console.log(xobj.particle.myScaleTween);
-				//xobj.particle.myPositionTween.start();
-				//xobj.particle.myScaleTween.start();
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.heading[0]/5);
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -102,37 +75,45 @@
 		particle.position.x = new Number(coords[0]);
 		particle.position.y = new Number(coords[1]);
 		particle.scale.x = particle.scale.y = newScale;
-		// particle.myPositionTween = new TWEEN.Tween( particle.position )
-		// 	.to( { x: new Number(coords[0]*2), y: new Number(coords[1]*2)}, 1000 )
-		// 	.start();	
-
-
-		// particle.myScaleTween= new TWEEN.Tween( particle.scale )
-		//  	.to( { x: newScale, y: newScale }, 0 );
-		// console.log(particle.myPositionTween);	
 	}
 
 	function setParticle( particle, time, coordsFrom,coordsTo, newScale) {
 		
-		var xq =new TWEEN.Tween( particle.position)
-		 .to(  { x: coordsTo[0], y: coordsTo[1]}, time )
-		 .onComplete (function(){
-		 	TWEEN.stop(this);
-		 });
-		 //.start();
-		 //console.log(time);
-		 if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)] !== undefined) {
-			particle.myPositionTween.chain(xq);
-			//console.log(TWEEN.getAll().indexOf(particle.myPositionTween));
+		var xq =undefined;
+		// xq=new TWEEN.Tween( particle.position)
+		//  .to(  { x: coordsTo[0], y: coordsTo[1]}, time )
+		//  .onComplete (function(){
+		//  	TWEEN.stop(this);
+		//  });
+
+		 var r = undefined;
+		 r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)];
+
+		 if (r !== undefined) {
+			particle.myPositionTween.chain(
+				xq=new TWEEN.Tween( particle.position)
+		 		.to(  { x: coordsTo[0], y: coordsTo[1]}, time )
+		 		.onComplete (function(){
+		 			TWEEN.stop(this);
+		 		})
+		 	);
+		 	particle.myPositionTween=xq;
 		 } else {
-		 	//console.log(TWEEN.getAll().indexOf(particle.myPositionTween));
+		 	xq=new TWEEN.Tween( particle.position)
+		 		.to(  { x: coordsTo[0], y: coordsTo[1]}, time )
+		 		.onComplete (function(){
+		 			TWEEN.stop(this);
+		 		});
 		 	particle.myPositionTween = xq;
 		 	particle.myPositionTween.start();
 		 }
 		
 
+		xq =undefined;
+		 r = undefined;
+		 r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)];
 
-		var xxq = new TWEEN.Tween( particle.scale )
+		var xq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
 		  	.onComplete (function(){
 		 		TWEEN.stop(this);
@@ -143,9 +124,19 @@
 
 
 		if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)] !== undefined) {
-			particle.myScaleTween.chain(xxq);
+			particle.myScaleTween.chain(xq = new TWEEN.Tween( particle.scale )
+		  	.to( { x: newScale, y: newScale }, time )
+		  	.onComplete (function(){
+		 		TWEEN.stop(this);
+		 	}));
+		 	particle.myScaleTween = xq;
 		 } else {
-		 	particle.myScaleTween = xxq;
+		 	xq = new TWEEN.Tween( particle.scale )
+		  	.to( { x: newScale, y: newScale }, time )
+		  	.onComplete (function(){
+		 		TWEEN.stop(this);
+		 	});
+		 	particle.myScaleTween = xq;
 		 	particle.myScaleTween.start();
 		 }		
 
