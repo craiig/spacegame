@@ -1,0 +1,304 @@
+<script src="/jquery/jquery.min.js"></script>
+<script src="/events.js"></script>
+<script src="/network.js"></script>
+<script src="/world.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/three/three.min.js"></script>
+<script src="/three/Tween.js"></script>
+<script src="/three/Stats.js"></script>
+<html>
+<head>
+		<style>
+			body {
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			a {
+				color:#0078ff;
+			}
+		</style>
+	</head>
+<body>
+<script>
+	var container, stats;
+	var camera, renderer, particle;
+	var mouseX = 0, mouseY = 0;
+	var currPing=0;
+	var windowHalfX = window.innerWidth / 2;
+	var windowHalfY = window.innerHeight / 2;
+	var scene = new THREE.Scene();
+	var lastUpdate=(new Date()).getTime();
+	var updateTime=(new Date()).getTime();
+	init();
+	var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
+	//var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.SubtractiveBlending } );
+	var lastPing = 0;
+	var socket = io.connect(location.hostname); //better way
+	var world = new World(socket);
+
+	world.events.on("init", function(){ 
+		console.log(world.WorldData)
+		for (obj in world.WorldData){
+			if ((world.WorldData[obj].coords!==undefined)){
+				world.WorldData[obj].particle = new THREE.Particle( material );
+				initParticle(world.WorldData[obj].particle, world.WorldData[obj].coords,1);
+				scene.add( world.WorldData[obj].particle);
+				world.WorldData[obj].prevCoord = world.WorldData[obj].coords; 	
+				world.WorldData[obj].prevHeading = world.WorldData[obj].heading;
+			} else if ((world.WorldData[obj].GameServerTime!==undefined)) {
+				updateTime =  (new Date()).getTime() - lastUpdate;
+				lastUpdate = (new Date()).getTime();
+			}			
+		}
+	});
+
+
+	world.events.on("update", function(){ 
+		if (world.worldData !== undefined) console.log(world.worldData);
+		for (obj in world.WorldData){
+			var xobj = world.WorldData[obj];
+			
+ 			if ((xobj.GameServerTime!==undefined))		{
+				updateTime =  Date.now() - lastUpdate;
+				lastUpdate = Date.now();
+			} 
+			else
+				if (xobj.coords!== undefined){
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.heading[0]/10);
+				world.WorldData[obj].prevCoord = xobj.coords; 	
+				world.WorldData[obj].prevHeading = xobj.heading;
+			} 
+		}
+	
+	});
+
+	function initParticle( particle, coords, newScale) {
+		particle.position.x = new Number(coords[0]);
+		particle.position.y = new Number(coords[1]);
+		particle.scale.x = particle.scale.y = newScale;
+	}
+
+	function setParticle( particle, time, coordsFrom,coordsTo, newScale) {
+		
+		var xq =undefined;
+		var r = undefined;
+		r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myPositionTween)];
+
+		if (r !== undefined) {
+			r.chain(
+				xq=new TWEEN.Tween( particle.position)
+		 		.to(  { x: coordsTo[0], y: coordsTo[1]}, time )
+		 		.onComplete (function(){
+		 			TWEEN.stop(this);
+		 		})
+		 	);
+		 	particle.myPositionTween=xq;
+		 } else {
+		 	xq=new TWEEN.Tween( particle.position)
+		 		.to(  { x: coordsTo[0], y: coordsTo[1]}, time )
+		 		.onComplete (function(){
+		 			TWEEN.stop(this);
+		 		})
+		 		.delay(5);
+		 	particle.myPositionTween = xq;
+		 	particle.myPositionTween.start();
+		 }
+		
+
+		xq =undefined;
+		 r = undefined;
+		 r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)];
+
+		
+		 console.log(time);
+
+		if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)] !== undefined) {
+			r.chain(xq = new TWEEN.Tween( particle.scale )
+		  	.to( { x: newScale, y: newScale }, time )
+		  	.onComplete (function(){
+		 		TWEEN.stop(this);
+		 		console.log('chain end');
+		 	}));
+		 	particle.myScaleTween = xq;
+		 	console.log('chain');
+		 } else {
+		 	xq = new TWEEN.Tween( particle.scale )
+		  	.to( { x: newScale, y: newScale }, time )
+		  	.onComplete (function(){
+		 		TWEEN.stop(this);
+		 		console.log('new end');
+		 	})
+		 	.delay(5);
+		 	particle.myScaleTween = xq;
+		 	particle.myScaleTween.start();
+		 	console.log('new');
+		 }		
+
+	}
+
+	function generateSprite() {
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = 64;
+		canvas.height = 64;
+
+		var context = canvas.getContext( '2d' );
+		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
+		gradient.addColorStop( 0, 'rgba(64,64,64,1)' );
+		gradient.addColorStop( 0.001, 'rgba(64,64,64,0.5)' );
+		gradient.addColorStop( 0.05, 'rgba(64,64,0,0.25)' );
+		gradient.addColorStop( 0.1, 'rgba(6,0,0,0.1)' );
+		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
+
+		context.fillStyle = gradient;
+		context.fillRect( 0, 0, canvas.width, canvas.height );
+
+		return canvas;
+
+	}
+	function init() {
+		container = document.createElement( 'div' );
+		document.body.appendChild( container );
+
+		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.z = 1500;
+
+		//renderer = new THREE.WebGLRenderer();
+		renderer = new THREE.CanvasRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.sortElements = false;
+		renderer.setClearColorHex( 0x0000ff, 0.25 );
+		renderer.autoClear = false;
+		container.appendChild( renderer.domElement );
+console.log(renderer);
+
+		stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '0px';
+		container.appendChild( stats.domElement );
+
+		//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		//document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+		//document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+		//
+
+		//window.addEventListener( 'resize', onWindowResize, false );
+
+	}
+
+	function animate() {
+		requestAnimationFrame( animate );
+		render();
+		stats.update();
+	}
+
+	function render() {
+
+		TWEEN.update();
+
+		camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+		camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+		camera.lookAt( scene.position );
+
+		renderer.render( scene, camera );
+
+	}
+
+
+	function onDocumentMouseMove( event ) {
+		mouseX = event.clientX - windowHalfX;
+		mouseY = event.clientY - windowHalfY;
+	}
+
+	function onDocumentTouchStart( event ) {
+		if ( event.touches.length == 1 ) {
+			event.preventDefault();
+			mouseX = event.touches[ 0 ].pageX - windowHalfX;
+			mouseY = event.touches[ 0 ].pageY - windowHalfY;
+		}
+	}
+
+	function onDocumentTouchMove( event ) {
+		if ( event.touches.length == 1 ) {
+			event.preventDefault();
+			mouseX = event.touches[ 0 ].pageX - windowHalfX;
+			mouseY = event.touches[ 0 ].pageY - windowHalfY;
+		}
+	}
+
+
+
+	//example: send a network obj rpc for testing
+	//world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
+
+	//send ping back immediately since we'll block processing and we can use it to measure how long this takes
+	//this.world.socket.emit('ping', { time: (new Date()).getTime() });
+
+	//setup simple ping function
+	$(document).ready( function(){ //fire when the document dom is ready
+	// 	socket.on('ping', function(data){
+	// //console.log("ping response:");
+	// //console.log(data);
+	// 	var now = (new Date()).getTime();
+	// 	$("#ping").html(now - data.time);
+	// //console.log("now: " + now + " received: " + data.time)
+	// 	lastPing = now - data.time;
+	// //this.emit('ping', { time: now });
+	// 	})
+	})
+
+	//setup a keypress handler
+	$(document).bind('keydown', function(e){
+	if(e.which == 38){
+	//up key
+	socket.emit('ship_accelerate_down');
+	//console.log("down")
+	} else if(e.which == 40){
+	//down key
+	} else if(e.which == 37){
+	//left
+	socket.emit('ship_accelerate_left');
+	} else if(e.which == 39){
+	//right
+	socket.emit('ship_accelerate_right');
+	}
+	//console.log(e.which);
+	})
+
+	$(document).bind('keyup', function(e){
+	if(e.which == 38){
+	//up key
+	socket.emit('ship_accelerate_up', "0")
+	//console.log("up")
+	} else if(e.which == 40){
+	//down key
+	} else if(e.which == 37){
+	//left
+	} else if(e.which == 39){
+	//right
+	}
+	//console.log(e.which);
+	})
+
+
+
+
+	animate();
+
+
+
+</script> 
+
+Ping: <span id="ping">xx</span> ms
+<br/>
+<br/>
+Ships: <ul id="shiplist"></ul>
+<br/>
+<br/>
+Name: <input type="text" /> <br />
+Players: <ul id="playerlist"></ul>
+
+</body>
+</html>
