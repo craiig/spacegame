@@ -25,6 +25,7 @@
 	var container, stats;
 	var camera, renderer, particle;
 	var mouseX = 0, mouseY = 0;
+var camMin,camMax,camZ;
 	var currPing=0;
 	var windowHalfX = window.innerWidth / 2;
 	var windowHalfY = window.innerHeight / 2;
@@ -160,9 +161,14 @@
 	function init() {
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
+camMin=1;
+camMax=1501;
+camZ=1500;
+		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
+		camera.position.z = camZ;
 
-		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
-		camera.position.z = 1500;
+
+
 
 		//renderer = new THREE.WebGLRenderer();
 		renderer = new THREE.CanvasRenderer();
@@ -286,11 +292,15 @@
 
 //    });
 
-
-//myimage.addEventListener("mousewheel", MouseWheelHandler, false);  
 document.addEventListener("mousewheel", function(e){
-//console.log(e); 
-camera.position.z += e.wheelDelta;
+camZ+=e.wheelDelta;
+camMax+=e.wheelDelta;
+
+camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
+		camera.position.z = camZ;
+
+
+
 
 //console.log(mousewheelevt);
 }, false);
