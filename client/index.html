@@ -113,28 +113,28 @@
 		 r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)];
 
 		
-		 console.log(time);
+		 //console.log(time);
 
 		if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)] !== undefined) {
 			r.chain(xq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
 		  	.onComplete (function(){
 		 		TWEEN.stop(this);
-		 		console.log('chain end');
+		 		//console.log('chain end');
 		 	}));
 		 	particle.myScaleTween = xq;
-		 	console.log('chain');
+		 	//console.log('chain');
 		 } else {
 		 	xq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
 		  	.onComplete (function(){
 		 		TWEEN.stop(this);
-		 		console.log('new end');
+		 		//console.log('new end');
 		 	})
 		 	.delay(5);
 		 	particle.myScaleTween = xq;
 		 	particle.myScaleTween.start();
-		 	console.log('new');
+		 	//console.log('new');
 		 }		
 
 	}
@@ -280,9 +280,20 @@
 	//console.log(e.which);
 	})
 
+// 	$(document).scroll(x,function () { 
+//console.log(x);
+      //camera.position.z += camera.position.x ) * 0.05;
+
+//    });
 
 
+//myimage.addEventListener("mousewheel", MouseWheelHandler, false);  
+document.addEventListener("mousewheel", function(e){
+//console.log(e); 
+camera.position.z += e.wheelDelta;
 
+//console.log(mousewheelevt);
+}, false);
 	animate();
 
 
