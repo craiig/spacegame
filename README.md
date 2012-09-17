@@ -6,15 +6,31 @@ Go to the directory, then type:
 
 node startServer.js
 
-then visit in your browser: http://localhost:59473/
+then visit in your browser: 
+http://localhost:59473/
+	-Three.js canvas client
+
+http://localhost:59473/fireball.html
+	-canvas client that looks like fire
+
+http://localhost:59473/webgl.html
+	-webgl client (broken)
 
 (59473 kind of spells space, right?)
 
+Areas:
+	AlphaOmega - One big grav source near, One gigantic source far but approaching
+	TwoPlusAFewBody - Two big grav sources with a bunch of smaller objects between them
+
+
+
+
+
 Notes:
+	-	Play with the Grav constant in SpaceMath.js to speed/slow things (esp. until we fix how time works)
 
 Dependencies:
-
-  - Socket.io
+  	- Socket.io
 
 
 Todo:
