@@ -84,7 +84,7 @@
 				if (xobj.coords!== undefined){
 				//particle = scene.__objects[xobj.prevParticle];
 				//console.log(updateTime);
-				setParticle( xobj.particle, updateTime*0.9, xobj.prevCoord, xobj.coords,xobj.heading[0]/10);
+				setParticle( xobj.particle, updateTime*0.9, xobj.prevCoord, xobj.coords,xobj.heading[0]/5);
 				// console.log('Pos tween');
 				// console.log(xobj.particle.myPositionTween);
 				// console.log('Scale tween');
@@ -117,6 +117,7 @@
 		var xq =new TWEEN.Tween( particle.position)
 		 .to(  { x: coordsTo[0], y: coordsTo[1]}, time )
 		 .onComplete (function(){
+		 	TWEEN.stop(this);
 		 });
 		 //.start();
 		 //console.log(time);
@@ -173,7 +174,7 @@
 		document.body.appendChild( container );
 
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
-		camera.position.z = 800;
+		camera.position.z = 1500;
 
 		//renderer = new THREE.WebGLRenderer();
 		renderer = new THREE.CanvasRenderer();
@@ -243,19 +244,19 @@
 	world.socket.emit("network_objrpc", {objid:1,eventname:'attach_to_ship'});
 
 	//send ping back immediately since we'll block processing and we can use it to measure how long this takes
-	this.world.socket.emit('ping', { time: (new Date()).getTime() });
+	//this.world.socket.emit('ping', { time: (new Date()).getTime() });
 
 	//setup simple ping function
 	$(document).ready( function(){ //fire when the document dom is ready
-	socket.on('ping', function(data){
-	//console.log("ping response:");
-	//console.log(data);
-	var now = (new Date()).getTime();
-	$("#ping").html(now - data.time);
-	//console.log("now: " + now + " received: " + data.time)
-	lastPing = now - data.time;
-	//this.emit('ping', { time: now });
-	})
+	// 	socket.on('ping', function(data){
+	// //console.log("ping response:");
+	// //console.log(data);
+	// 	var now = (new Date()).getTime();
+	// 	$("#ping").html(now - data.time);
+	// //console.log("now: " + now + " received: " + data.time)
+	// 	lastPing = now - data.time;
+	// //this.emit('ping', { time: now });
+	// 	})
 	})
 
 	//setup a keypress handler
