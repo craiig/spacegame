@@ -32,8 +32,7 @@
 	var lastUpdate=(new Date()).getTime();
 	var updateTime=(new Date()).getTime();
 	init();
-	var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.SubtractiveBlending } );
-	//var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
+	var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
 	var lastPing = 0;
 	var socket = io.connect(location.hostname); //better way
 	var world = new World(socket);
@@ -56,6 +55,8 @@
 
 
 	world.events.on("update", function(){ 
+		//console.log(world.worldData);
+		//console.log(world.worldData.length);
 		if (world.worldData !== undefined) console.log(world.worldData);
 		for (obj in world.WorldData){
 			var xobj = world.WorldData[obj];
@@ -112,42 +113,38 @@
 		 r=TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)];
 
 		
-		 console.log(time);
-
+		 
 		if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)] !== undefined) {
 			r.chain(xq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
 		  	.onComplete (function(){
 		 		TWEEN.stop(this);
-		 		console.log('chain end');
 		 	}));
 		 	particle.myScaleTween = xq;
-		 	console.log('chain');
 		 } else {
 		 	xq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
 		  	.onComplete (function(){
 		 		TWEEN.stop(this);
-		 		console.log('new end');
 		 	})
 		 	.delay(5);
 		 	particle.myScaleTween = xq;
 		 	particle.myScaleTween.start();
-		 	console.log('new');
 		 }		
 
 	}
 
 	function generateSprite() {
 		var canvas = document.createElement( 'canvas' );
-		canvas.width = 64;
-		canvas.height = 64;
+		canvas.width = 16;
+		canvas.height = 16;
 
 		var context = canvas.getContext( '2d' );
 		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
-		gradient.addColorStop( 0, 'rgba(64,64,64,0.5)' );
-		gradient.addColorStop( 0.05, 'rgba(64,64,0,0.25)' );
-		gradient.addColorStop( 0.3, 'rgba(8,0,0,0.1)' );
+		gradient.addColorStop( 0, 'rgba(0,0,256,1)' );
+		gradient.addColorStop( 0.1, 'rgba(128,128,128,1)' );
+		gradient.addColorStop( 0.2, 'rgba(64,64,0,0.8)' );
+		gradient.addColorStop( 0.9, 'rgba(6,0,0,0.3)' );
 		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
 
 		context.fillStyle = gradient;
@@ -168,9 +165,8 @@
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.sortElements = false;
 		renderer.setClearColorHex( 0x0000ff, 0.25 );
-		renderer.autoClear = false;
+		//renderer.autoClear=false;
 		container.appendChild( renderer.domElement );
-console.log(renderer);
 
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
