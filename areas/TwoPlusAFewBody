@@ -1,10 +1,10 @@
 {"allObjects":[
 {"name":"Phoenix","coords":[-50,-150],"heading":[0,0],"mass":1000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Basilisk","coords":[10,50],"heading":[0,0],"mass":2000,"power":0,"isRad":false,"isGrav":true},
-{"name":"Unicorn","coords":[-10220,1],"heading":[50,0],"mass":1000000,"power":0,"isRad":false,"isGrav":true},
+{"name":"Unicorn","coords":[-1220,1],"heading":[0,0],"mass":100000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Hippogryff","coords":[30,-30],"heading":[0,0],"mass":4000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Larry","coords":[-40,120],"heading":[0,0],"mass":5000,"power":0,"isRad":false,"isGrav":true},
-{"name":"Earth","coords":[1220,-1],"heading":[10,3.1],"mass":250000,"power":0,"isRad":false,"isGrav":true},
+{"name":"Earth","coords":[1220,-1],"heading":[0,0],"mass":10000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Luna","coords":[-260,-190],"heading":[0,0],"mass":7000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Mars","coords":[70,80],"heading":[0,0],"mass":8000,"power":9,"isRad":false,"isGrav":true},
 {"name":"UFO1","coords":[-280,170],"heading":[0,0],"mass":9000,"power":80,"isRad":true,"isGrav":true},

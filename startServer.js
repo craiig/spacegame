@@ -15,7 +15,20 @@ app.use(express.static(__dirname + '/client/'));
 
 //instantiate the world object - which includes a network channel
 var MainWorld = new world(io);
+
 //Load The Test Area
-MainWorld.loadArea('TestArea1');
-console.log('done loading');
+var areaArray = fs.readdirSync('./areas/');
+console.log('\nWHAT AREA, HUMAN?\n');
+for (x in areaArray) {
+	console.log('\n[' + x + ']');
+	console.log(areaArray[x]);
+}
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+ 
+process.stdin.on('data', function (areaID) {
+	MainWorld.loadArea('./areas/' + areaArray[new Number(areaID)]);
+	console.log('done loading ' + areaArray[new Number(areaID)]);
+	process.stdin.on('data', function(){});
+});
 
