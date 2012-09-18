@@ -175,6 +175,7 @@ camZ=1500;
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.sortElements = false;
 		renderer.setClearColorHex( 0x0000ff, 0.25 );
+renderer.autoClear=false;
 		container.appendChild( renderer.domElement );
 
 		stats = new Stats();
@@ -289,6 +290,13 @@ camZ=1500;
 // 	$(document).scroll(x,function () { 
 //console.log(x);
       //camera.position.z += camera.position.x ) * 0.05;
+	xq = new TWEEN.Tween( camera.position.z)
+		  	.to( { z: camera.position.z+ e.wheelDelta}, 500 )
+		  	.onComplete (function(){
+		 		TWEEN.stop(this);
+		 	})
+		 	.delay(5)
+.start();
 
 //    });
 
