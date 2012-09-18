@@ -23,7 +23,8 @@ Areas:
 	TwoPlusAFewBody - Two big grav sources with a bunch of smaller objects between them
 
 
-
+Mousewheel or twofinger zoom works now on default client.
+Click to clear the screen on default client.
 
 
 Notes:

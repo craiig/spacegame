@@ -162,8 +162,8 @@ var camMin,camMax,camZ;
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
 camMin=1;
-camMax=1501;
-camZ=1500;
+camMax=10;
+camZ=100000;
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
 		camera.position.z = camZ;
 
@@ -290,28 +290,43 @@ renderer.autoClear=false;
 // 	$(document).scroll(x,function () { 
 //console.log(x);
       //camera.position.z += camera.position.x ) * 0.05;
-	xq = new TWEEN.Tween( camera.position.z)
-		  	.to( { z: camera.position.z+ e.wheelDelta}, 500 )
-		  	.onComplete (function(){
-		 		TWEEN.stop(this);
-		 	})
-		 	.delay(5)
-.start();
-
+	
 //    });
 
 document.addEventListener("mousewheel", function(e){
-camZ+=e.wheelDelta;
-camMax+=e.wheelDelta;
-
-camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
-		camera.position.z = camZ;
+	//console.log('pow');
+	//console.log(e);
+	camZ+=e.wheelDelta;
+	camMax+=e.wheelDelta;
+	var oldPos = camera.position.z;
+	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
+	camera.position.z = oldPos;
+	//console.log(camZ);
+	var q = new TWEEN.Tween( camera.position)
+		  	.to( { z: camZ}, 100 )
+		  	.onComplete (function(){
+		 		TWEEN.stop(this);
+		 	})
+			.start();
 
 
 
 
 //console.log(mousewheelevt);
-}, false);
+	}, false);
+	
+
+	document.addEventListener("click", function(e){
+	//console.log('pow');
+	//console.log(e);
+	renderer.clear();
+	console.log(camZ);
+
+
+
+
+//console.log(mousewheelevt);
+	}, false);
 	animate();
 
 
