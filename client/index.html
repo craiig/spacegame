@@ -324,8 +324,8 @@
 	});
 
 
-	document.addEventListener("mousewheel", function(e){
-		camZ+=e.wheelDelta;
+	document.addEventListener("mousewheel", function(e){		
+		camZ+= (e.wheelDelta>0)? camZ*0.1: camZ*-0.1;
 		camZ=(camZ<0) ? 10:camZ;
 		//camMax+=e.wheelDelta;
 		//camera.far=2*Math.abs(camZ);

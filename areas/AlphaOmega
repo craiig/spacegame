@@ -4,7 +4,7 @@
 {"name":"Unicorn","coords":[-100220,1],"heading":[100,0],"mass":1000000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Hippogryff","coords":[30,-30],"heading":[0,0],"mass":4000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Larry","coords":[-40,120],"heading":[0,0],"mass":5000,"power":0,"isRad":false,"isGrav":true},
-{"name":"Earth","coords":[3220,-1],"heading":[25,3.1],"mass":250000,"power":0,"isRad":false,"isGrav":true},
+{"name":"Earth","coords":[3220,-1],"heading":[0,0],"mass":250000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Luna","coords":[-260,-190],"heading":[0,0],"mass":7000,"power":0,"isRad":false,"isGrav":true},
 {"name":"Mars","coords":[70,80],"heading":[0,0],"mass":8000,"power":9,"isRad":false,"isGrav":true},
 {"name":"UFO1","coords":[-280,170],"heading":[0,0],"mass":9000,"power":80,"isRad":true,"isGrav":true},
