@@ -75,7 +75,7 @@
 			} 
 			else
 				if (xobj.coords!== undefined){
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/1000000);
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/100000);
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
