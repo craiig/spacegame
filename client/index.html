@@ -3,7 +3,7 @@
 <script src="/network.js"></script>
 <script src="/world.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/three/three.min.js"></script>
+<script src="/three/three.js"></script>
 <script src="/three/Tween.js"></script>
 <script src="/three/Stats.js"></script>
 <html>
@@ -25,17 +25,20 @@
 	var container, stats;
 	var camera, renderer, particle;
 	var mouseX = 0, mouseY = 0;
-var camMin,camMax,camZ;
+	var camMin,camMax,camZ;
 	var currPing=0;
 	var windowHalfX = window.innerWidth / 2;
 	var windowHalfY = window.innerHeight / 2;
 	var scene = new THREE.Scene();
 	var lastUpdate=(new Date()).getTime();
 	var updateTime=(new Date()).getTime();
+	var myObj;
+
 	init();
+	
 	var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
 	var lastPing = 0;
-	var socket = io.connect(location.hostname); //better way
+	var socket = io.connect(location.hostname); 
 	var world = new World(socket);
 
 	world.events.on("init", function(){ 
@@ -47,10 +50,14 @@ var camMin,camMax,camZ;
 				scene.add( world.WorldData[obj].particle);
 				world.WorldData[obj].prevCoord = world.WorldData[obj].coords; 	
 				world.WorldData[obj].prevHeading = world.WorldData[obj].heading;
+				if ((world.WorldData[obj].name=="Earth")){
+					myObj = world.WorldData[obj].particle;
+				}	
 			} else if ((world.WorldData[obj].GameServerTime!==undefined)) {
 				updateTime =  (new Date()).getTime() - lastUpdate;
 				lastUpdate = (new Date()).getTime();
-			}			
+			}
+
 		}
 	});
 
@@ -68,7 +75,7 @@ var camMin,camMax,camZ;
 			} 
 			else
 				if (xobj.coords!== undefined){
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.heading[0]/10);
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/10000);
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -116,7 +123,7 @@ var camMin,camMax,camZ;
 		
 		 //console.log(time);
 
-		if (TWEEN.getAll()[TWEEN.getAll().indexOf(particle.myScaleTween)] !== undefined) {
+		if (r !== undefined) {
 			r.chain(xq = new TWEEN.Tween( particle.scale )
 		  	.to( { x: newScale, y: newScale }, time )
 		  	.onComplete (function(){
@@ -142,15 +149,15 @@ var camMin,camMax,camZ;
 
 	function generateSprite() {
 		var canvas = document.createElement( 'canvas' );
-		canvas.width = 16;
-		canvas.height = 16;
+		canvas.width = 8;
+		canvas.height = 8;
 
 		var context = canvas.getContext( '2d' );
 		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
 		gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
-		gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
-		gradient.addColorStop( 0.4, 'rgba(0,0,64,1)' );
-		gradient.addColorStop( 1, 'rgba(0,0,0,1)' );
+		gradient.addColorStop( 0.1, 'rgba(0,255,255,1)' );
+		gradient.addColorStop( 0.2, 'rgba(0,0,64,1)' );
+		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
 
 		context.fillStyle = gradient;
 		context.fillRect( 0, 0, canvas.width, canvas.height );
@@ -161,13 +168,11 @@ var camMin,camMax,camZ;
 	function init() {
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
-camMin=1;
-camMax=10;
-camZ=100000;
+		camMin=1;
+		camMax=1000000;
+		camZ=3682
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
 		camera.position.z = camZ;
-
-
 
 
 		//renderer = new THREE.WebGLRenderer();
@@ -175,15 +180,16 @@ camZ=100000;
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.sortElements = false;
 		renderer.setClearColorHex( 0x0000ff, 0.25 );
-renderer.autoClear=false;
+		//renderer.autoClear=false;
 		container.appendChild( renderer.domElement );
+		renderer.clear();
 
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
 		container.appendChild( stats.domElement );
 
-		//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		//document.addEventListener('mousemove', onDocumentMouseMove, false );
 		//document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 		//document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
@@ -203,18 +209,48 @@ renderer.autoClear=false;
 
 		TWEEN.update();
 
-		camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-		camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
-		camera.lookAt( scene.position );
+		//camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+		//camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
 
+		//camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+		
+		//camera.lookAt( scene.position );
+		if (myObj !== undefined){
+				camera.lookAt( myObj.position );
+				camera.position.x=myObj.position.x;
+				camera.position.y=myObj.position.y;
+				//console.log(myObj.position);	
+		} else {
+				camera.lookAt( scene.position );
+		}
 		renderer.render( scene, camera );
-
 	}
 
 
 	function onDocumentMouseMove( event ) {
-		mouseX = event.clientX - windowHalfX;
-		mouseY = event.clientY - windowHalfY;
+		
+		switch(event.clientX) {
+		case  0:
+			camera.position.x -= 100;
+		break;
+		case window.innerWidth:
+			camera.position.x += 100;
+		break;
+		}
+		switch(event.clientX) {
+		case  0:
+			camera.position.y -= 100;
+		break;
+		case window.innerHeight:
+			camera.position.y += 100;
+		break;
+		}
+
+		// camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+		// camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+		
+		// mouseX = event.clientX - windowHalfX;
+		// mouseY = event.clientY - windowHalfY;
 	}
 
 	function onDocumentTouchStart( event ) {
@@ -256,77 +292,63 @@ renderer.autoClear=false;
 
 	//setup a keypress handler
 	$(document).bind('keydown', function(e){
-	if(e.which == 38){
-	//up key
-	socket.emit('ship_accelerate_down');
-	//console.log("down")
-	} else if(e.which == 40){
-	//down key
-	} else if(e.which == 37){
-	//left
-	socket.emit('ship_accelerate_left');
-	} else if(e.which == 39){
-	//right
-	socket.emit('ship_accelerate_right');
-	}
-	//console.log(e.which);
-	})
+		if(e.which == 38){
+		//up key
+		socket.emit('ship_accelerate_down');
+		//console.log("down")
+		} else if(e.which == 40){
+		//down key
+		} else if(e.which == 37){
+		//left
+		socket.emit('ship_accelerate_left');
+		} else if(e.which == 39){
+		//right
+		socket.emit('ship_accelerate_right');
+		}
+		//console.log(e.which);
+	});
 
 	$(document).bind('keyup', function(e){
-	if(e.which == 38){
-	//up key
-	socket.emit('ship_accelerate_up', "0")
-	//console.log("up")
-	} else if(e.which == 40){
-	//down key
-	} else if(e.which == 37){
-	//left
-	} else if(e.which == 39){
-	//right
-	}
-	//console.log(e.which);
-	})
-
-// 	$(document).scroll(x,function () { 
-//console.log(x);
-      //camera.position.z += camera.position.x ) * 0.05;
-	
-//    });
-
-document.addEventListener("mousewheel", function(e){
-	//console.log('pow');
-	//console.log(e);
-	camZ+=e.wheelDelta;
-	camMax+=e.wheelDelta;
-	var oldPos = camera.position.z;
-	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
-	camera.position.z = oldPos;
-	//console.log(camZ);
-	var q = new TWEEN.Tween( camera.position)
-		  	.to( { z: camZ}, 100 )
-		  	.onComplete (function(){
-		 		TWEEN.stop(this);
-		 	})
-			.start();
+		if(e.which == 38){
+		//up key
+		socket.emit('ship_accelerate_up', "0")
+		//console.log("up")
+		} else if(e.which == 40){
+		//down key
+		} else if(e.which == 37){
+		//left
+		} else if(e.which == 39){
+		//right
+		}
+		//console.log(e.which);
+	});
 
 
-
-
-//console.log(mousewheelevt);
+	document.addEventListener("mousewheel", function(e){
+		camZ+=e.wheelDelta;
+		camZ=(camZ<0) ? 10:camZ;
+		//camMax+=e.wheelDelta;
+		//camera.far=2*Math.abs(camZ);
+		//camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, 2*Math.abs(camZ) );
+		camera.position.z=camZ;
+		
+		//renderer.render( scene, camera );
+		//console.log(camera);
+		// var q = new TWEEN.Tween( camera.position)
+		// 	  	.to( { z: camZ}, 100 )
+		// 	  	.onComplete (function(){
+		// 	 		TWEEN.stop(this);
+		// 	 	})
+		// 		.start();
 	}, false);
 	
 
 	document.addEventListener("click", function(e){
-	//console.log('pow');
-	//console.log(e);
-	renderer.clear();
-	console.log(camZ);
-
-
-
-
-//console.log(mousewheelevt);
+		renderer.clear();
+		console.log(camZ);
 	}, false);
+	
+
 	animate();
 
 
