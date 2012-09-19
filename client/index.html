@@ -37,6 +37,7 @@
 	init();
 	
 	var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite() ), blending: THREE.AdditiveBlending } );
+
 	var lastPing = 0;
 	var socket = io.connect(location.hostname); 
 	var world = new World(socket);
@@ -75,7 +76,9 @@
 			} 
 			else
 				if (xobj.coords!== undefined){
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/100000);
+//				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/100000);
+
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, Math.pow(2,Math.log(xobj.mass)/5));
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -149,14 +152,14 @@
 
 	function generateSprite() {
 		var canvas = document.createElement( 'canvas' );
-		canvas.width = 128;
-		canvas.height = 128;
+		canvas.width = 512;
+		canvas.height = 512;
 
 		var context = canvas.getContext( '2d' );
 		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
 		gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
-		gradient.addColorStop( 0.1, 'rgba(0,255,255,1)' );
-		gradient.addColorStop( 0.2, 'rgba(0,0,64,1)' );
+		gradient.addColorStop( 0.1, 'rgba(64,128,255,0.75)' );
+		gradient.addColorStop( 0.5, 'rgba(16,64,128,0.5)' );
 		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
 
 		context.fillStyle = gradient;
@@ -169,8 +172,8 @@
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
 		camMin=1;
-		camMax=1000000;
-		camZ=3682
+		camMax=1e50;
+		camZ=1208983.9326768476 ;
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
 		camera.position.z = camZ;
 
@@ -179,8 +182,10 @@
 		renderer = new THREE.CanvasRenderer();
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.sortElements = false;
-		renderer.setClearColorHex( 0x0000ff, 0.25 );
-		//renderer.autoClear=false;
+		renderer.setClearColorHex( 0x000000, 0.25 );
+
+//		renderer.setClearColorHex( 0x0000ff, 0.25 );
+//		renderer.autoClear=false;
 		container.appendChild( renderer.domElement );
 		renderer.clear();
 
@@ -327,11 +332,12 @@
 	document.addEventListener("mousewheel", function(e){		
 		camZ+= (e.wheelDelta>0)? camZ*0.1: camZ*-0.1;
 		camZ=(camZ<0) ? 10:camZ;
+		camZ=(camZ>65000000) ? 65000000:camZ;
 		//camMax+=e.wheelDelta;
 		//camera.far=2*Math.abs(camZ);
 		//camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, 2*Math.abs(camZ) );
 		camera.position.z=camZ;
-		
+		renderer.clear();
 		//renderer.render( scene, camera );
 		//console.log(camera);
 		// var q = new TWEEN.Tween( camera.position)

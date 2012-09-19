@@ -29,8 +29,8 @@ function GameServer(io) {
 	this.fileLoaded = false;
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
-	setInterval( function(){that.update()}, 500); //1 fps
-	setInterval( function(){that.slowUpdate()}, 50); //1 fps
+	setInterval( function(){that.update()}, 50); //1 fps
+	setInterval( function(){that.slowUpdate()}, 1); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
 };
@@ -71,10 +71,10 @@ GameServer.prototype.update = function(){
 	var sTimeDiff = timeDiff / 1000; //convert to seconds
 
 	//do fast item update like position due to heading
-	for (i=0; i< this.areaList.length; i++) {
-		a = this.areaList[i];
-		a.update(sTimeDiff);
-	}
+//	for (i=0; i< this.areaList.length; i++) {
+//		a = this.areaList[i];
+//		a.update(sTimeDiff);
+//	}
 
 	
 	this.emit("update", sTimeDiff);
