@@ -46,7 +46,7 @@
 		console.log(world.WorldData)
 		for (obj in world.WorldData){
 			if ((world.WorldData[obj].coords!==undefined)){
-				world.WorldData[obj].particle = new THREE.Particle( material );
+				world.WorldData[obj].particle = new THREE.Particle( new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite(obj) ), blending: THREE.AdditiveBlending } ));
 				initParticle(world.WorldData[obj].particle, world.WorldData[obj].coords,1);
 				scene.add( world.WorldData[obj].particle);
 				world.WorldData[obj].prevCoord = world.WorldData[obj].coords; 	
@@ -78,7 +78,7 @@
 				if (xobj.coords!== undefined){
 //				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/100000);
 
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, Math.pow(2,Math.log(xobj.mass)/5));
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, Math.pow(2,Math.log(xobj.mass)/4));
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -150,16 +150,19 @@
 
 	}
 
-	function generateSprite() {
+	function generateSprite(value) {
 		var canvas = document.createElement( 'canvas' );
-		canvas.width = 512;
-		canvas.height = 512;
+		canvas.width = 16;
+		canvas.height = 16;
+		var r1,r2,r3;
+		r1=Math.floor(Math.random()*128);
+		r2=Math.floor(Math.random()*128);
+		r3=Math.floor(Math.random()*128);
 
 		var context = canvas.getContext( '2d' );
 		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
 		gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
-		gradient.addColorStop( 0.1, 'rgba(64,128,255,0.75)' );
-		gradient.addColorStop( 0.5, 'rgba(16,64,128,0.5)' );
+		gradient.addColorStop( 0.1, 'rgba('+r1+','+r2+','+r3+',0.75)' );
 		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
 
 		context.fillStyle = gradient;
@@ -173,7 +176,7 @@
 		document.body.appendChild( container );
 		camMin=1;
 		camMax=1e50;
-		camZ=31556233.768796977 ;
+		camZ=1208983.9326768476 ;
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
 		camera.position.z = camZ;
 
@@ -185,7 +188,7 @@
 		renderer.setClearColorHex( 0x000000, 0.25 );
 
 //		renderer.setClearColorHex( 0x0000ff, 0.25 );
-//		renderer.autoClear=false;
+		renderer.autoClear=false;
 		container.appendChild( renderer.domElement );
 		renderer.clear();
 
