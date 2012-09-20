@@ -30,7 +30,7 @@ function GameServer(io) {
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
 	setInterval( function(){that.update()}, 50); //1 fps
-	setInterval( function(){that.slowUpdate()}, 1); //1 fps
+	setInterval( function(){that.slowUpdate()}, 0.001); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
 };
@@ -94,7 +94,7 @@ GameServer.prototype.slowUpdate = function(that){
 	for (i=0; i< this.areaList.length; i++) {
 		a = this.areaList[i];
 		a.prototype = area.prototype;
-		a.updateSlow(1);
+		a.updateSlow(500);
 	}
 };
 

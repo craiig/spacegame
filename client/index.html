@@ -46,7 +46,12 @@
 		console.log(world.WorldData)
 		for (obj in world.WorldData){
 			if ((world.WorldData[obj].coords!==undefined)){
-				world.WorldData[obj].particle = new THREE.Particle( new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite(obj) ), blending: THREE.AdditiveBlending } ));
+				if (Math.random()>0.5) {
+					world.WorldData[obj].particle = new THREE.Particle( new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite(obj) ), blending: THREE.AdditiveBlending } ));
+} else {
+					world.WorldData[obj].particle = new THREE.Particle( new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite(obj) ), blending: THREE.NormalBlending } ));
+
+}
 				initParticle(world.WorldData[obj].particle, world.WorldData[obj].coords,1);
 				scene.add( world.WorldData[obj].particle);
 				world.WorldData[obj].prevCoord = world.WorldData[obj].coords; 	
@@ -78,7 +83,7 @@
 				if (xobj.coords!== undefined){
 //				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/100000);
 
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, Math.pow(2,Math.log(xobj.mass)/4));
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, 300*Math.log(xobj.mass));
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -152,8 +157,8 @@
 
 	function generateSprite(value) {
 		var canvas = document.createElement( 'canvas' );
-		canvas.width = 16;
-		canvas.height = 16;
+		canvas.width = 32;
+		canvas.height = 32;
 		var r1,r2,r3;
 		r1=Math.floor(Math.random()*128);
 		r2=Math.floor(Math.random()*128);
@@ -161,8 +166,9 @@
 
 		var context = canvas.getContext( '2d' );
 		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
-		gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
-		gradient.addColorStop( 0.1, 'rgba('+r1+','+r2+','+r3+',0.75)' );
+//		gradient.addColorStop( 0, 'rgba(255,255,255,0)' );
+		gradient.addColorStop( 0, 'rgba(0,0,0,0)' );
+		gradient.addColorStop( 0.1, 'rgba('+r1+','+r2+','+r3+',0.5)' );
 		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
 
 		context.fillStyle = gradient;
