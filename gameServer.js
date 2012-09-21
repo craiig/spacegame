@@ -29,8 +29,8 @@ function GameServer(io) {
 	this.fileLoaded = false;
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
 	var that = this
-	setInterval( function(){that.update()}, 50); //1 fps
-	setInterval( function(){that.slowUpdate()}, 0.001); //1 fps
+	setInterval( function(){that.update()}, 300); //1 fps
+	setInterval( function(){that.slowUpdate()}, 8); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
 };
@@ -94,7 +94,7 @@ GameServer.prototype.slowUpdate = function(that){
 	for (i=0; i< this.areaList.length; i++) {
 		a = this.areaList[i];
 		a.prototype = area.prototype;
-		a.updateSlow(1);
+		a.updateSlow(8);
 	}
 };
 
@@ -117,6 +117,28 @@ GameServer.prototype.loadArea = function(filename){
 		}
 		newArea.allObjects[objindex] = newObj
 	}
+
+	for (i=0;i<1000;i++) {
+		var newObj = new physicalObject(this);
+var r1,r2,r3;
+r1=(Math.random()*10000000)-5000000;
+r2=(Math.random()*10000000)-5000000;
+r3=(Math.random()*1e20);
+//r3=1e20;
+r4=((Math.random()*2)-1)*Math.PI;
+r5=(Math.random()*100);
+console.log(r4,r5);
+		newObj.coords=[r1,r2];
+		newObj.heading=[r5,r4];
+		newObj.mass=r3;
+		newObj.isGrav=true;
+		newArea.addObject(newObj);
+
+
+
+	}
+
+
 
 	this.areaList.push(newArea);
 	this.fileLoaded = true;

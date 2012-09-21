@@ -82,8 +82,8 @@
 			else
 				if (xobj.coords!== undefined){
 //				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/100000);
-
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, 100*Math.log(xobj.mass));
+//console.log(Math.log(xobj.mass));
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, (10*(Math.log(xobj.mass))));
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -167,11 +167,13 @@
 		var context = canvas.getContext( '2d' );
 		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
 //		gradient.addColorStop( 0, 'rgba(255,255,255,0)' );
-		gradient.addColorStop( 0, 'rgba(0,0,0,0)' );
-		gradient.addColorStop( 0.1, 'rgba('+r1+','+r2+','+r3+',0.5)' );
-		gradient.addColorStop( 0.2, 'rgba('+r2+','+r3+','+r1+',0.5)' );
-		gradient.addColorStop( 0.3, 'rgba('+r3+','+r1+','+r2+',0.5)' );
-		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
+//		gradient.addColorStop( 0, 'rgba(0,0,0,0)' );
+		gradient.addColorStop( 0, 'rgba('+r1+','+r2+','+r3+',1)' );
+//		gradient.addColorStop( 0.2, 'rgba('+r2+','+r3+','+r1+',0.5)' );
+		gradient.addColorStop( 1, 'rgba('+r3+','+r1+','+r2+',0.0)' );
+//		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
+//		gradient.addColorStop( 1, 'rgba('+r1+','+r2+','+r3+',1)' );
+
 
 		context.fillStyle = gradient;
 		context.fillRect( 0, 0, canvas.width, canvas.height );
@@ -184,7 +186,7 @@
 		document.body.appendChild( container );
 		camMin=1;
 		camMax=1e50;
-		camZ=1208983.9326768476 ;
+		camZ=6721850.699023932 ;
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
 		camera.position.z = camZ;
 

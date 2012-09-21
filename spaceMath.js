@@ -10,7 +10,9 @@
 //gravitational constant of world
 //in our 2d world this is in units of m^2 kg^-1 s^-2
 //grav = 6.67384e-11;
-grav = 3.7384e-1;
+//grav = 3.7384e-1;
+
+grav = 6.7384e-1;
 
 function spaceMath (){};
 

@@ -79,12 +79,14 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 	for (i=0;i<this.allObjects.length;i++) {
 		o=this.allObjects[i];
 		o.applyHeading(amountOfTime);
+	}
+for (i=0;i<this.allObjects.length;i++) {
+		o=this.allObjects[i];
 		var q = this.calcGrav(o.coords);
 		o.applyImpulse(q);
 		q = this.calcRad(o.coords);
 		o.updateRad(q);
-		
-
 	}
+
 }
 
