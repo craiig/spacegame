@@ -49,7 +49,7 @@
 //				if (Math.random()>0.5) {
 //					world.WorldData[obj].particle = new THREE.Particle( new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite(obj) ), blending: THREE.AdditiveBlending } ));
 //} else {
-					world.WorldData[obj].particle = new THREE.Particle( new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite(obj) ), blending: THREE.NormalBlending } ));
+					world.WorldData[obj].particle = new THREE.Particle( new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSprite(obj) ), blending: THREE.AdditiveBlending } ));
 
 //}
 				initParticle(world.WorldData[obj].particle, world.WorldData[obj].coords,1);
@@ -83,7 +83,7 @@
 				if (xobj.coords!== undefined){
 //				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/100000);
 //console.log(Math.log(xobj.mass));
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, (10*(Math.log(xobj.mass))));
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, (50*(Math.log(xobj.mass))));
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -167,11 +167,11 @@
 		var context = canvas.getContext( '2d' );
 		var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
 //		gradient.addColorStop( 0, 'rgba(255,255,255,0)' );
-//		gradient.addColorStop( 0, 'rgba(0,0,0,0)' );
-		gradient.addColorStop( 0, 'rgba('+r1+','+r2+','+r3+',1)' );
+		gradient.addColorStop( 0, 'rgba(0,0,0,0)' );
+		gradient.addColorStop( 0.9, 'rgba('+r1+','+r2+','+r3+',1)' );
 //		gradient.addColorStop( 0.2, 'rgba('+r2+','+r3+','+r1+',0.5)' );
-		gradient.addColorStop( 1, 'rgba('+r3+','+r1+','+r2+',0.0)' );
-//		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
+//		gradient.addColorStop( 1, 'rgba('+r3+','+r1+','+r2+',0.0)' );
+		gradient.addColorStop( 1, 'rgba(0,0,0,0)' );
 //		gradient.addColorStop( 1, 'rgba('+r1+','+r2+','+r3+',1)' );
 
 

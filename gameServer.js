@@ -118,15 +118,15 @@ GameServer.prototype.loadArea = function(filename){
 		newArea.allObjects[objindex] = newObj
 	}
 
-	for (i=0;i<1000;i++) {
+	for (i=0;i<500;i++) {
 		var newObj = new physicalObject(this);
 var r1,r2,r3;
 r1=(Math.random()*10000000)-5000000;
 r2=(Math.random()*10000000)-5000000;
-r3=(Math.random()*1e20);
+r3=(Math.random()*1e20)+(Math.random()*1e20)+(Math.random()*1e10);
 //r3=1e20;
 r4=((Math.random()*2)-1)*Math.PI;
-r5=(Math.random()*100);
+r5=(Math.random()*1000);
 console.log(r4,r5);
 		newObj.coords=[r1,r2];
 		newObj.heading=[r5,r4];
