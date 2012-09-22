@@ -14,8 +14,10 @@ function physicalObject(world) {
     //considered to be in m/s and radians 
 	this.heading = [0,0]; //r,theta - contains direction and velocity
 	this.mass = 0; //mass for calculating momentum in kg
-	
+	this.radius = 0;
 	this.power = 0; //power of radiation in Watts
+	this.collision = false; 
+	this.collider = "";
 
 	//flags for special scene handling
 	this.isRad = false;
@@ -61,16 +63,25 @@ physicalObject.prototype.getSyncProps = function(){
 };
 
 //calculate this objects 'Gravitational' input from a point in space
-physicalObject.prototype.calcGrav = function(coords){
+physicalObject.prototype.calcGrav = function(obj){
 
-	if (coords !== this.coords) {
+	if (obj.coords !== this.coords) {
 		//find diff in positions
-		xDiff = this.coords[0] - coords[0];
-		yDiff = this.coords[1] - coords[1];
+		xDiff = this.coords[0] - obj.coords[0];
+		yDiff = this.coords[1] - obj.coords[1];
 	
 		//find radius of vector of difference
 		r = Math.sqrt(Math.pow(Math.abs(xDiff),2) + Math.pow(Math.abs(yDiff),2));
-		
+
+		if (r < (this.radius + obj.radius)) {
+		console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+		console.log(r,this.radius,obj.radius);
+			//Collision!
+			this.collision=true;
+			this.collider=obj;
+		}
+
+
 		//calc linear degrading gravity based on r
 		//in 'Newtons'
 		g = spaceMath.grav * this.mass / (r*r);

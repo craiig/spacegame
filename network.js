@@ -19,7 +19,6 @@ function Network(world) {
 	this.io = world.io;
 
 	var that = this
-	//this.io.sockets.on('connection', function(socket){ that.onConnection(socket) });
 	world.on('newplayer', function(player){that.onNewPlayer(player) })
 }
 
@@ -44,53 +43,15 @@ Network.prototype.onNewPlayer = function(player){ //event registered with socket
 										var object = that.objectList[objid].obj
 
 										if(object.objectRPC instanceof events.EventEmitter){
-											//console.log("calling objectRPC.emit: "+data.eventname)
 											object.objectRPC.emit(data.eventname, player, data.eventdata);
-											
 										} else {
 											console.log("no objectRPC on objid: "+objid)
 										}
 									})
 
-	/*socket.on("lastclientupdate", function(data){
-		console.log("lastclientupdate");
-		console.log(data)
-	})*/
 
-	//socket.emit("objectlist", this.objectList);
 	fullUpdate = this.calcFullUpdate();
-	//console.log(fullUpdate[0].data.playerList);
 	socket.emit("objectlist", fullUpdate);
-}
-
-Network.prototype.test = function(){
-	//test of networking code:
-	netChan = Network();
-	netChan2 = Network();
-	timer  = {curtime: 0};
-	timer.getSyncProps = function(){
-		return ['curtime'];
-	}
-	console.log(timer.getSyncProps());
-	netChan.registerObject(timer);
-	 timer.curtime = 1; //checking referencing - passes
-	console.log("First update:")
-	console.log(netChan.calcUpdate());
-
-	console.log("Second update:") //should output nothing
-	console.log(netChan.calcUpdate());
-
-	timer.curtime = 2
-	console.log("Third update:") //should output 2
-	console.log(netChan.calcUpdate());
-	//passes!
-	timer.curtime = 3;
-
-	console.log("netchan2 update:")
-	console.log(netChan2.calcUpdate()); //should output nothing
-	console.log("netchan update:")
-	console.log(netChan.calcUpdate()); //should output 3
-	//end networking code test
 }
 
 //register an object to be synchronized between client/server
@@ -99,7 +60,6 @@ Network.prototype.registerObject = function(obj){
 	if(obj.getSyncProps !== undefined){
 		o = { obj: obj, id: this.nextObjectID++, syncedProps: {} }
 		obj.netid = o.id;
-
 		this.objectList.push( o );
 	} else {
 		console.error("error: attempting to register object without getSyncProps");
@@ -133,7 +93,6 @@ Network.prototype.generateNetworkValue = function(val){
 			newval = new Array();
 			for(var i=0; i<val.length; i++){
 				newval.push(this.generateNetworkValue(val[i]));
-				
 			}
 		} else {
 			console.log('warning: serializing an object with no netid - did you register it? probably gonna crash now');

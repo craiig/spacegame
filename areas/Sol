@@ -1,5 +1,5 @@
 {"allObjects":[
-{"name":"Sol","coords":[0,0],"heading":[0,0],"mass":1.9891e30,"power":0,"isRad":false,"isGrav":true},
+{"name":"Sol","coords":[0,0],"heading":[0,0],"mass":1.9891e30,"power":0,"isRad":false,"isGrav":true,"radius":6963.42},
 {"name":"Mercury","coords":[57909.100,0],"heading":[150.787,1.5708],"mass":3.3022e23,"power":0,"isRad":false,"isGrav":true},
 {"name":"Venus","coords":[108208.000,0],"heading":[400,1.5708],"mass":4.8685e24,"power":0,"isRad":false,"isGrav":true},
 {"name":"Earth","coords":[149598.261,0],"heading":[370,1.5708],"mass":5.9736e24,"power":0,"isRad":false,"isGrav":true},

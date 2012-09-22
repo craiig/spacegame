@@ -42,11 +42,11 @@ physicalArea.prototype.removeObject = function(obj){
 }
 
 //calc sum of all gravities at a point
-physicalArea.prototype.calcGrav = function(coords) {
+physicalArea.prototype.calcGrav = function(obj) {
 	//calc the grav contributions from all the objects in the solar system
 	var vec = [0,0];
 	for (grav in this.gravitatingObjects) {
-		vec = spaceMath.vectorAdd(vec,this.allObjects[grav].calcGrav(coords)); // need to vector add this as it has direction and magnitude
+		vec = spaceMath.vectorAdd(vec,this.allObjects[grav].calcGrav(obj)); // need to vector add this as it has direction and magnitude
 	}
 	return vec;
 }
@@ -80,12 +80,38 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 		o=this.allObjects[i];
 		o.applyHeading(amountOfTime);
 	}
-for (i=0;i<this.allObjects.length;i++) {
+
+	for (i in this.allObjects) {
 		o=this.allObjects[i];
-		var q = this.calcGrav(o.coords);
-		o.applyImpulse(q);
-		q = this.calcRad(o.coords);
-		o.updateRad(q);
+		var q = this.calcGrav(o);
+
+		if (o.collision==true) {
+v1=o.heading;
+v2=o.collider.heading;
+v1[0] *= o.mass;
+v2[0] *= o.collider;
+ 
+			vec1 = spaceMath.vectorAdd(
+				v1,
+				v2); // need to vector add this as it has direction and magnitude
+//			o.collider.mass += o.mass;
+//			o.mass=0;
+//			o.collider.heading=vec1; 
+			o.collision=false;
+			o.mass+=o.collider.mass;
+			o.collider.mass=0; 
+
+			vec1[0] /= o.mass
+			o.heading = vec1;
+		
+//			o.collider.heading = [0,0];
+		console.log('collision');
+
+		} else {
+			o.applyImpulse(q);
+		}
+		//q = this.calcRad(o.coords);
+		//o.updateRad(q);
 	}
 
 }

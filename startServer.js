@@ -9,6 +9,8 @@ var world = require('./gameServer.js');
 //setup the app & socketio in this weird way thanks to express
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+io.set('log level', 1);
+
 
 server.listen(59473);
 app.use(express.static(__dirname + '/client/'));
