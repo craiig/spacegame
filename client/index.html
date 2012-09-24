@@ -83,7 +83,7 @@
 				if (xobj.coords!== undefined){
 //				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords,xobj.mass*xobj.heading[0]/100000);
 //console.log(Math.log(xobj.mass));
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, (50*(Math.log(xobj.mass))));
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, (30*(Math.log(xobj.mass))));
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} 
@@ -186,7 +186,7 @@
 		document.body.appendChild( container );
 		camMin=1;
 		camMax=1e50;
-		camZ=6721850.699023932 ;
+		camZ=42646500 ;
 		camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, camMin, camMax );
 		camera.position.z = camZ;
 

@@ -86,29 +86,52 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 		var q = this.calcGrav(o);
 
 		if (o.collision==true) {
-v1=o.heading;
-v2=o.collider.heading;
-v1[0] *= o.mass;
-v2[0] *= o.collider;
- 
-			vec1 = spaceMath.vectorAdd(
-				v1,
-				v2); // need to vector add this as it has direction and magnitude
-//			o.collider.mass += o.mass;
-//			o.mass=0;
-//			o.collider.heading=vec1; 
+			console.log('collision');
+
+			console.log(o.mass);
+			console.log(o.collider.mass);
 			o.collision=false;
-			o.mass+=o.collider.mass;
-			o.collider.mass=0; 
+			if (o.mass > o.collider.mass) {
+				console.log('collided');
 
-			vec1[0] /= o.mass
-			o.heading = vec1;
 		
-//			o.collider.heading = [0,0];
-		console.log('collision');
+//				v1=o.heading;
+//				v2=o.collider.heading;
+//				v1[0] *= o.mass;
+//				v2[0] *= o.collider.mass;
+ 
+//				vec1 = spaceMath.vectorAdd(
+//					v1,
+//					v2); // need to vector add this as it has direction and magnitude
+//				o.collider.mass += o.mass;
+	//			o.mass=0;
+	//			o.collider.heading=vec1; 
 
+//				o.mass-=o.collider.mass;
+//				o.collider.mass+=o.collider.mass; 
+//				if (o.mass<0) {
+//					var q = Math.abs(o.mass);
+//					o.mass=q;
+//					o.collider.mass -= q;
+//				} 
+
+				//vec1[0] /= o.mass
+				//o.heading = vec1;
+//				o.heading[0]*=-(1);
+//				o.collider.heading[0]*=-(2);
+//				o.collider.heading = [0,0];
+//				console.log(o.collider.mass);
+				var v = o.collider.heading;
+				v[0]*=v.mass;
+				o.mass+=o.collider.mass;
+				o.collider.mass=0;
+				o.collider.coords=undefined; //client looks for this for particle update				
+				o.applyImpulse(v);
+				console.log(o.mass);				
+				o.applyImpulse(q);
+			}		
 		} else {
-			o.applyImpulse(q);
+			o.applyImpulse(q);		
 		}
 		//q = this.calcRad(o.coords);
 		//o.updateRad(q);

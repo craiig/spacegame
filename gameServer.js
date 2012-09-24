@@ -125,13 +125,13 @@ r1=(Math.random()*10000000)-5000000;
 r2=(Math.random()*10000000)-5000000;
 //r3=(Math.random()*1e20)+(Math.random()*1e20)+(Math.random()*1e10);
 
-r3=3*(Math.random()*1e10);
+r3=Math.pow(10,Math.random()*30);
 //r3=1e20;
 r4=((Math.random()*2)-1)*Math.PI;
 r5=(Math.random()*1000);
-
+console.log(r3);
 //console.log(r4,r5);
-newObj.radius=1000;
+newObj.radius=Math.random()*100;
 		newObj.coords=[r1,r2];
 		newObj.heading=[r5,r4];
 		newObj.mass=r3;

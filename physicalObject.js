@@ -65,7 +65,7 @@ physicalObject.prototype.getSyncProps = function(){
 //calculate this objects 'Gravitational' input from a point in space
 physicalObject.prototype.calcGrav = function(obj){
 
-	if (obj.coords !== this.coords) {
+	if ((obj.coords !== this.coords)&&(obj.coords!==undefined)) {
 		//find diff in positions
 		xDiff = this.coords[0] - obj.coords[0];
 		yDiff = this.coords[1] - obj.coords[1];
@@ -74,8 +74,8 @@ physicalObject.prototype.calcGrav = function(obj){
 		r = Math.sqrt(Math.pow(Math.abs(xDiff),2) + Math.pow(Math.abs(yDiff),2));
 
 		if (r < (this.radius + obj.radius)) {
-		console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
-		console.log(r,this.radius,obj.radius);
+//		console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+//		console.log(r,this.radius,obj.radius);
 			//Collision!
 			this.collision=true;
 			this.collider=obj;
