@@ -1,5 +1,6 @@
 {"allObjects":[
-{"name":"Sol","coords":[0,0],"heading":[0,0],"mass":1.9891e10,"power":0,"isRad":false,"isGrav":true,"radius":6963.42}],
+{"name":"Sol","coords":[0,0],"heading":[0,0],"mass":1.9891e10,"power":0,"isRad":false,"isGrav":true,"radius":6963.42},
+{"name":"Sol2","coords":[1,0],"heading":[0,0],"mass":1.9890e10,"power":0,"isRad":false,"isGrav":true,"radius":6963.42}],
 "gravitatingObjects":[0],
 "radiatingObjects":[0],
 "bounds":[[-10,10],[10,-10]],"playerShips":[0],"name":"TestArea1","prototype":{}}

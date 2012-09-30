@@ -37,11 +37,14 @@ function physicalObject(world) {
 
 //apply specific impulse to object
 physicalObject.prototype.applyImpulse = function(vecImpulse){
+	if (this.coords!==undefined) {
+
 	//assumed that forces are expressed in Newtons
 	q = [this.heading[0] * this.mass, this.heading[1]];
 	q = spaceMath.vectorAdd(q,vecImpulse);
 	q[0] = q[0] / this.mass;
 	this.heading = q;
+}
 };
 
 physicalObject.prototype.updateRad = function(inPower){
@@ -50,11 +53,13 @@ physicalObject.prototype.updateRad = function(inPower){
 
 
 physicalObject.prototype.applyHeading = function(amountOfTime){
+	if (this.coords!==undefined) {
 	//update coords with heading
 	x1 = this.heading[0] * Math.cos(this.heading[1]) * amountOfTime;
 	y1 = this.heading[0] * Math.sin(this.heading[1]) * amountOfTime; 
 	this.coords[0] += x1;
 	this.coords[1] += y1; 
+}
 };
 
 
@@ -65,7 +70,7 @@ physicalObject.prototype.getSyncProps = function(){
 //calculate this objects 'Gravitational' input from a point in space
 physicalObject.prototype.calcGrav = function(obj){
 
-	if ((obj.coords !== this.coords)&&(obj.coords!==undefined)) {
+	if ((obj.coords !== this.coords)&&(obj.coords!==undefined)&&(this.coords!==undefined)) {
 		//find diff in positions
 		xDiff = this.coords[0] - obj.coords[0];
 		yDiff = this.coords[1] - obj.coords[1];
@@ -79,6 +84,8 @@ physicalObject.prototype.calcGrav = function(obj){
 			//Collision!
 			this.collision=true;
 			this.collider=obj;
+			obj.collision=true;
+			obj.collider=this;
 		}
 
 

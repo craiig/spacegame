@@ -29,8 +29,12 @@ process.stdin.resume();
 process.stdin.setEncoding('utf8');
  
 process.stdin.on('data', function (areaID) {
+ setTimeout(function(){
+                  
 	MainWorld.loadArea('./areas/' + areaArray[new Number(areaID)]);
 	console.log('done loading ' + areaArray[new Number(areaID)]);
+
+            }, 5000);
 	process.stdin.on('data', function(){});
 });
 

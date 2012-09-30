@@ -85,20 +85,29 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 		o=this.allObjects[i];
 		var q = this.calcGrav(o);
 
-		if (o.collision==true) {
-			console.log('collision');
+		if ((o.collision==true)&&(o.coords!==undefined)&&(o.collider.coords!=undefined)) {
+			//console.log('collision');
 
-			console.log(o.mass);
-			console.log(o.collider.mass);
+			//console.log(o.mass);
+			//console.log(o.collider.mass);
 			o.collision=false;
 			if (o.mass > o.collider.mass) {
 				console.log('collided');
 
 		
 //				v1=o.heading;
-//				v2=o.collider.heading;
+				v2=o.collider.heading;
 //				v1[0] *= o.mass;
-//				v2[0] *= o.collider.mass;
+				v2[0] *= o.collider.mass;
+
+				if (v2[0]>o.mass) {
+					console.log('subtracted!');
+					var cm = v2[0]-o.mass;
+					o.mass+=o.mass;
+					o.collider.mass=cm;
+} else {
+
+
  
 //				vec1 = spaceMath.vectorAdd(
 //					v1,
@@ -121,12 +130,17 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 //				o.collider.heading[0]*=-(2);
 //				o.collider.heading = [0,0];
 //				console.log(o.collider.mass);
-				var v = o.collider.heading;
-				v[0]*=v.mass;
+//				var v = o.collider.heading;
+//				v[0]*=v.mass;
 				o.mass+=o.collider.mass;
+				o.radius=(Math.pow( ((3*o.mass)/(4*Math.PI*1.408e3)),0.333)/100000 );
+				console.log(o.radius);
 				o.collider.mass=0;
-				o.collider.coords=undefined; //client looks for this for particle update				
-				o.applyImpulse(v);
+				o.collider.coords=undefined; //client looks for this for particle update	
+//				this.removeObject(o.collider);
+				//o.applyImpulse(v);
+}			
+
 				console.log(o.mass);				
 				o.applyImpulse(q);
 			}		
