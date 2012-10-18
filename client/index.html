@@ -83,7 +83,7 @@ myObj = world.WorldData[0].particle;
 			} 
 			else
 				if (xobj.coords!== undefined){
-				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, (Math.log(xobj.mass)+0.1));
+				setParticle( xobj.particle, updateTime, xobj.prevCoord, xobj.coords, 30*(Math.log(xobj.mass)+0.1));
 				world.WorldData[obj].prevCoord = xobj.coords; 	
 				world.WorldData[obj].prevHeading = xobj.heading;
 			} else {
