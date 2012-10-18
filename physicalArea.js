@@ -93,7 +93,7 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 			o.collision=false;
 			if (o.mass > o.collider.mass) {
 				console.log('collided');
-
+console.log(o.collider.mass);
 		
 //				v1=o.heading;
 				v2=o.collider.heading;
@@ -132,8 +132,9 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 //				console.log(o.collider.mass);
 //				var v = o.collider.heading;
 //				v[0]*=v.mass;
+
 				o.mass+=o.collider.mass;
-				o.radius=(Math.pow( ((3*o.mass)/(4*Math.PI*1.408e3)),0.333)/100000 );
+				o.radius=(Math.pow( ((3*o.mass)/(4*Math.PI*1.408e3)),0.333)/1000000 );
 				console.log(o.radius);
 				o.collider.mass=0;
 				o.collider.coords=undefined; //client looks for this for particle update	

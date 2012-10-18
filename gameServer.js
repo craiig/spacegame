@@ -28,10 +28,17 @@ function GameServer(io) {
 	this.myFlag = false;
 	this.fileLoaded = false;
 	//register some callbacks - this is annoying to do this way, but our other options are way worse: http://www.dustindiaz.com/scoping-anonymous-functions/
+<<<<<<< HEAD
 	var that = this
 	setInterval( function(){that.update()}, 100); //1 fps
 	setInterval( function(){that.slowUpdate()}, 100); //1 fps
 
+=======
+	var that = this;
+	
+	setInterval( function(){that.slowUpdate()}, 100); //1 fps
+//	setInterval( function(){that.update()}, 100); //1 fps
+>>>>>>> Does stuff
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
 };
 
@@ -71,10 +78,10 @@ GameServer.prototype.update = function(){
 	var sTimeDiff = timeDiff / 1000; //convert to seconds
 
 	//do fast item update like position due to heading
-//	for (i=0; i< this.areaList.length; i++) {
-//		a = this.areaList[i];
-//		a.update(sTimeDiff);
-//	}
+	for (i=0; i< this.areaList.length; i++) {
+		a = this.areaList[i];
+		a.update(sTimeDiff);
+	}
 
 	
 	this.emit("update", sTimeDiff);
@@ -84,18 +91,12 @@ GameServer.prototype.update = function(){
 };
 
 GameServer.prototype.slowUpdate = function(that){
-	// for (i=0; i< this.areaList.length; i++) {
-	// 	a = this.areaList[i];
-	// 	a.prototype = area.prototype;
-	// 	a.updateSlow(1);
-	// }
-	//this.emit("slowUpdate", this.GameServerTime);
-	//this.netchan.update();
 	for (i=0; i< this.areaList.length; i++) {
 		a = this.areaList[i];
 		a.prototype = area.prototype;
 		a.updateSlow(1);
 	}
+this.netchan.update();
 };
 
 
@@ -118,14 +119,26 @@ GameServer.prototype.loadArea = function(filename){
 		newArea.allObjects[objindex] = newObj
 	}
 
+<<<<<<< HEAD
 	for (i=0;i<1000;i++) {
+=======
+
+
+
+
+	for (i=0;i<200;i++) {
+>>>>>>> Does stuff
 		var newObj = new physicalObject(this);
 var r1,r2,r3;
 r1=(Math.random()*1000000)-500000;
 r2=(Math.random()*1000000)-500000;
 //r3=(Math.random()*1e20)+(Math.random()*1e20)+(Math.random()*1e10);
 
+<<<<<<< HEAD
 r3=Math.pow(10,Math.random()*20)+1e10;
+=======
+r3=Math.pow(10,Math.random()*20)+1e5;
+>>>>>>> Does stuff
 //r3=1e20;
 r4=((Math.random()*2)-1)*Math.PI;
 r5=(Math.random()*1000)+100;
@@ -145,14 +158,23 @@ newObj.radius=Math.floor(Math.pow( ((3*r3)/(4*Math.PI*1.408e3)),0.333)/100000 );
 // (3/(4pi) v)^1/3 = r
 
 	}
+<<<<<<< HEAD
 for (i=0;i<1000;i++) {
+=======
+
+
+
+
+
+for (i=0;i<30;i++) {
+>>>>>>> Does stuff
 		var newObj = new physicalObject(this);
 var r1,r2,r3;
 r1=(Math.random()*100000000)-50000000;
 r2=(Math.random()*100000000)-50000000;
 //r3=(Math.random()*1e20)+(Math.random()*1e20)+(Math.random()*1e10);
 
-r3=Math.pow(10,Math.random()*40)+1e5;
+r3=Math.pow(10,Math.random()*30)+1e5;
 //r3=1e20;
 r4=((Math.random()*2)-1)*Math.PI;
 //r5=(Math.random()*100)+10;
