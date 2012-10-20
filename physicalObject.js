@@ -64,7 +64,7 @@ physicalObject.prototype.applyHeading = function(amountOfTime){
 
 
 physicalObject.prototype.getSyncProps = function(){
-	return ['coords', 'heading','mass','model','state'];
+	return ['coords', 'radius'];
 };
 
 //calculate this objects 'Gravitational' input from a point in space
@@ -91,7 +91,9 @@ physicalObject.prototype.calcGrav = function(obj){
 
 		//calc linear degrading gravity based on r
 		//in 'Newtons'
-		g = spaceMath.grav * this.mass / (r*r);
+//		g = spaceMath.grav * this.mass / (r*r);
+
+		g = spaceMath.grav * this.mass / (r);
 		
 		//calc vector direction
 		th = Math.atan2(yDiff,xDiff);

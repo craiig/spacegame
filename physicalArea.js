@@ -79,6 +79,10 @@ physicalArea.prototype.updateSlow = function(amountOfTime) {
 	for (i=0;i<this.allObjects.length;i++) {
 		o=this.allObjects[i];
 		o.applyHeading(amountOfTime);
+try{
+		if ((Math.abs(o.coords[0])>10000000)||(Math.abs(o.coords[1])>10000000))
+			this.removeObject(o);
+} catch (m) {}
 	}
 
 	for (i in this.allObjects) {
@@ -134,7 +138,8 @@ console.log(o.collider.mass);
 //				v[0]*=v.mass;
 
 				o.mass+=o.collider.mass;
-				o.radius=(Math.pow( ((3*o.mass)/(4*Math.PI*1.408e3)),0.333)/1000000 );
+				o.radius=(Math.pow( ((3*o.mass)/(4*Math.PI*1.408e3)),0.333)/100000);
+ 
 				console.log(o.radius);
 				o.collider.mass=0;
 				o.collider.coords=undefined; //client looks for this for particle update	

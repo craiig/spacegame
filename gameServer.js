@@ -31,7 +31,7 @@ function GameServer(io) {
 
 	var that = this;
 	
-	setInterval( function(){that.slowUpdate()}, 100); //1 fps
+	setInterval( function(){that.slowUpdate()}, 300); //1 fps
 //	setInterval( function(){that.update()}, 100); //1 fps
 
 	this.io.sockets.on('connection', function(socket){ that.newConnection(socket) });
@@ -117,25 +117,29 @@ GameServer.prototype.loadArea = function(filename){
 
 
 
-	for (i=0;i<200;i++) {
+	for (i=0;i<2000;i++) {
 
 		var newObj = new physicalObject(this);
 var r1,r2,r3;
-r1=(Math.random()*1000000)-500000;
-r2=(Math.random()*1000000)-500000;
+//r1=(Math.random()*1000000)-500000;
+//r2=(Math.random()*1000000)-500000;
+r1=(Math.random()*10000000)-5000000;
+r2=(Math.random()*10000000)-5000000;
+
 //r3=(Math.random()*1e20)+(Math.random()*1e20)+(Math.random()*1e10);
 
 
-r3=Math.pow(10,Math.random()*20)+1e5;
+r3=Math.pow(10,(Math.random()*20)+5)+1e10;
 //r3=1e20;
 r4=((Math.random()*2)-1)*Math.PI;
-r5=(Math.random()*1000)+100;
+r5=(Math.random()*1000)+1;
 //r5=0;
 console.log(r3);
 //console.log(r4,r5);
 //newObj.radius=Math.random()*100;
-newObj.radius=Math.floor(Math.pow( ((3*r3)/(4*Math.PI*1.408e3)),0.333)/100000 );
-
+//o.radius=(Math.pow( ((3*o.mass)/(4*Math.PI*1.408e3)),0.333)/1000000 );
+newObj.radius=Math.pow( ((3*r3)/(4*Math.PI*1.408e3)),0.333)/100000 ;
+console.log("r:" + newObj.radius);
 		newObj.coords=[r1,r2];
 		newObj.heading=[r5,r4];
 		newObj.mass=r3;
@@ -151,23 +155,34 @@ newObj.radius=Math.floor(Math.pow( ((3*r3)/(4*Math.PI*1.408e3)),0.333)/100000 );
 
 
 
-for (i=0;i<30;i++) {
+for (i=0;i<300;i++) {
 		var newObj = new physicalObject(this);
-var r1,r2,r3;
-r1=(Math.random()*100000000)-50000000;
-r2=(Math.random()*100000000)-50000000;
+var r1,r2,r3,n1,n2,n3,n4;
+
+n1=Math.random();
+n2=Math.random();
+n3=Math.random();
+n1=(n1>0.5)?1:-1;
+n2=(n2>0.5)?1:-1;
+n3=(n3>0.5)?1:-1;
+
+r1=(Math.random()*10000000)-5000000;
+r2=(Math.random()*10000000)-5000000;
 //r3=(Math.random()*1e20)+(Math.random()*1e20)+(Math.random()*1e10);
 
-r3=Math.pow(10,Math.random()*30)+1e5;
+r3=Math.pow(10,(Math.random()*25)+10)+1e5;
 //r3=1e20;
 r4=((Math.random()*2)-1)*Math.PI;
-//r5=(Math.random()*100)+10;
-r5=0;
+r5=(Math.random()*100)+10;
+//r5=0;
 console.log(r3);
 //console.log(r4,r5);
 //newObj.radius=Math.random()*100;
-newObj.radius=Math.pow( ((3*r3)/(4*Math.PI*1.408e3)),0.333)/100000;
-
+newObj.radius=Math.pow( ((3*r3)/(4*Math.PI*1.408e3)),0.333)/100000 ;
+console.log("r:" + newObj.radius);
+r1*=n1;
+r2*=n2;
+r5*=n3;
 		newObj.coords=[r1,r2];
 		newObj.heading=[r5,r4];
 		newObj.mass=r3;

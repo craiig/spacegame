@@ -12,7 +12,7 @@
 //grav = 6.67384e-11;
 //grav = 3.7384e-1;
 
-grav = 6.7384e-3;
+grav = 6.7384e5;
 
 function spaceMath (){};
 
