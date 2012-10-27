@@ -91,9 +91,9 @@ physicalObject.prototype.calcGrav = function(obj){
 
 		//calc linear degrading gravity based on r
 		//in 'Newtons'
-//		g = spaceMath.grav * this.mass / (r*r);
+		g = spaceMath.grav * this.mass / (r*r);
 
-		g = spaceMath.grav * this.mass / (r);
+		//g = spaceMath.grav * this.mass / (r);
 		
 		//calc vector direction
 		th = Math.atan2(yDiff,xDiff);

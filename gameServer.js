@@ -129,7 +129,7 @@ r2=(Math.random()*10000000)-5000000;
 //r3=(Math.random()*1e20)+(Math.random()*1e20)+(Math.random()*1e10);
 
 
-r3=Math.pow(10,(Math.random()*20)+5)+1e10;
+r3=Math.pow(10,(Math.random()*30))+1e10;
 //r3=1e20;
 r4=((Math.random()*2)-1)*Math.PI;
 r5=(Math.random()*1000)+1;
@@ -155,7 +155,7 @@ console.log("r:" + newObj.radius);
 
 
 
-for (i=0;i<300;i++) {
+for (i=0;i<100;i++) {
 		var newObj = new physicalObject(this);
 var r1,r2,r3,n1,n2,n3,n4;
 
