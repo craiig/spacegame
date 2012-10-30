@@ -4,10 +4,10 @@
 
 exports = module.exports = shipGroup;
 
-function shipGroup(civ,activity) {
+function shipGroup(activity) {
     this.ships = new Array(); //all objects in a level / physicalArea
 	this.activity = activity;
-	this.civ=civ;
+	this.orbit = activity.defaultOrbit;
 }
 
 shipGroup.prototype.getSyncProps = function(obj){

@@ -13,7 +13,7 @@ civilisation.prototype.civType = {
 
 function civilisation(planet) {
 	this.planets = new Array();
-	this.planets.add(planet);
+	this.planets.push(planet);
 	this.capital = planet;
 	this.government = 0 ;
 	this.populationGrowthRate=0;
@@ -24,6 +24,7 @@ function civilisation(planet) {
 	this.totalResearch=0;
 	
 	this.neighbours = new Array();
+	this.actions = new Array();
 	//neighbour = {civtype,closestRange,knownPlanetsAndObjects,associatedThreatGroups}
 	this.allElementsInAllWarehouses = new Array();
 	this.costElementPerJoule = new Array();
@@ -32,9 +33,23 @@ function civilisation(planet) {
 
 
 //add gameObject to current physicalArea
-civilisation.prototype.addObject = function(obj){
+civilisation.prototype.addPlanet = function(planet){
     x = this.allObjects.push(obj); //add object to all object list
     if (obj.isGrav == true) this.gravitatingObjects.push(x); //add reference to object
 	if (obj.isRad == true) this.radiatingObjects.push(x); //add reference to object
 	if (obj.isPlayerShip == true) this.playerShips.push(x); //add reference to object
+}
+
+civilisation.prototype.doTick = function(){
+    //iterate through planets and have them update the civ totals
+	for (x in this.planets){
+		x.doCivTick();
+	}
+	//calculate the happiness function components + expected happiness from ongoing actions
+	
+	
+	
+	//select top expected happiness actions from new actions proposed vs random sample of ongoing actions+cost of cancel & select best
+	
+	
 }

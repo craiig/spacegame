@@ -6,6 +6,13 @@ exports = module.exports = planet;
 
 function planet() {
 	this.cells = new Array();
+	this.overallAbundance = new Array();
+	this.populationDensity=0;
+	this.researchValue=0;
+	this.warehousing=new Array();
+	this.manufacturingValue=0;
+	this.manufacturingQueue = new Object();
+	this.orbitals = new Array();
 }
 
 planet.prototype.getSyncProps = function(obj){

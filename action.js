@@ -4,6 +4,14 @@
 
 exports = module.exports = action;
 
+action.prototype.actionType = {
+    createGroup:{},
+	createShip:{},
+	moveShip:{to:{}},
+	moveGroup:{to:{}},
+	trade:{from:{},to:{},haggle:false,cargo:{}}
+	
+}
 function action(world) {
     this.allObjects = new Array(); //all objects in a level / physicalArea
 	this.gravitatingObjects =  new Array(); //just index into allObjects
