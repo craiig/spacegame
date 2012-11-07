@@ -5,8 +5,8 @@
 exports = module.exports = action;
 
 action.prototype.actionType = {
-    createShipGroup:{groupType:Object}
-    ,destroyShipGroup:{group:Object}
+    createShipGroup:{groupType:Object,func:function(obj){ civ.shipGroups.push(new shipGroup(groupType));}}
+    ,destroyShipGroup:{group:Object,func:function(obj){ civ.shipGroups.split(civ.shipGroups.indexOf(group) );}}
     ,createBuilding:{cell:Object,buildingType:Number}
     ,destroyBuilding:{cell:Object}
     ,createShip:{shipType:Number}
@@ -22,10 +22,10 @@ action.prototype.actionType = {
 	,attack:{attackType:Object}
 }
 
-function action(world) {
-
+function action(actionTypeName) {
+	this.params = this.actionType[actionTypeName];
 }
 
-action.prototype.addObject = function(obj){
-
+action.prototype.doTick = function(obj){
+	this.params.func(obj);
 }

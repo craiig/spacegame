@@ -10,12 +10,14 @@ Housing:{
 		SkyScraper:0,
 		Dome:0,
 		Subterranean:0,
-		Undersea:0
+		Undersea:0,
+		FloatingCity:0
 	}
 },
 SpaceStation:{
 	Quality:0,
-	Efficiency:0
+	Efficiency:0,
+	maxCells:0
 },
 SpaceHabitat:{
 	Quality:0,

@@ -16,7 +16,9 @@ EnergyPlant:8,
 Terraformer:9,
 Dock:10,
 Empty:11,
-Wasteland:12
+Wasteland:12,
+MilitaryBase:13,
+TrainingAcademy:14
 }; 
 
 function terrainCell(newAbundance,newCellType) {
