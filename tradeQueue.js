@@ -11,7 +11,34 @@ function tradeQueue(civ) {
     this.civ = civ;
 }
 
-function addTradeMission(newSource,newDest,newCargo) {
+tradeQueue.prototype.tradeStatus = {
+	unconfirmed:0,
+	confirmed:1,
+	termsAgreed:2,
+	shipsAllocated:3,
+	shipsAtSource:4,
+	cargoLoaded:5,
+	shipsInTransit:6,
+	shipsAtDestination:7,
+	cargoUnLoaded:8,
+	paymentReceived:9
+}
+
+
+tradeQueue.prototype.addTradeMission = function(newSource,newDest,newCargo) {
+	var x = {
+		source:newSource,
+		dest:newDest,
+		cargo:newCargo,
+		haggle:false,
+
+	};
+			
+    this.tradeObjects.add(x);
+
+}
+
+tradeQueue.prototype.doTick = function(newSource,newDest,newCargo) {
 	var x = {
 		source:newSource,
 		dest:newDest,
