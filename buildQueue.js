@@ -44,6 +44,11 @@ buildQueue.prototype.doTick = function(planet,warehouse){
         //if item is a ship or hab, move to orbit
         //otherwise move to warehouse
         //split item from queue
+		
+		
+	//hm, should maybe sort by priority before loop in tick
+		//although build queue should be sorted before it gets a tick
+		
     while (doProcessing==1){
         if (remainingUnits>this.queue[currentId].processingUnits){
             if (warehouse.checkItems(this.queue[currentId].materialRequirements)==true) {
@@ -52,19 +57,16 @@ buildQueue.prototype.doTick = function(planet,warehouse){
                 warehouse[this.queue[currentId].itemType]+=1;
                 warehouse.removeItems(this.queue[currentId].materialRequirements);
                 //remove item from queue
+				queue[currentId] = undefined;
             }
         } else {
             this.queue[currentId].processingUnits-=remainingUnits;
             remainingUnits=0;
         }
-        if ((remainingUnits==0) || (this.queue.count >0)) {
+		currentId++;
+		if((queue[currentId] == undefined)) currentId--;
+        if ((remainingUnits==0)) {
             doProcessing=0;
         }
     }
-
-
-
-
-
-    return ['bounds'];
 }

@@ -7,8 +7,9 @@ exports = module.exports = civilisation;
 civilisation.prototype.civType = {
 	Hostile:0,
 	Unknown:1,
-	TradePartner:2,
-	MilitaryAlly:3
+	Neutral:2,
+	TradePartner:3,
+	MilitaryAlly:4
 };
 
 function civilisation(planet) {
@@ -24,7 +25,7 @@ function civilisation(planet) {
 	this.totalResearch=0;
 	
 	this.neighbours = new Array();
-	this.actions = new Array();
+	this.activities = new Array();
 	//neighbour = {civtype,closestRange,knownPlanetsAndObjects,associatedThreatGroups}
 	this.allElementsInAllWarehouses = new Array();
 	this.costElementPerJoule = new Array();
@@ -32,21 +33,22 @@ function civilisation(planet) {
 }
 
 
-//add gameObject to current physicalArea
 civilisation.prototype.addPlanet = function(planet){
-    x = this.allObjects.push(obj); //add object to all object list
-    if (obj.isGrav == true) this.gravitatingObjects.push(x); //add reference to object
-	if (obj.isRad == true) this.radiatingObjects.push(x); //add reference to object
-	if (obj.isPlayerShip == true) this.playerShips.push(x); //add reference to object
 }
 
 civilisation.prototype.doTick = function(){
-    //iterate through planets and have them update the civ totals
-	for (x in this.planets){
-		x.doCivTick();
-	}
-	//calculate the happiness function components + expected happiness from ongoing actions
+
+	//we will run planets at a higher update speed than the civilisations
+	//they will update the slower civilisation objects
 	
+	
+	
+	//base unit is Joule*Seconds against the unitless Happiness value
+	
+	//calculate the happiness function components + expected happiness from ongoing activities and actions
+		//for each activity in queue
+			//x=estCost>currCost:estCost,currCost;
+			//(riskDont + estGain - x) / riskDo
 	
 	
 	//select top expected happiness actions from new actions proposed vs random sample of ongoing actions+cost of cancel & select best

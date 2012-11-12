@@ -1,14 +1,8 @@
 
-//basic physicalArea model
-//var spaceMath = require('./spaceMath.js');
-//var physicalObject = require('./physicalObject.js');
-//var PlayerShip = require('./playerShip.js');
-
 exports = module.exports = tradeQueue;
 
-function tradeQueue(civ) {
+function tradeQueue() {
     this.tradeObjects = new Array(); 
-    this.civ = civ;
 }
 
 tradeQueue.prototype.tradeStatus = {
@@ -30,21 +24,34 @@ tradeQueue.prototype.addTradeMission = function(newSource,newDest,newCargo) {
 		source:newSource,
 		dest:newDest,
 		cargo:newCargo,
-		haggle:false,
-
-	};
-			
+		haggle:{ask:0,min:0}
+	};			
     this.tradeObjects.add(x);
-
 }
 
-tradeQueue.prototype.doTick = function(newSource,newDest,newCargo) {
-	var x = {
-		source:newSource,
-		dest:newDest,
-		cargo:newCargo
-		};
-			
-    this.tradeObjects.add(x);
-
+tradeQueue.prototype.doTick = function() {
+	for(to in this.tradeObjects) {
+		switch (tradeObjects[to].tradestatus) {
+			case this.tradeStatus.unconfirmed:{}
+				break;
+			case this.tradeStatus.confirmed:{},
+				break;
+			case this.tradeStatus.termsAgreed:{},
+				break;
+			case this.tradeStatus.shipsAllocated:{},
+				break;
+			case this.tradeStatus.shipsAtSource:{},
+				break;
+			case this.tradeStatus.cargoLoaded:{},
+				break;
+			case this.tradeStatus.shipsInTransit:{},
+				break;
+			case this.tradeStatus.shipsAtDestination:{},
+				break;
+			case this.tradeStatus.cargoUnLoaded:{},
+				break;
+			case this.tradeStatus.paymentReceived:{}
+				break;
+		}
+	}
 }

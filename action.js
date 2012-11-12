@@ -1,7 +1,4 @@
 
-//basic physicalArea model
-//var spaceMath = require('./spaceMath.js');
-
 exports = module.exports = action;
 
 action.prototype.actionType = {

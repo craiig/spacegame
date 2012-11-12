@@ -1,19 +1,11 @@
 
-//basic physicalArea model
 exports = module.exports = techTree;
 
 techTree.techState = {
 	Housing:{
-		inputs:{
-			joules:0,
-			population:0,
-			requiredElements:{}
-		},
-		outputs:{
-			population:0
-		},
 		density:0,
 		luxury:0,
+		requiredElements:{}
 		type:{
 			SkyScraper:0,
 			Dome:0,
@@ -23,12 +15,6 @@ techTree.techState = {
 		}
 	},
 	SpaceStation:{
-		inputs:{
-			joules:0,
-			requiredElements:{}
-		},
-
-
 		Quality:0,
 		Efficiency:0,
 		maxCells:0
@@ -52,15 +38,14 @@ techTree.techState = {
 		Type:{
 			Colossus:0,
 			Library:0,
-			Waterslides:0
+			Waterslides:0,
+			Arena:0
 		}
-
 	},
 	Ship:{
 		Drive:{
-			Size:0,
+			Size:0, //ship units
 			EnergyRequired:0,
-
 			Type:{
 				Docking:0,
 				Stellar:0,

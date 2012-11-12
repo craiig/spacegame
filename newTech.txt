@@ -1,0 +1,39 @@
+
+nanites
+	-efficiency basis for mining and manufacturing
+	-machining
+		-macro (default)
+			-add build items:
+				level 1 cities/structures
+				level 1 small ships, freighters, drones
+				level 1 shoebox
+		-micro +10
+			-add research items:
+				level 1 orbital habitats
+				level 1 large ships
+		-nano +100
+			-add research items:
+				level 1 forcefield
+		-atmo +1000000
+			-add research items:
+				level 1 ringworld
+	-various classes, attributes
+
+forcefields (higgs fields)
+	-efficiency basis for housing/structures
+	-basis for :
+		new construction (no need for materials besides aethetics), 
+		different energy sources(fusion confinement)
+		initial star drives (temporarily bend spacetime so the ship travels through it quickly)(like a tiny shitty stargate)
+
+quantum shoebox (indirect observation device:box inside a box)(perfect energy storage)(quantum telephone game)
+	-small, portable and ubiquitous
+	-can store almost any amount of energy in several forms (max energy based on amount of energy pulsed in at creation - no loss, just the initial spike for the fourier series)
+	-can be configured to release energy at different rates and forms
+	-requires no maintaining energy but can be damaged
+
+	-higher levels can be linked for power transfer over distance
+	-even higher levels can become ansibles
+	-even higher higher levels can become stargates
+	
+	

@@ -12,7 +12,7 @@ exports = module.exports = warehouse;
 
 function warehouse() {}
 
-warehouse.prototype.storage= {
+warehouse.prototype.storage = {
 	Sc:{name:'Scandium',amount:0},
 	Ti:{name:'Titanium',amount:0},
 	V:{name:'Vanadium',amount:0},
@@ -143,7 +143,7 @@ warehouse.prototype.addItems = function(itemList){
 
 
 
-
+//make sure you checkItems first
 warehouse.prototype.removeItems = function(itemList){
 	for (item in itemList) {
 		q = itemList[item];
