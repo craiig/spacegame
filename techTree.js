@@ -3,65 +3,358 @@ exports = module.exports = techTree;
 
 techTree.techState = {
 	Housing:{
-		density:0,
-		luxury:0,
-		requiredElements:{}
-		type:{
-			SkyScraper:0,
-			Dome:0,
-			Subterranean:0,
-			Undersea:0,
-			FloatingCity:0
+		SkyScraper:{	
+			density:0,
+			luxury:0,
+			buildElements:{},
+			turnJoules:0
+		},
+		Dome:{	
+			density:0,
+			luxury:0,
+			buildElements:{},
+			turnJoules:0
+		},
+		Subterranean:{	
+			density:0,
+			luxury:0,
+			buildElements:{},
+			turnJoules:0
+		},
+		Undersea:{	
+			density:0,
+			luxury:0,
+			buildElements:{},
+			turnJoules:0
+		},
+		FloatingCity:{	
+			density:0,
+			luxury:0,
+			buildElements:{},
+			turnJoules:0
 		}
 	},
 	SpaceStation:{
-		Quality:0,
-		Efficiency:0,
-		maxCells:0
+		Science:{
+			maxCells:0,
+			researchUnits:0,
+			joulesOutput:0,
+			turnJoules:0,
+			buildElements:{}
+		},
+		Energy:{
+			maxCells:0,
+			researchUnits:0,
+			turnJoules:0,
+			buildElements:{}
+		},
+		Military:{
+			maxCells:0,
+			turnJoules:0,
+			buildElements:{}
+		}
 	},
 	Orbital:{
-		Quality:0,
-		Efficiency:0,
+		turnJoules:0,
+		buildElements:{},
 		Length:0,
 		Width:0
 	},
 	Warehouse:{
-		Efficiency:0
+		turnJoules:0,
+		buildElements:{}
 	},
 	Manufacturing:{
-		Efficiency:0
+		turnJoules:0,
+		buildElements:{},
+		prductionUnits:0
 	},
 	University:{
-		Efficiency:0
+		turnJoules:0,
+		buildElements:{},
+		researchUnits:0
+	},
+	EnergyPlant:{
+		Hyrdrocarbon:{
+			buildElements:{},
+			turnElements:{},
+			outputJoules:0,
+			outputChemicals:{}
+		},
+		Fission:{
+			buildElements:{},
+			turnElements:{},
+			outputJoules:0,
+			outputChemicals:{}
+		},
+		Fusion:{
+			buildElements:{},
+			turnElements:{},
+			outputJoules:{},
+			outputChemicals:{}
+		},
+		Solar:{
+			buildElements:{},
+			outputJoules:{},
+			efficiency:0
+		},
+		ForceFusion:{
+			buildElements:{},
+			turnElements:{},
+			turnJoules:0,
+			outputJoules:0,
+			outputChemicals:{}
+		},
+		ForceAntimatter:{
+			buildElements:{},
+			turnElements:{},
+			turnJoules:0,
+			outputJoules:0
+		},
+		MatterConversion:{
+			buildElements:{},
+			turnElements:{},
+			turnJoules:0,
+			outputJoules:0
+		},
+		ZeroPoint:{
+			buildElements:{},
+			turnJoules:0,
+			outputJoules:0
+		},
+		BraneExtraction:{
+			buildElements:{},
+			turnElements:{},
+			turnJoules:0,
+			outputJoules:0
+		}
 	},
 	Wonder:{
-		Type:{
-			Colossus:0,
-			Library:0,
-			Waterslides:0,
-			Arena:0
+		Colossus:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		Library:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		AmusementPark:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		Arena:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		Monolith:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		GiantHead:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		Palace:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		Museum:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		WarMemorial:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		WildlifePreserve:{
+			buildElements:{},
+			turnJoules:0,
+			affectedAttributes:{}
+		},
+		
+	},
+	EmpireCapital:{
+		buildElements:{},
+		turnJoules:0,
+		affectedAttributes:{}
+	},
+	AreaCapital:{
+		buildElements:{},
+		turnJoules:0,
+		affectedAttributes:{}
+	},
+	Mine:{
+		Solid:{
+			buildElements:{},
+			turnJoules:0,
+			numElementsPerTurn:0
+		},
+		Liquid:{
+			buildElements:{},
+			turnJoules:0,
+			numElementsPerTurn:0
+		},
+		Gas:{
+			buildElements:{},
+			turnJoules:0,
+			numElementsPerTurn:0
+		},
+		Plasma:{
+			buildElements:{},
+			turnJoules:0,
+			numElementsPerTurn:0
 		}
+	},
+	Terraformer:{
+		Bio:{
+			buildElements:{},
+			turnJoules:0,
+			habitabilityUnitsPerTurn:0
+		},
+		Chemical:{
+			buildElements:{},
+			turnJoules:0,
+			habitabilityUnitsPerTurn:0
+		},
+		Nuclear:{
+			buildElements:{},
+			turnJoules:0,
+			habitabilityUnitsPerTurn:0
+		},
+		Force:{
+			buildElements:{},
+			turnJoules:0,
+			habitabilityUnitsPerTurn:0
+		}
+	},
+	SpaceDock:{
+		buildElements:{},
+		turnJoules:0
+	},
+	MilitaryBase:{
+		buildElements:{},
+		turnJoules:0
+	},
+	TrainingAcademy:{
+		buildElements:{},
+		turnJoules:0
 	},
 	Ship:{
 		Drive:{
-			Size:0, //ship units
-			EnergyRequired:0,
-			Type:{
-				Docking:0,
-				Stellar:0,
-				InterStellar:0,
-				Galactic:0,
-				InterGalactic:0
+			Docking:{
+				Size:0, //ship units
+				turnJoules:0,
+				buildElements:0,
+				minSpeed:0,
+				maxSpeed:0
+			},
+			Stellar:{
+				Size:0, //ship units
+				turnJoules:0,
+				buildElements:0,
+				minSpeed:0,
+				maxSpeed:0
+			},
+			InterStellar:{
+				Size:0, //ship units
+				turnJoules:0,
+				buildElements:0,
+				minSpeed:0,
+				maxSpeed:0
+			},
+			Galactic:{
+				Size:0, //ship units
+				turnJoules:0,
+				buildElements:0,
+				minSpeed:0,
+				maxSpeed:0
+			},
+			InterGalactic:{
+				Size:0, //ship units
+				turnJoules:0,
+				buildElements:0,
+				minSpeed:0,
+				maxSpeed:0
 			}
 		},
 		Weapons:{
-			Type:{
-				Beam:0,
-				Missile:0	
+			Beam:{
+				size:0, //ship units
+				turnJoules:0,
+				buildElements:0,
+				damagePerSecond:0
+			},
+			Missile:{
+				size:0, //ship units
+				turnJoules:0,
+				buildElements:0,
+				damagePerSecond:0
+			}	
+		},
+		EnergySource:{
+			Fission:{
+				size:0,
+				buildElements:{},
+				turnElements:{},
+				turnJoules:0,
+				outputJoules:0
+			},
+			Fusion:{
+				size:0,
+				buildElements:{},
+				turnElements:{},
+				turnJoules:0,
+				outputJoules:0
+			},
+			ForceFusion:{
+				size:0,
+				buildElements:{},
+				turnElements:{},
+				turnJoules:0,
+				outputJoules:0
+			},
+			ForceAntimatter:{
+				size:0,
+				buildElements:{},
+				turnElements:{},
+				turnJoules:0,
+				outputJoules:0
+			},
+			ZeroPoint:{
+				size:0,
+				buildElements:{},
+				turnElements:{},
+				turnJoules:0,
+				outputJoules:0
+			},
+			BraneExtraction:{
+				size:0,
+				buildElements:{},
+				turnElements:{},
+				turnJoules:0,
+				outputJoules:0
 			}
 		},
-		EnergySource:0,
-		Shields:0
+		Shields:{
+			size:0,
+			damageUnits:0,
+			rechargeRate:0,
+			buildElements:{}
+		},
+		Armour:{
+			size:0,
+			damageUnits:0,
+			buildElements:{}
+		}
 	}
 
 
