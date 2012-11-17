@@ -1,6 +1,8 @@
 
 exports = module.exports = techTree;
 
+//we're writing the MAX level tech state here
+//actual running tree will be much more sparse until quite late in the 'game'
 techTree.techState = {
 	Housing:{
 		SkyScraper:{	
@@ -75,7 +77,7 @@ techTree.techState = {
 		researchUnits:0
 	},
 	EnergyPlant:{
-		Hyrdrocarbon:{
+		Hurdurcarbon:{
 			buildElements:{},
 			turnElements:{},
 			outputJoules:0,
@@ -249,6 +251,12 @@ techTree.techState = {
 		turnJoules:0
 	},
 	Ship:{
+		Hull:{
+
+			grossMass:0,
+			numShipGrids:0,
+			pressureTolerance:0
+		},
 		Drive:{
 			Docking:{
 				Size:0, //ship units
@@ -354,7 +362,20 @@ techTree.techState = {
 			size:0,
 			damageUnits:0,
 			buildElements:{}
+		},
+		SciencePackage:{
+			EffectiveRange:0
+
+		},
+		Computer:{
+			
+
+
+		},
+		CargoBay:{
+
 		}
+
 	}
 
 
