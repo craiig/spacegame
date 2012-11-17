@@ -38,14 +38,14 @@ techTree.techState = {
 	},
 	SpaceStation:{
 		Science:{
-			maxCells:0,
+			maxShipCells:0,
 			researchUnits:0,
 			joulesOutput:0,
 			turnJoules:0,
 			buildElements:{}
 		},
 		Energy:{
-			maxCells:0,
+			maxShipCells:0,
 			researchUnits:0,
 			turnJoules:0,
 			buildElements:{}
@@ -252,11 +252,61 @@ techTree.techState = {
 	},
 	Ship:{
 		Hull:{
-
-			grossMass:0,
-			numShipGrids:0,
-			pressureTolerance:0
+			probe:{
+				grossMass:0,
+				numShipCells:4,
+				standardDeployment:{
+					Drive,
+					EnergySource,
+					SciencePackage,
+					Storage
+				}
+			},
+			scout:{
+				grossMass:0,
+				numShipCells:6,
+				standardDeployment:{
+					2x Drive,
+					EnergySource,
+					SciencePackage,
+					Storage
+				}
+			},
+			fighter:{
+				grossMass:0,
+			numShipCells:0
+			},
+			escort:{
+				grossMass:0,
+			numShipCells:0
+			},
+			frigate:{
+				grossMass:0,
+			numShipCells:0
+			},
+			transport:{
+				grossMass:0,
+			numShipCells:0
+			},
+			battleship:{
+				grossMass:0,
+			numShipCells:0
+			},
+			carrier:{
+				grossMass:0,
+			numShipCells:0
+			},
+			megaship:{
+				grossMass:0,
+			numShipCells:0
+			},
+			seedship:{
+				grossMass:0,
+			numShipCells:0
+			}
 		},
+		Storage:{},
+		Cabin:{},
 		Drive:{
 			Docking:{
 				Size:0, //ship units
@@ -368,11 +418,17 @@ techTree.techState = {
 
 		},
 		Computer:{
-			
+
 
 
 		},
 		CargoBay:{
+
+		},
+		Sensors:{
+			
+		},
+		Comms:{
 
 		}
 
