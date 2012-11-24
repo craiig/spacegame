@@ -6,31 +6,31 @@ exports = module.exports = techTree;
 techTree.techState = {
 	Housing:{
 		SkyScraper:{	
-			density:0,
+			capacity:0,
 			luxury:0,
 			buildElements:{},
 			turnJoules:0
 		},
 		Dome:{	
-			density:0,
+			capacity:0,
 			luxury:0,
 			buildElements:{},
 			turnJoules:0
 		},
 		Subterranean:{	
-			density:0,
+			capacity:0,
 			luxury:0,
 			buildElements:{},
 			turnJoules:0
 		},
 		Undersea:{	
-			density:0,
+			capacity:0,
 			luxury:0,
 			buildElements:{},
 			turnJoules:0
 		},
 		FloatingCity:{	
-			density:0,
+			capacity:0,
 			luxury:0,
 			buildElements:{},
 			turnJoules:0
@@ -40,31 +40,31 @@ techTree.techState = {
 		Science:{
 			maxShipCells:0,
 			researchUnits:0,
-			joulesOutput:0,
 			turnJoules:0,
 			buildElements:{}
 		},
 		Energy:{
 			maxShipCells:0,
-			researchUnits:0,
 			turnJoules:0,
-			buildElements:{}
+			buildElements:{},
+			joulesOutput:0
 		},
 		Military:{
-			maxCells:0,
+			maxShipCells:0,
 			turnJoules:0,
-			buildElements:{}
+			buildElements:{},
+			numFighterBays:0
 		}
 	},
 	Orbital:{
 		turnJoules:0,
 		buildElements:{},
-		Length:0,
-		Width:0
+		maxCells:0
 	},
 	Warehouse:{
 		turnJoules:0,
-		buildElements:{}
+		buildElements:{},
+		massLimit:0
 	},
 	Manufacturing:{
 		turnJoules:0,
@@ -77,7 +77,7 @@ techTree.techState = {
 		researchUnits:0
 	},
 	EnergyPlant:{
-		Hurdurcarbon:{
+		Hydrocarbon:{
 			buildElements:{},
 			turnElements:{},
 			outputJoules:0,
@@ -198,22 +198,26 @@ techTree.techState = {
 		Solid:{
 			buildElements:{},
 			turnJoules:0,
-			numElementsPerTurn:0
+			numElementsPerTurn:0,
+			massPerTurn:0
 		},
 		Liquid:{
 			buildElements:{},
 			turnJoules:0,
-			numElementsPerTurn:0
+			numElementsPerTurn:0,
+			massPerTurn:0
 		},
 		Gas:{
 			buildElements:{},
 			turnJoules:0,
-			numElementsPerTurn:0
+			numElementsPerTurn:0,
+			massPerTurn:0
 		},
 		Plasma:{
 			buildElements:{},
 			turnJoules:0,
-			numElementsPerTurn:0
+			numElementsPerTurn:0,
+			massPerTurn:0
 		}
 	},
 	Terraformer:{
@@ -254,55 +258,115 @@ techTree.techState = {
 		Hull:{
 			probe:{
 				grossMass:0,
-				numShipCells:4,
+				numShipCells:5,
 				standardDeployment:{
-					Drive,
-					EnergySource,
-					SciencePackage,
-					Storage
+					Drive:1,
+					EnergySource:1,
+					SciencePackage:1,
+					Comms:1,
+					FuelStorage:1
 				}
 			},
 			scout:{
 				grossMass:0,
-				numShipCells:6,
+				numShipCells:7,
 				standardDeployment:{
-					2x Drive,
-					EnergySource,
-					SciencePackage,
-					Storage
+					Drive:2,
+					EnergySource:1,
+					SciencePackage:1,
+					Comms:!,
+					FuelStorage:1,
+					Cabin:1
 				}
 			},
 			fighter:{
 				grossMass:0,
-			numShipCells:0
+				numShipCells:8,
+				standardDeployment:{
+					Drive:2,
+					Comms:1,
+					Weapons:1,
+					EnergySource:1,
+					SciencePackage:1,
+					FuelStorage:1,
+					Cabin:1
+				}
 			},
 			escort:{
 				grossMass:0,
-			numShipCells:0
+				numShipCells:10,
+				standardDeployment:{
+					Drive:2,
+					Weapons:2,
+					Comms:1,
+					EnergySource:1,
+					SciencePackage:1,
+					FuelStorage:1,
+					Cabin:2
+				}
 			},
 			frigate:{
 				grossMass:0,
-			numShipCells:0
+				numShipCells:20,
+				standardDeployment:{
+					Drive:3,
+					Cargo:1,
+					Weapons:7,
+					EnergySource:2,
+					SciencePackage:2,
+					Storage:1,
+					Cabin:1,
+					Comms:1
+				}
 			},
 			transport:{
 				grossMass:0,
-			numShipCells:0
+				numShipCells:0,
+				standardDeployment:{
+					SciencePackage:1,
+					Comms:1,
+					Weapons:1,
+					Cargo:0,
+					Drive:0,
+					Cabin:0,
+					function(numCargoUnits){
+						var x=Math.floor(numCargoUnits/50)+1;
+						this.Cargo = numCargoUnits;
+						this.Drive += x;
+						this.Cabin += x;
+					}
+				}
 			},
 			battleship:{
 				grossMass:0,
-			numShipCells:0
+				numShipCells:50,
+				standardDeployment:{
+					Drive:6,
+					Cargo:2,
+					Weapons:12,
+					EnergySource:4,
+					SciencePackage:2,
+					Storage:2,
+					Cabin:6,
+					Comms:2	
+				}
 			},
 			carrier:{
 				grossMass:0,
-			numShipCells:0
+				numShipCells:0,
+				numFighterBays:0,
+				//each fighter bay must be the size of a fighter
+				standardDeployment:{
+
+				}
 			},
 			megaship:{
 				grossMass:0,
-			numShipCells:0
+				numShipCells:1000
 			},
 			seedship:{
 				grossMass:0,
-			numShipCells:0
+				numShipCells:0
 			}
 		},
 		Storage:{},
@@ -426,13 +490,37 @@ techTree.techState = {
 
 		},
 		Sensors:{
-			
+
 		},
 		Comms:{
 
 		}
 
-	}
+	},
+	Nanites:{
+		Macro:{},
+		Micro:{},
+		Nano:{},
+		Atmo:{}
+	},
+	Forcefields:{
+		Level1:{},
+		Level2:{},
+		Level3:{},
+		Level4:{},
+		Level5:{}
+	},
+	QuantumShoebox:{
+		Level1:{},
+		Level2:{},
+		Level3:{},
+		Level4:{},
+		Level5:{},
+		LinkedShoebox:{},
+		Ansible:{},
+		Stargate:{}
+	},
+
 
 
 };

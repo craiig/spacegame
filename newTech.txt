@@ -19,7 +19,7 @@ nanites
 				level 1 ringworld
 	-various classes, attributes
 
-forcefields (higgs fields)
+forcefields (bound higgs fields)
 	-efficiency basis for housing/structures
 	-basis for :
 		new construction (no need for materials besides aethetics), 
