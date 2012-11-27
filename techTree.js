@@ -4,6 +4,11 @@ exports = module.exports = techTree;
 //we're writing the MAX level tech state here
 //actual running tree will be much more sparse until quite late in the 'game'
 techTree.techState = {
+	Observatory:{
+		range:0,
+		magnification:0,
+		resolutionSize:0
+	},
 	Housing:{
 		SkyScraper:{	
 			capacity:0,
