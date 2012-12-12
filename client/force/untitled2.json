@@ -1,0 +1,929 @@
+
+"links":[
+		{"source":"SkyScraper","target":"PlanetTech","value":1},
+		{"source":"Dome","target":"PlanetTech","value":1},
+		{"source":"Subterranean","target":"PlanetTech","value":1},
+		{"source":"Undersea","target":"PlanetTech","value":1},
+		{"source":"FloatingCity","target":"PlanetTech","value":1},
+		{"source":"ScienceStation","target":"PlanetTech","value":1},
+		{"source":"EnergyStation","target":"PlanetTech","value":1},
+		{"source":"MilitaryStation","target":"PlanetTech","value":1},
+		{"source":"OrbitalHabitat","target":"PlanetTech","value":1},
+		{"source":"Observatory","target":"PlanetTech","value":1},
+		{"source":"Warehouse","target":"PlanetTech","value":1},
+		{"source":"ManufacturingPlant","target":"PlanetTech","value":1},
+		{"source":"University","target":"PlanetTech","value":1},
+		{"source":"HydrocarbonPowerPlant","target":"PlanetTech","value":1},
+		{"source":"FissionPowerPlant","target":"PlanetTech","value":1},
+		{"source":"FusionPowerPlant","target":"PlanetTech","value":1},
+		{"source":"SolarPowerPlant","target":"PlanetTech","value":1},
+		{"source":"ForceFusionPowerPlant","target":"PlanetTech","value":1},
+		{"source":"ForceAntimatterPowerPlant","target":"PlanetTech","value":1},
+		{"source":"MatterConversionPowerPlant","target":"PlanetTech","value":1},
+		{"source":"ZeroPointPowerPlant","target":"PlanetTech","value":1},
+		{"source":"BraneExtractionPowerPlant","target":"PlanetTech","value":1},
+		{"source":"ColossusWonder","target":"PlanetTech","value":1},
+		{"source":"LibraryWonder","target":"PlanetTech","value":1},
+		{"source":"AmusementParkWonder","target":"PlanetTech","value":1},
+		{"source":"ArenaWonder","target":"PlanetTech","value":1},
+		{"source":"MonolithWonder","target":"PlanetTech","value":1},
+		{"source":"GiantHeadWonder","target":"PlanetTech","value":1},
+		{"source":"PalaceWonder","target":"PlanetTech","value":1},
+		{"source":"MuseumWonder","target":"PlanetTech","value":1},
+		{"source":"WarMemorialWonder","target":"PlanetTech","value":1},
+		{"source":"WildlifePreserveWonder","target":"PlanetTech","value":1},
+		{"source":"EmpireCapital","target":"PlanetTech","value":1},
+		{"source":"AreaCapital","target":"PlanetTech","value":1},
+		{"source":"SolidMine","target":"PlanetTech","value":1},
+		{"source":"LiquidMine","target":"PlanetTech","value":1},
+		{"source":"GasMine","target":"PlanetTech","value":1},
+		{"source":"PlasmaMine","target":"PlanetTech","value":1},
+		{"source":"BioTerraformer","target":"PlanetTech","value":1},
+		{"source":"ChemicalTerraformer","target":"PlanetTech","value":1},
+		{"source":"NuclearTerraformer","target":"PlanetTech","value":1},
+		{"source":"ForceTerraformer","target":"PlanetTech","value":1},
+		{"source":"SpaceDock","target":"PlanetTech","value":1},
+		{"source":"MilitaryBase","target":"PlanetTech","value":1},
+		{"source":"TrainingAcademy","target":"PlanetTech","value":1},
+		{"source":"ProbeHull","target":"ShipTech","value":1},
+		{"source":"ScoutHull","target":"ShipTech","value":1},
+		{"source":"FighterHull","target":"ShipTech","value":1},
+		{"source":"EscortHull","target":"ShipTech","value":1},
+		{"source":"FrigateHull","target":"ShipTech","value":1},
+		{"source":"TransportHull","target":"ShipTech","value":1},
+		{"source":"BattleshipHull","target":"ShipTech","value":1},
+		{"source":"CarrierHull","target":"ShipTech","value":1},
+		{"source":"MegashipHull","target":"ShipTech","value":1},
+		{"source":"SeedshipHull","target":"ShipTech","value":1},
+		{"source":"Storage","target":"ShipTech","value":1},
+		{"source":"Cabin","target":"ShipTech","value":1},
+		{"source":"DockingDrive","target":"ShipTech","value":1},
+		{"source":"StellarDrive","target":"ShipTech","value":1},
+		{"source":"InterStellarDrive","target":"ShipTech","value":1},
+		{"source":"GalacticDrive","target":"ShipTech","value":1},
+		{"source":"InterGalacticDrive","target":"ShipTech","value":1},
+		{"source":"BeamWeapon","target":"ShipTech","value":1},
+		{"source":"MissileWeapon","target":"ShipTech","value":1},
+		{"source":"FissionReactor","target":"ShipTech","value":1},
+		{"source":"FusionReactor","target":"ShipTech","value":1},
+		{"source":"ForceFusionReactor","target":"ShipTech","value":1},
+		{"source":"ForceAntimatterReactor","target":"ShipTech","value":1},
+		{"source":"ZeroPointReactor","target":"ShipTech","value":1},
+		{"source":"BraneExtractionReactor","target":"ShipTech","value":1},
+		{"source":"Shields","target":"ShipTech","value":1},
+		{"source":"Armour","target":"ShipTech","value":1},
+		{"source":"SciencePackage","target":"ShipTech","value":1},
+		{"source":"Computer","target":"ShipTech","value":1},
+		{"source":"CargoBay","target":"ShipTech","value":1},
+		{"source":"Sensors","target":"ShipTech","value":1},
+		{"source":"Comms","target":"ShipTech","value":1},
+		{"source":"MacroNanites","target":"BasicTech","value":1},
+		{"source":"MicroNanites","target":"BasicTech","value":1},
+		{"source":"NanoNanites","target":"BasicTech","value":1},
+		{"source":"AtmoNanites","target":"BasicTech","value":1},
+		{"source":"MacroForcefields","target":"BasicTech","value":1},
+		{"source":"MegaForcefields","target":"BasicTech","value":1},
+		{"source":"MicroForcefields","target":"BasicTech","value":1},
+		{"source":"NanoForcefields","target":"BasicTech","value":1},
+		{"source":"GigaForcefields","target":"BasicTech","value":1},
+		{"source":"TeraForcefields","target":"BasicTech","value":1},
+		{"source":"QuantumShoebox","target":"BasicTech","value":1},
+		{"source":"LinkedShoebox","target":"BasicTech","value":1},
+		{"source":"Ansible","target":"BasicTech","value":1},
+		{"source":"Stargate","target":"BasicTech","value":1},
+
+
+		{"source":"SkyScraper","target":"Dome","value":1},
+		{"source":"SkyScraper","target":"Subterranean","value":1},
+		{"source":"Dome","target":"Undersea","value":1},
+		{"source":"Subterranean","target":"Undersea","value":1},
+		{"source":"Undersea","target":"FloatingCity","value":1},
+		{"source":"EnergyStation","target":"ScienceStation","value":1},		
+		{"source":"EnergyStation","target":"OrbitalHabitat","value":1},		
+		{"source":"ScienceStation","target":"MilitaryStation","value":1},
+		{"source":"HydrocarbonPowerPlant","target":"FissionPowerPlant","value":1},
+		{"source":"HydrocarbonPowerPlant","target":"SolarPowerPlant","value":1},	
+		{"source":"FissionPowerPlant","target":"FusionPowerPlant","value":1},
+		{"source":"FusionPowerPlant","target":"ForceFusionPowerPlant","value":1},
+		{"source":"ForceFusionPowerPlant","target":"ForceAntimatterPowerPlant","value":1},
+		{"source":"ForceAntimatterPowerPlant","target":"MatterConversionPowerPlant","value":1},
+		{"source":"MatterConversionPowerPlant","target":"ZeroPointPowerPlant","value":1},
+		{"source":"ZeroPointPowerPlant","target":"BraneExtractionPowerPlant","value":1},
+		{"source":"SolidMine","target":"LiquidMine","value":1},
+		{"source":"LiquidMine","target":"GasMine","value":1},
+		{"source":"GasMine","target":"PlasmaMine","value":1},
+		{"source":"BioTerraformer","target":"ChemicalTerraformer","value":1},
+		{"source":"ChemicalTerraformer","target":"NuclearTerraformer","value":1},
+		{"source":"NuclearTerraformer","target":"ForceTerraformer","value":1},
+		{"source":"SpaceDock","target":"MilitaryBase","value":1},
+		{"source":"SpaceDock","target":"TrainingAcademy","value":1},
+		{"source":"ProbeHull","target":"ScoutHull","value":1},
+		{"source":"ScoutHull","target":"FighterHull","value":1},
+		{"source":"ScoutHull","target":"TransportHull","value":1},
+		{"source":"FighterHull","target":"EscortHull","value":1},
+		{"source":"EscortHull","target":"FrigateHull","value":1},
+		{"source":"FrigateHull","target":"BattleshipHull","value":1},
+		{"source":"BattleshipHull","target":"CarrierHull","value":1},
+		{"source":"CarrierHull","target":"MegashipHull","value":1},
+		{"source":"TransportHull","target":"MegashipHull","value":1},
+		{"source":"MegashipHull","target":"SeedshipHull","value":1},
+		{"source":"DockingDrive","target":"StellarDrive","value":1},
+		{"source":"StellarDrive","target":"InterStellarDrive","value":1},
+		{"source":"InterStellarDrive","target":"GalacticDrive","value":1},
+		{"source":"GalacticDrive","target":"InterGalacticDrive","value":1},
+		{"source":"FissionReactor","target":"FusionReactor","value":1},
+		{"source":"FusionReactor","target":"ForceFusionReactor","value":1},
+		{"source":"ForceFusionReactor","target":"ForceAntimatterReactor","value":1},
+		{"source":"ForceAntimatterReactor","target":"ZeroPointReactor","value":1},
+		{"source":"ZeroPointReactor","target":"BraneExtractionReactor","value":1},
+		{"source":"MacroNanites","target":"MicroNanites","value":1},
+		{"source":"MicroNanites","target":"NanoNanites","value":1},
+		{"source":"NanoNanites","target":"AtmoNanites","value":1},
+		{"source":"MacroForcefields","target":"MicroForcefields","value":1},
+		{"source":"MacroForcefields","target":"MegaForcefields","value":1},
+		{"source":"MegaForcefields","target":"GigaForcefields","value":1},
+		{"source":"MicroForcefields","target":"NanoForcefields","value":1},
+		{"source":"GigaForcefields","target":"TeraForcefields","value":1},
+		{"source":"QuantumShoebox","target":"LinkedShoebox","value":1},
+		{"source":"LinkedShoebox","target":"Ansible","value":1},
+		{"source":"Ansible","target":"Stargate","value":1},
+
+
+
+		{"source":"SkyScraper","target":"Level_1","value":1},
+		{"source":"Dome","target":"Level_2","value":1},
+		{"source":"Subterranean","target":"Level_2","value":1},
+		{"source":"Undersea","target":"Level_3","value":1},
+		{"source":"FloatingCity","target":"Level_5","value":1},
+		{"source":"ScienceStation","target":"","value":1},
+		{"source":"EnergyStation","target":"Level_1","value":1},
+		{"source":"MilitaryStation","target":"Level_1","value":1},
+		{"source":"OrbitalHabitat","target":"Level_2","value":1},
+		{"source":"Observatory","target":"Level_1","value":1},
+		{"source":"Warehouse","target":"Level_1","value":1},
+		{"source":"ManufacturingPlant","target":"Level_1","value":1},
+		{"source":"University","target":"Level_1","value":1},
+		{"source":"HydrocarbonPowerPlant","target":"Level_1","value":1},
+		{"source":"FissionPowerPlant","target":"Level_1","value":1},
+		{"source":"FusionPowerPlant","target":"Level_2","value":1},
+		{"source":"SolarPowerPlant","target":"Level_1","value":1},
+		{"source":"ForceFusionPowerPlant","target":"Level_2","value":1},
+		{"source":"ForceAntimatterPowerPlant","target":"Level_3","value":1},
+		{"source":"MatterConversionPowerPlant","target":"Level_4","value":1},
+		{"source":"ZeroPointPowerPlant","target":"Level_5","value":1},
+		{"source":"BraneExtractionPowerPlant","target":"Level_5","value":1},
+		{"source":"ColossusWonder","target":"Level_1","value":1},
+		{"source":"LibraryWonder","target":"Level_1","value":1},
+		{"source":"AmusementParkWonder","target":"Level_1","value":1},
+		{"source":"ArenaWonder","target":"Level_1","value":1},
+		{"source":"MonolithWonder","target":"Level_1","value":1},
+		{"source":"GiantHeadWonder","target":"Level_1","value":1},
+		{"source":"PalaceWonder","target":"Level_1","value":1},
+		{"source":"MuseumWonder","target":"Level_1","value":1},
+		{"source":"WarMemorialWonder","target":"Level_1","value":1},
+		{"source":"WildlifePreserveWonder","target":"Level_1","value":1},
+		{"source":"EmpireCapital","target":"Level_1","value":1},
+		{"source":"AreaCapital","target":"Level_1","value":1},
+		{"source":"SolidMine","target":"Level_1","value":1},
+		{"source":"LiquidMine","target":"Level_1","value":1},
+		{"source":"GasMine","target":"Level_1","value":1},
+		{"source":"PlasmaMine","target":"Level_2","value":1},
+		{"source":"BioTerraformer","target":"Level_2","value":1},
+		{"source":"ChemicalTerraformer","target":"Level_2","value":1},
+		{"source":"NuclearTerraformer","target":"Level_3","value":1},
+		{"source":"ForceTerraformer","target":"Level_5","value":1},
+		{"source":"SpaceDock","target":"Level_1","value":1},
+		{"source":"MilitaryBase","target":"Level_1","value":1},
+		{"source":"TrainingAcademy","target":"Level_1","value":1},
+		{"source":"ProbeHull","target":"Level_1","value":1},
+		{"source":"ScoutHull","target":"Level_1","value":1},
+		{"source":"FighterHull","target":"Level_1","value":1},
+		{"source":"EscortHull","target":"Level_1","value":1},
+		{"source":"FrigateHull","target":"Level_1","value":1},
+		{"source":"TransportHull","target":"Level_1","value":1},
+		{"source":"BattleshipHull","target":"Level_2","value":1},
+		{"source":"CarrierHull","target":"Level_2","value":1},
+		{"source":"MegashipHull","target":"Level_3","value":1},
+		{"source":"SeedshipHull","target":"Level_3","value":1},
+		{"source":"Storage","target":"Level_1","value":1},
+		{"source":"Cabin","target":"Level_1","value":1},
+		{"source":"DockingDrive","target":"Level_1","value":1},
+		{"source":"StellarDrive","target":"Level_2","value":1},
+		{"source":"InterStellarDrive","target":"Level_3","value":1},
+		{"source":"GalacticDrive","target":"Level_4","value":1},
+		{"source":"InterGalacticDrive","target":"Level_5","value":1},
+		{"source":"BeamWeapon","target":"Level_1","value":1},
+		{"source":"MissileWeapon","target":"Level_1","value":1},
+		{"source":"FissionReactor","target":"Level_1","value":1},
+		{"source":"FusionReactor","target":"Level_2","value":1},
+		{"source":"ForceFusionReactor","target":"Level_2","value":1},
+		{"source":"ForceAntimatterReactor","target":"Level_3","value":1},
+		{"source":"ZeroPointReactor","target":"Level_4","value":1},
+		{"source":"BraneExtractionReactor","target":"Level_5","value":1},
+		{"source":"Shields","target":"Level_2","value":1},
+		{"source":"Armour","target":"Level_1","value":1},
+		{"source":"SciencePackage","target":"Level_1","value":1},
+		{"source":"Computer","target":"Level_1","value":1},
+		{"source":"CargoBay","target":"Level_1","value":1},
+		{"source":"Sensors","target":"Level_1","value":1},
+		{"source":"Comms","target":"Level_1","value":1},
+		{"source":"MacroNanites","target":"Level_1","value":1},
+		{"source":"MicroNanites","target":"Level_2","value":1},
+		{"source":"NanoNanites","target":"Level_3","value":1},
+		{"source":"AtmoNanites","target":"Level_5","value":1},
+		{"source":"MacroForcefields","target":"Level_2","value":1},
+		{"source":"MegaForcefields","target":"Level_3","value":1},
+		{"source":"MicroForcefields","target":"Level_3","value":1},
+		{"source":"NanoForcefields","target":"Level_4","value":1},
+		{"source":"GigaForcefields","target":"Level_4","value":1},
+		{"source":"TeraForcefields","target":"Level_5","value":1},
+		{"source":"QuantumShoebox","target":"Level_1","value":1},
+		{"source":"LinkedShoebox","target":"Level_3","value":1},
+		{"source":"Ansible","target":"Level_3","value":1},
+		{"source":"Stargate","target":"Level_5","value":1},
+		{"source":"FighterHull","target":"BeamWeapon","value":1},
+		{"source":"FighterHull","target":"MissileWeapon","value":1},		
+		{"source":"FissionReactor","target":"FissionPowerPlant","value":1},
+		{"source":"FusionReactor","target":"FusionPowerPlant","value":1},
+		{"source":"ForceFusionReactor","target":"ForceFusionPowerPlant","value":1},
+		{"source":"ForceAntimatterReactor","target":"ForceAntimatterPowerPlant","value":1},
+		{"source":"ZeroPointReactor","target":"ZeroPointPowerPlant","value":1},
+		{"source":"BraneExtractionReactor","target":"BraneExtractionPowerPlant","value":1},
+		{"source":"MicroNanites","target":"MacroForcefields","value":1},
+		{"source":"MicroNanites","target":"QuantumShoebox","value":1},
+		{"source":"AtmoNanites","target":"Ansible","value":1},
+		{"source":"AtmoNanites","target":"Stargate","value":1},		
+		{"source":"MacroForcefields","target":"Shields","value":1}
+]	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+			"name":"ShipTech",
+			"group":"ShipTech"	
+		},
+		{
+			"name":"BasicTech",
+			"group":"BasicTech"
+		},
+		{
+			"name":"Level_1",
+			"group":"TechLevel"
+		},
+		{
+			"name":"Level_2",
+			"group":"TechLevel"
+		},
+		{
+			"name":"Level_3",
+			"group":"TechLe el"
+		},
+		{
+			"name":"Level_4",
+			"group":"TechLevel"
+		},
+		{
+			"name":"Level_5",
+			"group":"TechLevel"
+		},
+						
+		{
+			"name":"SkyScraper",
+			"group":"housing",
+			"capacity":0,
+			"luxury":0,
+			
+			"turnJoules":0
+		},
+		{
+			"name":"Dome",
+			"group":"housing",
+			"capacity":0,
+			"luxury":0,
+			
+			"turnJoules":0
+		},
+		{
+			"name":"Subterranean",
+			"group":"housing",
+			"capacity":0,
+			"luxury":0,
+			
+			"turnJoules":0
+		},
+		{
+			"name":"Undersea",
+			"group":"housing",
+			"capacity":0,
+			"luxury":0,
+			
+			"turnJoules":0
+		},
+		{
+			"name":"FloatingCity",	
+			"group":"housing",
+			"capacity":0,
+			"luxury":0,
+			
+			"turnJoules":0
+		},
+		{
+			"name":"ScienceStation",
+			"group":"station",
+			"maxShipCells":0,
+			"researchUnits":0,
+			"turnJoules":0
+			
+		},
+		{
+			"name":"EnergyStation",
+			"group":"station",
+			"maxShipCells":0,
+			"turnJoules":0,
+			
+			"joulesOutput":0
+		},
+		{
+			"name":"MilitaryStation",
+			"group":"station",
+			"maxShipCells":0,
+			"turnJoules":0,
+			
+			"numFighterBays":0
+		},
+		{
+			"name":"OrbitalHabitat",
+			"group":"orbital",
+			"turnJoules":0,
+			
+			"maxCells":0
+		},
+		{
+			"name":"Observatory",
+			"group":"planetCell",
+			"range":0,
+			"magnification":0,
+			"resolutionSize":0
+		},
+		{
+			"name":"Warehouse",
+			"group":"planetCell",
+			"turnJoules":0,
+			
+			"massLimit":0
+		},
+		{
+			"name":"ManufacturingPlant",
+			"group":"planetCell",
+			"turnJoules":0,
+			
+			"prductionUnits":0
+		},
+		{
+			"name":"University",
+			"group":"planetCell",
+			"turnJoules":0,
+			
+			"researchUnits":0
+		},
+		{
+			"name":"HydrocarbonPowerPlant",
+			"group":"powerplant",
+			
+			
+			"outputJoules":0
+			
+		},
+		{
+			"name":"FissionPowerPlant",
+			"group":"powerplant",
+			
+			
+			"outputJoules":0
+			
+		},
+		{
+			"name":"FusionPowerPlant",
+			"group":"powerplant",
+			
+		
+			"outputJoules":0
+			
+		},
+		{
+			"name":"SolarPowerPlant",
+			"group":"powerplant",
+			
+			"outputJoules":0,
+			"efficiency":0
+		},
+		{
+			"name":"ForceFusionPowerPlant",
+			"group":"powerplant",
+			
+			
+			"turnJoules":0,
+			"outputJoules":0,
+			
+		},
+		{
+			"name":"ForceAntimatterPowerPlant",
+			"group":"powerplant",
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{
+			"name":"MatterConversionPowerPlant",
+			"group":"powerplant",
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{
+			"name":"ZeroPointPowerPlant",
+			"group":"powerplant",
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{"name":"BraneExtractionPowerPlant",
+			"group":"powerplant",
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{"name":"ColossusWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"LibraryWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"AmusementParkWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"ArenaWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"MonolithWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"GiantHeadWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"PalaceWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"MuseumWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"WarMemorialWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+		{"name":"WildlifePreserveWonder",
+			"group":"wonder",
+			
+			"turnJoules":0
+		},
+
+		{"name":"EmpireCapital",
+			"group":"planetCell",
+			
+			"turnJoules":0
+		},
+		{"name":"AreaCapital",
+			"group":"planetCell",
+			
+			"turnJoules":0
+		},
+		{"name":"SolidMine",
+			"group":"planetCell",
+			
+			"turnJoules":0,
+			"numElementsPerTurn":0,
+			"massPerTurn":0
+		},
+		{"name":"LiquidMine",
+			"group":"planetCell",
+			
+			"turnJoules":0,
+			"numElementsPerTurn":0,
+			"massPerTurn":0
+		},
+		{"name":"GasMine",
+			"group":"planetCell",
+			
+			"turnJoules":0,
+			"numElementsPerTurn":0,
+			"massPerTurn":0
+		},
+		{"name":"PlasmaMine",
+			"group":"planetCell",
+			
+			"turnJoules":0,
+			"numElementsPerTurn":0,
+			"massPerTurn":0
+		}
+		{"name":"BioTerraformer",
+			"group":"planetCell",
+			
+			"turnJoules":0,
+			"habitabilityUnitsPerTurn":0
+		},
+		{"name":"ChemicalTerraformer",
+			"group":"planetCell",
+			
+			"turnJoules":0,
+			"habitabilityUnitsPerTurn":0
+		},
+		{"name":"NuclearTerraformer",
+			"group":"planetCell",
+			
+			"turnJoules":0,
+			"habitabilityUnitsPerTurn":0
+		},
+		{"name":"ForceTerraformer",
+			"group":"planetCell",
+			
+			"turnJoules":0,
+			"habitabilityUnitsPerTurn":0
+		},
+		{"name":"SpaceDock",
+			"group":"planetCell",
+			
+			"turnJoules":0
+		},
+		{"name":"MilitaryBase",
+			"group":"planetCell",
+			
+			"turnJoules":0
+		},
+		{"name":"TrainingAcademy",
+			"group":"planetCell",
+			
+			"turnJoules":0
+		},
+
+		{"name":"ProbeHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":5
+		},
+		{"name":"ScoutHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":7
+		},
+		{"name":"FighterHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":8
+			
+		},
+		{"name":"EscortHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":10
+		},
+		{"name":"FrigateHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":20
+		},
+		{"name":"TransportHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":0
+		},
+		{"name":"BattleshipHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":50
+		},
+		{"name":"CarrierHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":0,
+			"numFighterBays":0
+		},
+		{"name":"MegashipHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":1000
+		},
+		{"name":"SeedshipHull",
+			"group":"shipHull",
+			"grossMass":0,
+			"numShipCells":0
+		},
+		{"name":"Storage",
+			"group":"shipCell"
+		},
+		{"name":"Cabin",
+			"group":"shipCell"
+		},
+		{"name":"DockingDrive",
+			"group":"shipCell",
+			"Size":0, 
+			"turnJoules":0,
+			"buildElements":0,
+			"minSpeed":0,
+			"maxSpeed":0
+		},
+		{"name":"StellarDrive",
+			"group":"shipCell",
+			"Size":0, 
+			"turnJoules":0,
+			"buildElements":0,
+			"minSpeed":0,
+			"maxSpeed":0
+		},
+		{"name":"InterStellarDrive",
+			"group":"shipCell",
+			"Size":0, 
+			"turnJoules":0,
+			"buildElements":0,
+			"minSpeed":0,
+			"maxSpeed":0
+		},
+		{"name":"GalacticDrive",
+			"group":"shipCell",
+			"Size":0, 
+			"turnJoules":0,
+			"buildElements":0,
+			"minSpeed":0,
+			"maxSpeed":0
+		},
+		{"name":"InterGalacticDrive",
+			"group":"shipCell",
+			"Size":0, 
+			"turnJoules":0,
+			"buildElements":0,
+			"minSpeed":0,
+			"maxSpeed":0
+		},
+		{"name":"BeamWeapon",
+			"group":"shipCell",
+			"size":0, 
+			"turnJoules":0,
+			"buildElements":0,
+			"damagePerSecond":0
+		},
+		{"name":"MissileWeapon",
+			"group":"shipCell",
+			"size":0,
+			"turnJoules":0,
+			"buildElements":0,
+			"damagePerSecond":0
+		},	
+		{"name":"FissionReactor",
+			"group":"shipCell",
+			"size":0,
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{"name":"FusionReactor",
+			"group":"shipCell",
+			"size":0,
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{"name":"ForceFusionReactor",
+			"group":"shipCell",
+			"size":0,
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{"name":"ForceAntimatterReactor",
+			"group":"shipCell",
+			"size":0,
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{"name":"ZeroPointReactor",
+			"group":"shipCell",
+			"size":0,
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{"name":"BraneExtractionReactor",
+			"group":"shipCell",
+			"size":0,
+			
+			
+			"turnJoules":0,
+			"outputJoules":0
+		},
+		{"name":"Shields",
+			"group":"shipCell",
+			"size":0,
+			"damageUnits":0,
+			"rechargeRate":0
+		},
+		{"name":"Armour",
+			"group":"shipCell",
+			"size":0,
+			"damageUnits":0
+		},
+		{"name":"SciencePackage",
+			"group":"shipCell",
+			"EffectiveRange":0
+
+		},
+		{"name":"Computer",
+			"group":"shipCell"
+		},
+		{"name":"CargoBay",
+			"group":"shipCell"
+
+		},
+		{"name":"Sensors",
+			"group":"shipCell"
+
+		},
+		{
+			"name":"Comms",
+			"group":"shipCell"
+		},
+		{
+			"name":"MacroNanites",
+			"group":"nanites"
+		},
+		{
+			"name":"MicroNanites",
+			"group":"nanites"
+		},
+		{
+			"name":"NanoNanites",
+			"group":"nanites"
+		},
+		{
+			"name":"AtmoNanites",
+			"group":"nanites"
+		},
+		{
+			"name":"MacroForcefields",
+			"group":"forcefields"
+		},
+		{
+			"name":"MegaForcefields",
+			"group":"forcefields"
+		},
+		{
+			"name":"MicroForcefields",
+			"group":"forcefields"
+		},
+		{
+			"name":"NanoForcefields",
+			"group":"forcefields"
+		},
+		{
+			"name":"GigaForcefields",
+			"group":"forcefields"
+		},
+		{
+			"name":"TeraForcefields",
+			"group":"forcefields"
+		},
+		{
+			"name":"QuantumShoebox",
+			"group":"quantumshoebox"
+		},
+		{
+			"name":"LinkedShoebox",
+			"group":"quantumshoebox"
+		},
+		{
+			"name":"Ansible",
+			"group":"quantumshoebox"
+		},
+		{
+			"name":"Stargate",
+			"group":"quantumshoebox"
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
